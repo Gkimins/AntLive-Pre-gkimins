@@ -126,7 +126,7 @@ export default {
           { len: 18, message: "请输入合法的身份证号", trigger: "change" }
         ]
       },
-      uploadAction: "http://119.23.255.187:9000/upload",
+      uploadAction: "http://127.0.0.1:9011/upload",
       active: 1,
       reject: {
         tag: false,
