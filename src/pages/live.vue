@@ -1,7 +1,7 @@
 <template>
   <el-container style="height:100%;">
     <el-header style="padding:0px">
-      <Header :notIndexPage="true" />
+      <Header :notIndexPage="true"/>
     </el-header>
     <el-main style="text-align:center;">
       <div class="live-root">
@@ -12,36 +12,39 @@
                 <el-image class="author-info-avatar" :src="info.userInfo.avatar" :fit="'fit'"></el-image>
               </div>
               <div class="author-info">
-                <p class="author-info-title">{{info.title}}</p>
-                <p class="author-info-name">{{info.userInfo.name}}</p>
+                <p class="author-info-title">{{ info.title }}</p>
+                <p class="author-info-name">{{ info.userInfo.name }}</p>
               </div>
 
               <div class="author-follow">
                 <el-button
-                  @click="handleBan"
-                  v-if="isLiveRole"
-                  round
-                  style="padding:8px 20px 8px 20px;font-size:13px;"
-                  type="danger"
-                >封禁</el-button>
+                    @click="handleBan"
+                    v-if="isLiveRole"
+                    round
+                    style="padding:8px 20px 8px 20px;font-size:13px;"
+                    type="danger"
+                >封禁
+                </el-button>
 
                 <el-button
-                  @click="handleFollow(false)"
-                  v-if="isFollow"
-                  round
-                  disabled
-                  style="padding:8px 20px 8px 20px;font-size:13px;"
-                >已关注</el-button>
+                    @click="handleFollow(false)"
+                    v-if="isFollow"
+                    round
+                    disabled
+                    style="padding:8px 20px 8px 20px;font-size:13px;"
+                >已关注
+                </el-button>
                 <el-button
-                  @click="handleFollow(true)"
-                  v-else
-                  round
-                  style="padding:8px 20px 8px 20px;font-size:13px;"
-                >关注</el-button>
+                    @click="handleFollow(true)"
+                    v-else
+                    round
+                    style="padding:8px 20px 8px 20px;font-size:13px;"
+                >关注
+                </el-button>
               </div>
             </div>
             <div class="live-content">
-              <LivePlayer v-if="info.status===1" :url="spliceLiveUrl" />
+              <LivePlayer @senddm="senddm" v-if="info.status===1" :url="spliceLiveUrl" ref="maindplayer"/>
               <div class="not-live" v-else-if="info.status===0">主播正在赶来的路上...</div>
               <div class="not-live" style="color:#ff8e8e;" v-else>该直播间因违规已被封禁</div>
             </div>
@@ -64,42 +67,46 @@
               </el-popconfirm>-->
 
               <el-popover
-                v-for="item in presents"
-                :key="item.id"
-                placement="top"
-                width="250"
-                v-model="visible"
+                  v-for="item in presents"
+                  :key="item.id"
+                  placement="top"
+                  width="250"
+                  v-model="visible"
               >
                 <div style="height:30px;">
                   <el-image style="width:30px;height:30px;" :src="item.icon"></el-image>
-                  {{item.name}}
-                  <span>（{{item.price}}开心果）</span>
+                  {{ item.name }}
+                  <span>（{{ item.price }}开心果）</span>
                 </div>
                 <div style="text-align: left; margin: 20px 0 2px 0;background:666;">
                   <div
-                    :class="sendCount==1?'price-item price-item-active':'price-item'"
-                    @click="sendCount = 1"
-                  >1</div>
+                      :class="sendCount==1?'price-item price-item-active':'price-item'"
+                      @click="sendCount = 1"
+                  >1
+                  </div>
                   <div
-                    :class="sendCount==10?'price-item price-item-active':'price-item'"
-                    @click="sendCount = 10"
-                  >10</div>
+                      :class="sendCount==10?'price-item price-item-active':'price-item'"
+                      @click="sendCount = 10"
+                  >10
+                  </div>
                   <div
-                    :class="sendCount==100?'price-item price-item-active':'price-item'"
-                    @click="sendCount = 100"
-                  >100</div>
+                      :class="sendCount==100?'price-item price-item-active':'price-item'"
+                      @click="sendCount = 100"
+                  >100
+                  </div>
                   <el-button
-                    style="float:right"
-                    type="primary"
-                    size="mini"
-                    @click="handlePresent"
-                  >确定</el-button>
+                      style="float:right"
+                      type="primary"
+                      size="mini"
+                      @click="handlePresent"
+                  >确定
+                  </el-button>
                 </div>
                 <el-image
-                  class="present-item"
-                  :src="item.icon"
-                  slot="reference"
-                  @click="handlePresentClick(item)"
+                    class="present-item"
+                    :src="item.icon"
+                    slot="reference"
+                    @click="handlePresentClick(item)"
                 ></el-image>
               </el-popover>
             </div>
@@ -112,8 +119,8 @@
               <ul id="danmu-list" class="infinite-list" style="overflow:auto">
                 <!-- v-infinite-scroll="load" -->
                 <li v-for="(i,index) in messageList" :key="index" class="infinite-list-item">
-                  <span class="chat-name">{{i.name}}</span>:
-                  <span class="chat-content">{{i.content}}</span>
+                  <span class="chat-name">{{ i.name }}</span>:
+                  <span class="chat-content">{{ i.content }}</span>
                 </li>
               </ul>
             </div>
@@ -134,8 +141,9 @@
 import Api from "../api";
 import Header from "../components/Header";
 import LivePlayer from "../components/FlvLivePlayer";
-import { getToken } from "../utils/auth";
+import {getLocalUserInfo, getToken} from "../utils/auth";
 import store from "../store";
+
 export default {
   name: "index",
   data() {
@@ -169,8 +177,8 @@ export default {
     isLiveRole() {
       const roleLiveId = 2;
       return (
-        this.$store.state.userInfo != null &&
-        this.$store.state.userInfo.roleIds.indexOf(roleLiveId) > -1
+          this.$store.state.userInfo != null &&
+          this.$store.state.userInfo.roleIds.indexOf(roleLiveId) > -1
       );
     }
   },
@@ -190,11 +198,11 @@ export default {
       this.currentPresent = v;
     },
     handlePresent() {
-      this.$confirm("是否赠送"+this.sendCount+"个"+this.currentPresent.name+"?", "赠送确认", {
+      this.$confirm("是否赠送" + this.sendCount + "个" + this.currentPresent.name + "?", "赠送确认", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "success ",
-        lockScroll:false
+        lockScroll: false
       }).then(() => {
         let data = {
           rid: this.info.id,
@@ -202,20 +210,20 @@ export default {
           pid: this.currentPresent.id
         };
         Api.sendPresent(data)
-          .then(ret => {
-            if (ret.data.code != 0) {
+            .then(ret => {
+              if (ret.data.code != 0) {
+                this.$notify.error({
+                  title: "错误1",
+                  message: "赠送失败"
+                });
+              }
+            })
+            .catch(() => {
               this.$notify.error({
-                title: "错误1",
+                title: "错误2",
                 message: "赠送失败"
               });
-            }
-          })
-          .catch(() => {
-            this.$notify.error({
-              title: "错误2",
-              message: "赠送失败"
             });
-          });
       });
     },
     handleFollow(flag) {
@@ -245,19 +253,44 @@ export default {
         this.input = "登录后才可以发送消息噢~";
       }
     },
-    handleSend() {
+    senddm(message){
+      console.log('in')
       let ws = store.state.webSocket.socket;
+      let rid = this.$route.params.id;
+
+      console.log(getLocalUserInfo(), "getLocalUserInfo");
       ws.send(
-        JSON.stringify({
-          c: 0,
-          d: this.input,
-          op: "MESSAGE"
-        })
+          JSON.stringify({
+            code: 1002,
+            roomId: rid,
+            nickname: JSON.parse(getLocalUserInfo()).nickName,
+            content: message
+          })
       );
-      this.messageList.push({
-        name: "我",
-        content: this.input
-      });
+
+    },
+    sendAndReFreshList(message) {
+      let ws = store.state.webSocket.socket;
+      let rid = this.$route.params.id;
+
+      console.log(getLocalUserInfo(), "getLocalUserInfo");
+      let final_data = {
+        text: message,
+        color: "#fff",
+        type: "right"
+      };
+      ws.send(
+          JSON.stringify({
+            code: 1002,
+            roomId: rid,
+            nickname: JSON.parse(getLocalUserInfo()).nickName,
+            content: JSON.stringify(final_data)
+          })
+      );
+      this.$refs.maindplayer.sendDmf(final_data);
+    },
+    handleSend() {
+      this.sendAndReFreshList(this.input);
       this.input = "";
 
       setTimeout(() => {
@@ -269,9 +302,9 @@ export default {
       let socketObj = store.state.webSocket;
       console.log(socketObj, "obj");
       if (
-        socketObj.rid === rid &&
-        socketObj.socket != "" &&
-        socketObj.socket.readyState === 1
+          socketObj.rid === rid &&
+          socketObj.socket != "" &&
+          socketObj.socket.readyState === 1
       ) {
         console.log("ws连接已经创建");
       } else {
@@ -280,11 +313,9 @@ export default {
           console.log("wst执行手动关闭");
         }
         console.log("初始化ws");
-        // this.socket = new WebSocket(
-        //   "ws://127.0.0.1:9000/live/chat/" + rid + "/" + getToken()
-        // );
+        console.log(getToken())
         this.socket = new WebSocket(
-          "ws://127.0.0.1:9011/live/chat/" + rid + "/" + getToken()
+            "ws://localhost:18888/"
         );
         this.socket.onopen = this.open;
         this.socket.onclose = this.onclose;
@@ -297,6 +328,14 @@ export default {
       }
     },
     open() {
+      let ws = store.state.webSocket.socket;
+      let rid = this.$route.params.id;
+      ws.send(
+          JSON.stringify({
+                code: 1001,
+                roomId: rid
+              }
+          ));
       console.log("ws连接成功");
     },
     error() {
@@ -306,7 +345,10 @@ export default {
       console.log(msg, "msg");
       let message = JSON.parse(msg.data);
       console.log(message, "message");
-      if (message.op === "PRESENT") {
+      let data = JSON.parse(message.message);
+      console.log(data)
+      let final_data = JSON.parse(data.content);
+      if (message.type === "GIFT") {
         // 礼物特效
         let p = message.p;
         this.$notify({
@@ -316,16 +358,21 @@ export default {
         });
       }
       this.messageList.push({
-        name: message.u.name,
-        content: message.d
+        name: data.nickname,
+        content: final_data.text
       });
-      if (this.messageList.length > 20) {
-        this.messageList.shift();
-      }
       setTimeout(() => {
         var div = document.getElementById("danmu-list");
         div.scrollTop = div.scrollHeight;
       }, 0);
+      if (this.messageList.length > 20) {
+        this.messageList.shift();
+      }
+      if (getLocalUserInfo()!=null&&data.nickname === JSON.parse(getLocalUserInfo()).nickName) {
+        return;
+      }
+      this.$refs.maindplayer.sendDmf(final_data);
+
     },
     send() {
       this.socket.send("tt");
@@ -348,24 +395,28 @@ export default {
   text-align: center;
   margin-right: 5px;
 }
+
 .price-item-active {
   color: #fff;
   background: rgb(250, 125, 23);
   border: 1px solid rgb(255, 160, 72);
   cursor: pointer;
 }
+
 .price-item:hover {
   color: #fff;
   background: rgb(250, 125, 23);
   border: 1px solid rgb(255, 160, 72);
   cursor: pointer;
 }
+
 .infinite-list {
   height: 430px;
   padding: 0;
   margin: 0;
   list-style: none;
 }
+
 .infinite-list .infinite-list-item {
   display: flex;
   /* align-items: center; */
@@ -376,56 +427,68 @@ export default {
   font-size: 14px;
   padding: 8px 5px 5px 10px;
 }
+
 .infinite-list .infinite-list-item:hover {
   background: #fff;
 }
+
 .infinite-list-item .chat-name {
   color: #52ad7f;
   margin-right: 3px;
 }
+
 .infinite-list-item .chat-content {
   margin-left: 5px;
 }
+
 .live-root {
   margin: 0 auto;
   min-width: 1500px;
 }
+
 .live-content-div {
   text-align: left;
   width: 890px;
   display: inline-block;
 }
+
 .live-chat-div {
   margin-left: 10px;
   text-align: left;
   width: 330px;
   display: inline-block;
 }
+
 .bg-purple {
   background: #d3dce6;
   height: 550px;
 }
+
 .bg-purple-light {
   background: #e5e9f2;
   height: 550px;
 }
+
 .author-info-content {
   height: 80px;
   background: rgb(255, 255, 255);
   display: flex;
 }
+
 .author-info-avatar {
   width: 65px;
   height: 65px;
   border-radius: 70px;
   margin: 6px 10px 0px 10px;
 }
+
 .author-info {
   height: 80px;
   width: 700px;
   position: relative;
   display: inline-block;
 }
+
 .author-info-title {
   padding: 7px;
   margin: 0px 0 0 10px;
@@ -436,6 +499,7 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
 .author-info-name {
   padding: 7px;
   margin: 0px 0 0 10px;
@@ -446,6 +510,7 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
 .author-follow {
   height: 80px;
   width: 200px;
@@ -453,22 +518,27 @@ export default {
   vertical-align: middle;
   text-align: center;
 }
+
 .live-content {
   height: 500px;
   background: rgba(44, 44, 44, 0.685);
 }
+
 .present-content {
   height: 60px;
   background: rgb(255, 255, 255);
 }
+
 .rank {
   height: 130px;
   background: #52ad7f;
 }
+
 .danmu {
   height: 450px;
   background: rgb(247, 247, 247);
 }
+
 .send-message-content {
   vertical-align: middle;
   padding: 10px 10px 10px 10px;
@@ -496,10 +566,12 @@ export default {
   border-radius: 4px;
   border: 1px solid rgb(221, 221, 221);
 }
+
 .present-item:hover {
   border: 1px solid rgb(243, 130, 0);
   cursor: pointer;
 }
+
 .not-live {
   width: 100%;
   height: 100%;
