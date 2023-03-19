@@ -4,7 +4,7 @@
     class="el-menu-demo"
     @select="handleSelect"
     :unique-opened="true"
-    
+
   >
     <el-submenu index="1" >
       <template slot="title">
@@ -12,7 +12,7 @@
         <span>个人中心</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item index="security">账号安全</el-menu-item>
+        <el-menu-item index="security">首页</el-menu-item>
         <el-menu-item index="info">个人信息</el-menu-item>
         <el-menu-item index="identify">实名认证</el-menu-item>
         <el-menu-item index="wallet">我的钱包</el-menu-item>

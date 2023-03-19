@@ -1,36 +1,38 @@
 <template>
-  <div class="personal-info-container" style="height:500px;box-sizing: border-box;padding:25px;text-align:left;">
-    <div style="width:500px;">
-      <el-form ref="form" :model="form" label-width="80px">
-           <el-form-item label="头像">
-               <el-upload
+  <el-card>
+    <div class="personal-info-container" style="height:500px;box-sizing: border-box;padding:25px;text-align:left;">
+      <div style="width:500px;">
+        <el-form ref="form" :model="form" label-width="80px">
+          <el-form-item label="头像">
+            <el-upload
                 class="avatar-uploader"
                 action="http://127.0.0.1:8222/live/upload"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload">
-                <img v-if="form.avatar_preview" :src="form.avatar_preview" class="avatar-preview">
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
-        </el-form-item>
-        <el-form-item label="别称">
-          <el-input v-model="form.nickName"></el-input>
-        </el-form-item>
+              <img v-if="form.avatar_preview" :src="form.avatar_preview" class="avatar-preview">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="别称">
+            <el-input v-model="form.nickName"></el-input>
+          </el-form-item>
           <el-form-item label="邮箱">
-            <el-input  v-model="form.email" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="手机">
+            <el-input v-model="form.email" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="手机">
             <el-input v-model="form.mobile" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="个性签名">
+          </el-form-item>
+          <el-form-item label="个性签名">
             <el-input type="textarea" v-model="form.signature"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSave" size="small">保存</el-button>
-        </el-form-item>
-      </el-form>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSave" size="small">保存</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
     </div>
-  </div>
+  </el-card>
 </template>
 
 <script>

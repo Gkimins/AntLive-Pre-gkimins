@@ -2,7 +2,8 @@
   <div class="gift-list" style="height:700px;box-sizing: border-box;padding:10px">
 
     <div>
-      <el-empty v-if="tableData.length === 0" description="描述文字" image="require('@/assets/img/data_none.png')"></el-empty>
+      <el-empty v-if="tableData.length === 0" description="暂无数据"
+                :image="require('@/assets/img/data_none.png')"></el-empty>
     </div>
 
     <div v-if="tableData.length > 0">

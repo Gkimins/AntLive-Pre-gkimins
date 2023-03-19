@@ -1,7 +1,7 @@
 <template>
   <div class="info">
     <div class="portrait">
-      <img :src="portrait" width="80" height="80" />
+      <el-image :src="portrait" style="width: 120px; height: 120px"  />
     </div>
 
     <div class="user-info">
@@ -14,17 +14,15 @@
       </div>
 
       <div class="uid" v-text="'ID:'+uid"></div>
-
-      <div class="wealth">
-        <div class="w-star">
-          <span v-text="starNumber"></span>
-          <i class="icons star-sm"></i>
-        </div>
-        <span class="cut">|</span>
-        <div class="w-diamond">
-          <span v-text="diamondNumber"></span>
-          <i class="icons diamond-sm"></i>
-        </div>
+      <div style="margin: 10px 0px 0px 0px">
+        <span style="font-size: 15px" >直播间ID:</span>
+        <span style="color: #66ccff; margin-left: 15px" v-text="1125"></span>
+        <span style="color: #66ccff; margin-left: 15px; font-size: 15px" >点击复制</span>
+      </div>
+      <div style="margin: 10px 0px 0px 0px">
+        <span style="font-size: 15px" >直播间链接:</span>
+        <span style="color: #66ccff; margin-left: 15px">http://live.bilibili.com/904881</span>
+        <span style="color: #66ccff; margin-left: 15px; font-size: 15px" >点击复制</span>
       </div>
     </div>
   </div>
@@ -37,7 +35,7 @@ export default {
     return {
     };
   },
-  props: ["nick", "level", "uid", "starNumber", "diamondNumber", "portrait"],
+  props: ["nick", "level", "uid", "starNumber", "roomId", "roomUrl"],
   computed: {
     levelClass() {
       var level = this.level;
@@ -63,13 +61,14 @@ export default {
 
 <style scoped>
 .info {
+  font-size: 20px;
   background: #fff;
   height: 180px;
   text-align: left;
 }
 .portrait {
-  width: 80px;
-  height: 80px;
+  width: 110px;
+  height: 110px;
   overflow: hidden;
   -webkit-border-radius: 40px;
   -moz-border-radius: 40px;
@@ -77,10 +76,10 @@ export default {
   -o-border-radius: 40px;
   border-radius: 40px;
   background-color: #cccccc;
-  margin: 40px 18px 0 15px;
+  margin: 30px 18px 0 22px;
 }
 .user-info {
-  margin: 38px 0 0 0;
+  margin: 18px 0 0 10px;
   vertical-align: top;
 }
 .portrait,
@@ -92,6 +91,7 @@ export default {
   display: inline-block;
 }
 .nick {
+  font-size: 25px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -111,14 +111,14 @@ export default {
   margin-top: 14px;
 }
 .uid {
-  font-size: 13px;
+  font-size: 15px;
 }
 .nick-level {
 }
 .level {
   padding: 0 6px;
   color: #fff;
-  font-size: 12px;
+  font-size: 13px;
   margin-left: 5px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;

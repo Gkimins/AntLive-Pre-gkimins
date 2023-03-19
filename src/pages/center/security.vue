@@ -1,35 +1,42 @@
-<template>
-  <div style="height:500px;box-sizing: border-box;padding:15px">
-    <el-row>
-      <el-col :span="12">
-        <SecurityItem :item="items[0]" :checked="checked[0]" @handleClick="handleEmailItemClick" />
-      </el-col>
-      <el-col :span="12">
-        <SecurityItem :item="items[1]" :checked="checked[1]" @handleClick="handlePhoneItemClick" />
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="12">
-        <SecurityItem :item="items[2]" :checked="checked[2]" @handleClick="handle2Click" />
-      </el-col>
-      <el-col :span="12"></el-col>
-    </el-row>
-    <el-dialog :title="'绑定' + this.editProp.desc" :visible.sync="dialogFormVisible" width="450px">
-      <el-form :model="form" size="small" label-width="70px" :rules="rules" ref="ruleForm">
-        <el-form-item :label="this.editProp.desc" prop="account">
-          <el-input v-model="form.account" autocomplete="off">
-            <el-button slot="append" @click="handleSendCode">{{this.buttonDesc}}</el-button>
-          </el-input>
-        </el-form-item>
-        <el-form-item label="验证码" prop="code">
-          <el-input v-model="form.code" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="dialogFormVisible = false">取 消</el-button>
-        <el-button size="small" type="primary" @click="handleEditConfirm">确 定</el-button>
+
+<template style="height:500px;box-sizing: border-box;padding:15px">
+  <div>
+    <el-card :body-style="{ padding: '0px', margin:'0px' }">
+      <div >
+        <el-row>
+          <el-col :span="12">
+            <SecurityItem :item="items[0]" :checked="checked[0]" @handleClick="handleEmailItemClick" />
+          </el-col>
+          <el-col :span="12">
+            <SecurityItem :item="items[1]" :checked="checked[1]" @handleClick="handlePhoneItemClick" />
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <SecurityItem :item="items[2]" :checked="checked[2]" @handleClick="handle2Click" />
+          </el-col>
+          <el-col :span="12"></el-col>
+        </el-row>
+        <el-dialog :title="'绑定' + this.editProp.desc" :visible.sync="dialogFormVisible" width="450px">
+          <el-form :model="form" size="small" label-width="70px" :rules="rules" ref="ruleForm">
+            <el-form-item :label="this.editProp.desc" prop="account">
+              <el-input v-model="form.account" autocomplete="off">
+                <el-button slot="append" @click="handleSendCode">{{this.buttonDesc}}</el-button>
+              </el-input>
+            </el-form-item>
+            <el-form-item label="验证码" prop="code">
+              <el-input v-model="form.code" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button size="small" @click="dialogFormVisible = false">取 消</el-button>
+            <el-button size="small" type="primary" @click="handleEditConfirm">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
-    </el-dialog>
+    </el-card>
+    <info style="margin-top: 20px" :body-style="{ padding: '10px 0px 0px 0px', margin:'0px' }"/>
+
   </div>
 </template>
 
@@ -39,7 +46,8 @@ import SecurityItem from "../../components/SecurityItem";
 export default {
   name: "security",
   components: {
-    SecurityItem
+    SecurityItem,
+    info: () => import("./info.vue")
   },
   data() {
     return {

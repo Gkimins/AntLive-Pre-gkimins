@@ -22,9 +22,7 @@
             </el-aside>
           </el-card>
           <el-main>
-            <el-card :body-style="{ padding: '0px', margin:'0px' }">
-              <router-view></router-view>
-            </el-card>
+            <router-view></router-view>
           </el-main>
         </el-container>
       </el-container>
@@ -52,8 +50,8 @@ export default {
         nick: "",
         ulevel: 89,
         uid: '',
-        gold: 68,
-        point: 99,
+        // gold: 68,
+        // point: 99,
         portrait: ''
       }
     };

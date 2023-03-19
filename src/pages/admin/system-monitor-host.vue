@@ -217,7 +217,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style>
 .system-monitor-container {
   background: #fff;
   padding: 20px;
