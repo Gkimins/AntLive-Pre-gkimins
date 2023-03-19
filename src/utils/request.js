@@ -8,7 +8,7 @@ import router from '../router'
 //import 'ant-design-vue/lib/message/style/css'
 
 const instance = axios.create({
-    baseURL: 'http://localhost:9011/',
+    baseURL: 'http://localhost:8222/',
     //baseURL:'http://www.imhtb.cn:9000',
     timeout: 20000,
     //20s
