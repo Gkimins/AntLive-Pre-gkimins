@@ -201,7 +201,7 @@ export default {
     },
     getLiveStatInfo(page,limit,dateRange) {
         return request({
-            url: '/live/live/info/list',
+            url: '/live/info/list',
             method: 'get',
             params: {
                 page,
@@ -376,7 +376,7 @@ export default {
     },
     liveClose(rid) {
         return request({
-            url: '/live/live/on_done',
+            url: '/live/on_done',
             method: 'post',
             params: {
                 name: rid
@@ -385,7 +385,7 @@ export default {
     },
     sendPresent(data) {
         return request({
-            url: '/live/present/send',
+            url: '/live/present/live/reward',
             method: 'post',
             data
         })
@@ -512,14 +512,14 @@ export default {
     },
     getStatView(params) {
         return request({
-            url: '/live/admin/stat/view/list',
+            url: '/live/statistic/stat/view/list',
             method: 'get',
             params
         })
     },
     getStatSpeak(params) {
         return request({
-            url: '/live/admin/stat/speak/list',
+            url: '/live/statistic/stat/speak/list',
             method: 'get',
             params
         })

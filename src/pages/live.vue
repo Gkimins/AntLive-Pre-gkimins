@@ -213,7 +213,7 @@ export default {
             .then(ret => {
               if (ret.data.code != 0) {
                 this.$notify.error({
-                  title: "错误1",
+                  title: "错误",
                   message: "赠送失败"
                 });
               }
@@ -315,7 +315,7 @@ export default {
         console.log("初始化ws");
         console.log(getToken())
         this.socket = new WebSocket(
-            "ws://localhost:18888/"
+            "ws://127.0.0.1:18888/"
         );
         this.socket.onopen = this.open;
         this.socket.onclose = this.onclose;

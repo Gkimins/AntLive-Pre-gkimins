@@ -31,7 +31,7 @@
       <el-form-item label="直播封面">
         <el-upload
           class="avatar-uploader"
-          action="http://localhost:8222/live/upload"
+          action="http://127.0.0.1:8222/live/upload"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"

@@ -1,37 +1,44 @@
 <template>
-  <div class="gift-list" style="height:auto;box-sizing: border-box;padding:10px">
-    <div class="header-operator">
-      <el-date-picker
-        v-model="dateRange"
-        type="datetimerange"
-        align="right"
-        unlink-panels
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        :picker-options="pickerOptions"
-        @change="handleDateRangeChange"
-        size="small"
-        value-format="yyyy-MM-dd HH:mm"
-      ></el-date-picker>
+  <div class="gift-list" style="height:700px;box-sizing: border-box;padding:10px">
+
+    <div>
+      <el-empty v-if="tableData.length === 0" description="描述文字" image="require('@/assets/img/data_none.png')"></el-empty>
     </div>
-    <el-table :data="tableData" border style="width: 100%;" size="small">
-      <el-table-column label="序号" type="index" align="center" width="100"></el-table-column>
-      <el-table-column prop="fromId" align="center" label="赠送者"></el-table-column>
-      <el-table-column prop="presentId" align="center" label="礼物"></el-table-column>
-      <el-table-column prop="unitPrice" align="center" label="礼物单价"></el-table-column>
-      <el-table-column prop="number" align="center" label="礼物数量"></el-table-column>
-      <el-table-column prop="totalPrice" align="center" label="总价值(开心果)"></el-table-column>
-      <el-table-column prop="createTime" align="center" label="获得时间" width="180"></el-table-column>
-    </el-table>
-    <el-pagination
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage"
-      :page-size="limit"
-      layout="prev, pager, next"
-      :total="total"
-      style="margin:10px 0px 10px 0px;text-align:center;"
-    ></el-pagination>
+
+    <div v-if="tableData.length > 0">
+      <div class="header-operator">
+        <el-date-picker
+            v-model="dateRange"
+            type="datetimerange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :picker-options="pickerOptions"
+            @change="handleDateRangeChange"
+            size="small"
+            value-format="yyyy-MM-dd HH:mm"
+        ></el-date-picker>
+      </div>
+      <el-table :data="tableData" border style="width: 100%;" size="small">
+        <el-table-column label="序号" type="index" align="center" width="100"></el-table-column>
+        <el-table-column prop="fromId" align="center" label="赠送者"></el-table-column>
+        <el-table-column prop="presentId" align="center" label="礼物"></el-table-column>
+        <el-table-column prop="unitPrice" align="center" label="礼物单价"></el-table-column>
+        <el-table-column prop="number" align="center" label="礼物数量"></el-table-column>
+        <el-table-column prop="totalPrice" align="center" label="总价值(开心果)"></el-table-column>
+        <el-table-column prop="createTime" align="center" label="获得时间" width="180"></el-table-column>
+      </el-table>
+      <el-pagination
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="limit"
+          layout="prev, pager, next"
+          :total="total"
+          style="margin:10px 0px 10px 0px;text-align:center;"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 

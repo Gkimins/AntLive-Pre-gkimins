@@ -58,7 +58,7 @@ export default {
           },
         },
         video: {
-          url: 'https://v17.dogevideo.com/vcloud/17/v/20190424/1556036075_818c4125ec9c8cbc7a7a8a7cc1601512/1037/7d515b22c4958598c0fbd1e6290a5ca5.mp4?vkey=A75B56&tkey=16791474389cb8709853&auth_key=1679161838-Jv24W1LdNj6EWbio-0-f7b06ad33222e132c94eeba26702ed42',
+          url: 'https://v17.dogevideo.com/vcloud/17/v/20190424/1556036075_818c4125ec9c8cbc7a7a8a7cc1601512/1037/7d515b22c4958598c0fbd1e6290a5ca5.mp4?vkey=B87237&tkey=1679207831fe3ace539e&auth_key=1679222231-Qw0izxJ4R2nruRFJ-0-07cbf535c201deba2d9e9254c5785a17',
         },
       });
       console.log(this.dp)
