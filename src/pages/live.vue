@@ -3,7 +3,12 @@
     <el-header style="padding:0px">
       <Header :notIndexPage="true"/>
     </el-header>
-    <el-main style="text-align:center;">
+    <el-main style="
+    text-align:center;
+    /*background-position: center center;*/
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('https://s2.loli.net/2023/03/25/CupAHg3oJBmUjZV.webp')">
       <div class="live-root">
         <div class="live-content-div">
           <el-card :body-style="{ padding: '0px' }" shadow="never">
@@ -12,11 +17,16 @@
                 <el-image class="author-info-avatar" :src="info.userInfo.avatar" :fit="'fit'"></el-image>
               </div>
               <div class="author-info">
-                <p class="author-info-title">{{ info.title }}</p>
+                <p class="author-info-title">{{ info.title }} <span @click="this.$router.push({path:'/',params:info.categoryInfo})" style="margin-left: 15px">{{info.categoryInfo.name}}</span></p>
                 <p class="author-info-name">{{ info.userInfo.name }}</p>
               </div>
 
               <div class="author-follow">
+                <p style="width: 600px;font-size: 10px;width: 215px;line-height: 18px;">
+                  <span class="head-text"><i class="el-icon-view">15人看过</i></span>
+                  <span @click="alarm()" class="iconfont head-text" style="margin-left: 16px;font-size: 10px">&#xe652;举报</span>
+                  <span @click="share()" class="iconfont head-text" style="margin-left: 16px;font-size: 10px">&#xe600;分享</span>
+                </p>
                 <el-button
                     @click="handleBan"
                     v-if="isLiveRole"
@@ -49,23 +59,6 @@
               <div class="not-live" style="color:#ff8e8e;" v-else>该直播间因违规已被封禁</div>
             </div>
             <div class="present-content">
-              <!-- <el-popconfirm
-                v-for="item in presents"
-                :key="item.id"
-                confirmButtonText="是的"
-                cancelButtonText="不了"
-                icon="el-icon-info"
-                iconColor="green"
-                title="确定要赠送礼物吗？"
-                @onConfirm="handlePresent(item.id)"
-              >
-                <el-image
-                  class="present-item"
-                  :src="item.icon"
-                  slot="reference"
-                ></el-image>
-              </el-popconfirm>-->
-
               <el-popover
                   v-for="item in presents"
                   :key="item.id"
@@ -124,8 +117,9 @@
                 </li>
               </ul>
             </div>
-            <div class="send-message-content">
-              <el-input v-model="input" :disabled="this.isLogin" placeholder>
+            <div class="send-message-content" style="display: inline-flex">
+              <el-image style="width: 32px;height: 32px;margin-top: 3px" :src="require('@/assets/img/Palette.png')"/>
+              <el-input style="margin-left: 10px" v-model="input" :disabled="this.isLogin" placeholder>
                 <el-button slot="append" :disabled="this.isLogin" @click="handleSend">发送</el-button>
               </el-input>
             </div>
@@ -190,6 +184,13 @@ export default {
     this.init();
   },
   methods: {
+    alarm(){
+      //截图 并用el-pop显示， 用于举报
+
+    },
+    share(){
+
+    },
     handleBan() {
       // eslint-disable-next-line no-unused-vars
       let rid = this.info.id;
@@ -226,6 +227,7 @@ export default {
             });
       });
     },
+    //flag true的话是关注 否则是取消关注
     handleFollow(flag) {
       if (flag) {
         Api.saveWatch({
@@ -235,7 +237,7 @@ export default {
           this.isFollow = true;
         });
       } else {
-        Api.delWatch(this.info.id).then(() => {
+        Api.cancelFollow(this.info.id).then(() => {
           this.isFollow = false;
         });
       }
@@ -252,8 +254,15 @@ export default {
       if (this.$store.state.userInfo == null) {
         this.input = "登录后才可以发送消息噢~";
       }
+      Api.getIsWatch(rid).then(res => {
+        this.isFollow = res.data.data;
+      });
+      Api.saveWatch({
+        rid: rid,
+        type: 0
+      });
     },
-    senddm(message){
+    senddm(message) {
       console.log('in')
       let ws = store.state.webSocket.socket;
       let rid = this.$route.params.id;
@@ -301,6 +310,7 @@ export default {
     initWebSocket(rid) {
       let socketObj = store.state.webSocket;
       console.log(socketObj, "obj");
+      // logdata
       if (
           socketObj.rid === rid &&
           socketObj.socket != "" &&
@@ -368,7 +378,7 @@ export default {
       if (this.messageList.length > 20) {
         this.messageList.shift();
       }
-      if (getLocalUserInfo()!=null&&data.nickname === JSON.parse(getLocalUserInfo()).nickName) {
+      if (getLocalUserInfo() != null && data.nickname === JSON.parse(getLocalUserInfo()).nickName) {
         return;
       }
       this.$refs.maindplayer.sendDmf(final_data);
@@ -385,6 +395,32 @@ export default {
 </script>
 
 <style scoped lang="less">
+.head-text {
+  color:#9499a0;
+}
+.head-text:hover {
+  color: #66ccff;
+}
+
+/* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+/* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: 'iconfont';  /* Project id 3976290 */
+  src: url('//at.alicdn.com/t/c/font_3976290_fj009bnikk.woff2?t=1679729037716') format('woff2'),
+  url('//at.alicdn.com/t/c/font_3976290_fj009bnikk.woff?t=1679729037716') format('woff'),
+  url('//at.alicdn.com/t/c/font_3976290_fj009bnikk.ttf?t=1679729037716') format('truetype');
+}
+
+/* 可以自己改成自己想要的  比如yzsIconfont*/
+.iconfont {
+  font-family: "iconfont" !important;
+  /*  样式都可以 修改  font-size: .20rem;  */
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .price-item {
   width: 45px;
   height: 25px;
@@ -513,8 +549,8 @@ export default {
 
 .author-follow {
   height: 80px;
-  width: 200px;
-  line-height: 80px;
+  //width: 200px;
+  line-height: 5px;
   vertical-align: middle;
   text-align: center;
 }
@@ -525,6 +561,7 @@ export default {
 }
 
 .present-content {
+  float: right;
   height: 60px;
   background: rgb(255, 255, 255);
 }
@@ -568,6 +605,7 @@ export default {
 }
 
 .present-item:hover {
+  //float: right;
   border: 1px solid rgb(243, 130, 0);
   cursor: pointer;
 }

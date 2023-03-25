@@ -1,16 +1,31 @@
 <template>
-    <div style="height:500px;box-sizing: border-box;max-width:900px;padding:20px;position:relative;">
-        <FollowItem v-for="item in watchList" :key="item.id" :item="item"/>
+    <el-card>
+      <div style="height:500px;box-sizing: border-box;max-width:900px;padding:20px;position:relative;">
+        <el-row :gutter="12">
+          <div
+              v-if="watchList.length==0"
+              class="identify"
+              style="height:445px;text-align:center;font-size:17px;color:#3f74a8"
+          >
+            <div style="/* line-height: 400px; */display: inline-grid; margin-top: 80px">
+              <el-image :src="require('@/assets/img/waiting.png')" style="width: 200px;height: 200px"/>
+              <br>
+              <span>暂时没有关注用户</span>
+            </div>
+          </div>
+          <FollowItem v-on:click="this.jump(item)" v-for="item in watchList" :key="item.id" :item="item"/>
+        </el-row>
         <el-pagination
-        @current-change="handleCurrentChange"
-        :current-page.sync="currentPage"
-        :page-size="limit"
-        layout="prev, pager, next"
-        :total="total"
-        style="float:left;width:850px;"
-        hide-on-single-page	
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
+            :page-size="limit"
+            layout="prev, pager, next"
+            :total="total"
+            style="float:left;width:850px;"
+            hide-on-single-page
         ></el-pagination>
-    </div>
+      </div>
+    </el-card>
 </template>
 
 <script>
@@ -48,9 +63,13 @@ export default {
     mounted(){
         this.page()
     },
+  jump(item){
+      console.log('xxxx')
+      console.log(item)
+  },
 }
 </script>
 
 <style>
-    
+
 </style>

@@ -7,7 +7,7 @@
           <el-card @click.native="handleInfoClick" :body-style="{ padding: '0px' }" shadow="hover" style="cursor:pointer;">
             <UserInfo
               :nick="userInfo.nick||''"
-              :portrait="userInfo.portrait || ''"
+              :portrait="portrait || ''"
               :level="userInfo.ulevel || 0"
               :uid="userInfo.uid || ''"
               :starNumber="userInfo.point||0"
@@ -47,22 +47,24 @@ export default {
     return {
       userInfo: {
         //保存用户信息
+
         nick: "",
         ulevel: 89,
         uid: '',
-        // gold: 68,
-        // point: 99,
-        portrait: ''
-      }
+        aid: ''
+      },
+      portrait: ''
     };
   },
   mounted(){
+    var pthis = this;
     Api.getUserInfo().then(res => {
       let ret = res.data.data;
       this.userInfo.nick = ret.nickName;
       this.userInfo.uid = ret.id;
       this.userInfo.ulevel = ret.id;
       this.userInfo.portrait = ret.avatar;
+      pthis.portrait= ret.avatar;
     })
   },
   filters:{

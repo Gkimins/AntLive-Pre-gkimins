@@ -4,8 +4,9 @@
 </template>
 
 <script>
-// import flvjs from "flv.js";
+import 'flv.js'
 import DPlayer from 'dplayer';
+import Hls from "hls.js";
 export default {
   name: "flv-live-player",
   props: ["url"],
@@ -58,8 +59,15 @@ export default {
           },
         },
         video: {
-          url: 'https://v17.dogevideo.com/vcloud/17/v/20190424/1556036075_818c4125ec9c8cbc7a7a8a7cc1601512/1037/7d515b22c4958598c0fbd1e6290a5ca5.mp4?vkey=B87237&tkey=1679207831fe3ace539e&auth_key=1679222231-Qw0izxJ4R2nruRFJ-0-07cbf535c201deba2d9e9254c5785a17',
+          url: this.url,
         },
+        customType: {
+          customHls: function (video) {
+            const hls = new Hls();
+            hls.loadSource(video.src);
+            hls.attachMedia(video);
+          },
+        }
       });
       console.log(this.dp)
     }

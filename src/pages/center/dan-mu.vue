@@ -1,17 +1,20 @@
 <template>
-  <div class="dan-mu-container">
-    <el-tabs v-model="days" @tab-click="handleClick">
-      <el-tab-pane label="近7天总计" name="7"></el-tab-pane>
-      <el-tab-pane label="近30天总计" name="30"></el-tab-pane>
-    </el-tabs>
-    <div class="dan-mu-sub-container">
-      <el-tabs v-model="subActiveName" @tab-click="handleSubClick">
-        <el-tab-pane label="人气统计" name="view"></el-tab-pane>
-        <el-tab-pane label="弹幕统计" name="speak"></el-tab-pane>
+  <el-card>
+    <div class="dan-mu-container">
+      <el-tabs v-model="days" @tab-click="handleClick">
+        <el-tab-pane label="近7天总计" name="7"></el-tab-pane>
+        <el-tab-pane label="近30天总计" name="30"></el-tab-pane>
       </el-tabs>
+      <div class="dan-mu-sub-container">
+        <el-tabs v-model="subActiveName" @tab-click="handleSubClick">
+          <el-tab-pane label="人气统计" name="view"></el-tab-pane>
+          <el-tab-pane label="弹幕统计" name="speak"></el-tab-pane>
+        </el-tabs>
+      </div>
+      <div id="c1"></div>
     </div>
-    <div id="c1"></div>
-  </div>
+  </el-card>
+
 </template>
 
 <script>

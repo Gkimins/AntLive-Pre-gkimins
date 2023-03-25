@@ -2,9 +2,9 @@
   <div class="main-header">
     <div class="main-header-nav">
       <a class="nav-a" href="#" style="float:left;" @click="handleIndex">首页</a>
-      <el-popover width="260" trigger="hover"  v-model="visible" v-if="!notIndexPage">
+      <el-popover width="260" trigger="hover"  v-model="visible">
         <div class="popover-container">
-          <el-button v-for="item in categorys" :key="item.id" style="margin:0px 6px 5px 0px" plain size="mini" @click="handleCategoryClick(item)">{{item.name}}</el-button>
+          <el-button v-for="item in this.$store.state.categorys" :key="item.id" style="margin:0px 6px 5px 0px" plain size="mini" @click="handleCategoryClick(item)">{{item.name}}</el-button>
         </div>
         <a class="nav-a" href="#" style="float:left;" slot="reference">分类</a>
         <a class="nav-a" href="#" style="float:left;" slot="reference" @click="handleVideoClick">视频</a>
@@ -103,7 +103,7 @@ export default {
       this.$router.push({
         path: "/"
       }).catch(()=>{});
-    }
+    },
   }
 };
 </script>
@@ -111,7 +111,7 @@ export default {
 <style lang="less">
 .main-header {
   background: rgb(255, 255, 255);
-  height: 50px;
+  height: 58px;
   text-align: center;
   width: 100%;
   .category-btn{

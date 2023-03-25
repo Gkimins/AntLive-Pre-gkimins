@@ -1,52 +1,56 @@
 <template>
-  <div class="live-info-div">
+  <el-card>
+    <div class="live-info-div">
 
-    <div v-if="this.status == -1" class="no-auth-container">
-        您还没有进行身份认证，请认证后再尝试~
-    </div>
-    <el-form
-      v-else
-      label-position="right"
-      label-width="80px"
-      :model="formData"
-      style="width:400px;margin-top:20px;margin-left:50px;"
-    >
-      <el-form-item label="标题">
-        <el-input v-model="formData.title"></el-input>
-      </el-form-item>
-      <el-form-item label="公告">
-        <el-input v-model="formData.notice"></el-input>
-      </el-form-item>
-      <el-form-item label="分类">
-        <el-select v-model="formData.cid" placeholder="请选择分类" style="display:inline;">
-          <!-- <el-option label="游戏" value="1"></el-option> -->
-          <el-option
-            v-for="item in this.category_list"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="直播封面">
-        <el-upload
-          class="avatar-uploader"
-          action="http://127.0.0.1:8222/live/upload"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-        >
-          <img v-if="formData.cover_preview" :src="formData.cover_preview" class="cover" />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-      </el-form-item>
-      <el-form-item>
-        <div class="save_botton">
+      <div v-if="this.status == -1" >
+        <el-empty style="margin: 72px 0px 0px 10px" description="您还没有进行身份认证，请认证后再尝试~"
+                  :image="require('@/assets/img/waiting.png')"></el-empty>
+
+      </div>
+      <el-form
+          v-else
+          label-position="right"
+          label-width="80px"
+          :model="formData"
+          style="width:400px;margin-top:20px;margin-left:50px;"
+      >
+        <el-form-item label="标题">
+          <el-input v-model="formData.title"></el-input>
+        </el-form-item>
+        <el-form-item label="公告">
+          <el-input v-model="formData.notice"></el-input>
+        </el-form-item>
+        <el-form-item label="分类">
+          <el-select v-model="formData.cid" placeholder="请选择分类" style="display:inline;">
+            <!-- <el-option label="游戏" value="1"></el-option> -->
+            <el-option
+                v-for="item in this.category_list"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="直播封面">
+          <el-upload
+              class="avatar-uploader"
+              action="http://127.0.0.1:8222/live/upload"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+          >
+            <img v-if="formData.cover_preview" :src="formData.cover_preview" class="cover" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
+        <el-form-item>
+          <div class="save_botton">
             <el-button size="small" type="primary" @click="onSubmit">保存</el-button>
-        </div>
-      </el-form-item>
-    </el-form>
-  </div>
+          </div>
+        </el-form-item>
+      </el-form>
+    </div>
+  </el-card>
 </template>
 
 <script>

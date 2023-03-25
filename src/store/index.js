@@ -53,7 +53,7 @@ const store = new Vuex.Store({
         },
         login({ commit }, e) {
             return new Promise((resolve, reject) => {
-                Api.login(e.username, e.password).then((res) => {
+                Api.login(e.username, e.password,e.vcode,e.vcodeId).then((res) => {
                     if(res.data.code == 0){
                         let ret = res.data;
                         commit('setStateToken', ret.data.token)

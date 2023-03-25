@@ -35,7 +35,7 @@ export default {
     return {
     };
   },
-  props: ["nick", "level", "uid", "starNumber", "roomId", "roomUrl"],
+  props: ["nick", "level", "uid", "starNumber", "roomId", "roomUrl","portrait"],
   computed: {
     levelClass() {
       var level = this.level;

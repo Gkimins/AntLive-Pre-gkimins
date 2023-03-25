@@ -29,15 +29,15 @@
         <el-menu-item index="live-settings">开播设置</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
-        <el-submenu index="3">
-      <template slot="title">
-        <span>我的视频</span>
-      </template>
-      <el-menu-item-group>
-        <el-menu-item index="vod">视频上传</el-menu-item>
-        <el-menu-item index="vod-list">视频列表</el-menu-item>
-      </el-menu-item-group>
-    </el-submenu>
+<!--        <el-submenu index="3">-->
+<!--      <template slot="title">-->
+<!--        <span>我的视频</span>-->
+<!--      </template>-->
+<!--      <el-menu-item-group>-->
+<!--        <el-menu-item index="vod">视频上传</el-menu-item>-->
+<!--        <el-menu-item index="vod-list">视频列表</el-menu-item>-->
+<!--      </el-menu-item-group>-->
+<!--    </el-submenu>-->
     <el-submenu index="4">
       <template slot="title">
         <span>直播数据</span>

@@ -1,272 +1,688 @@
 <template>
-  <div class="login_page">
-    <transition name="form-fade" mode="in-out">
-      <section class="form_contianer">
-        <div class="titleArea rflex" @click="handleToHome">
-          <!-- <img class="logo" :src="logo" alt="小爱admin" /> -->
-          <span class="title">
-            Ant
-            <i>Live</i>
-          </span>
+  <div class="container">
+    <div class="forms-container">
+      <div class="signin-signup">
+        <form action="" class="sign-in-form">
+          <h2 class="title">VoiceLive</h2>
+          <h2 class="title">用户登录</h2>
+          <div class="input-field">
+            <i class="fa fa-user"/>
+            <input
+                v-model="loginForm.username"
+                type="text"
+                placeholder="Username"
+            >
+          </div>
+          <div class="input-field">
+            <i class="fa fa-lock"/>
+            <input
+                v-model="loginForm.password"
+                type="password"
+                placeholder="Password"
+            >
+          </div>
+          <div class="input-field input-verify">
+            <i class="fa fa-lock"/>
+            <input
+                type="text"
+                v-model="loginForm.vcode"
+                placeholder="Verify Code"
+            >
+            <a
+                href="javascript:;"
+                class="pswverifyimg"
+                @click="changeCodeImg()"
+            ><img
+                id="codeImg"
+                :src="pswverifyimg"
+            ></a>
+          </div>
+          <!--          <div v-show="loginForm.errorVisible">-->
+          <!--            {{ loginForm.errorMsg }}-->
+          <!--          </div>-->
+
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <input
+                  type="button"
+                  value="登 录"
+                  class="btn solid"
+                  @click="userpwdLogin"
+              >
+            </el-col>
+            <el-col :span="12">
+              <input
+                  id="changelayouttoreg"
+                  type="button"
+                  value="去注册"
+                  class="btn solid"
+              >
+            </el-col>
+          </el-row>
+        </form>
+        <form action="" class="sign-up-form">
+          <h2 class="title">用户注册</h2>
+          <div class="input-field">
+            <i class="fa fa-user"/>
+            <input
+                v-model="registerForm.userName"
+                type="text"
+                placeholder="用户名"
+            >
+          </div>
+          <div class="input-field">
+            <i class="fa fa-lock"/>
+            <input
+                v-model="registerForm.password"
+                type="password"
+                placeholder="密码"
+            >
+          </div>
+          <div class="input-field">
+            <i class="fa fa-lock"/>
+            <input
+                v-model="registerForm.confirmPassword"
+                type="password"
+                placeholder="确认密码"
+            >
+          </div>
+          <div class="input-field">
+            <i class="fa fa-envelope"/>
+            <input
+                v-model="registerForm.phoneNumber"
+                type="text"
+                placeholder="手机号"
+            >
+          </div>
+          <div class="input-field">
+            <i class="fa fa-envelope"/>
+            <input
+                v-model="registerForm.mail"
+                type="text"
+                placeholder="邮箱"
+            >
+          </div>
+
+          <el-row v-if="!isSendMail">
+            <el-col :span="24">
+              <input
+                  type="button"
+                  value="获取验证码"
+                  class="btn solid"
+                  @click="getvcode"
+              >
+            </el-col>
+          </el-row>
+          <div class="input-field" v-if="isSendMail">
+            <i class="fa fa-envelope"/>
+            <input
+                v-model="registerForm.code"
+                type="text"
+                placeholder="验证码"
+            >
+          </div>
+
+          <div class="input-field">
+            <i class="fa fa-user"/>
+            <select id="gender" name="">
+              <option value="1">男</option>
+              <option value="0">女</option>
+            </select>
+          </div>
+          <el-row>
+            <el-col :span="24">
+              <input
+                  type="button"
+                  value="注 册"
+                  class="btn solid"
+                  @click="register"
+              >
+            </el-col>
+          </el-row>
+        </form>
+      </div>
+
+      <div class="panels-container">
+        <div class="panel left-panel">
+          <div class="content">
+            <h3>还没有帐号？</h3>
+            <p>用户注册</p>
+            <button id="sign-up-btn" class="btn transparent">去注册噻</button>
+          </div>
+
+          <img :src="require('@/assets/img/log.svg')" class="image" alt="">
         </div>
-        <el-form :model="loginForm" :rules="rules" ref="loginForm" class="loginForm">
-          <el-form-item prop="username" class="login-item">
-            <!-- <span class="loginTips">
-              <icon-svg icon-class="iconuser" />
-            </span> -->
-            <el-input
-              @keyup.enter.native="submitForm('loginForm')"
-              class="area"
-              type="text"
-              placeholder="用户名"
-              v-model="loginForm.username"
-            ></el-input>
-          </el-form-item>
-          <el-form-item prop="password" class="login-item">
-            <!-- <span class="loginTips">
-              <icon-svg icon-class="iconLock" />
-            </span> -->
-            <el-input
-              @keyup.enter.native="submitForm('loginForm')"
-              class="area"
-              type="password"
-              placeholder="密码"
-              v-model="loginForm.password"
-            ></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">登录</el-button>
-          </el-form-item>
-          <div class="register">
-            <router-link :to="{ path: '/register'}">注册用户</router-link>
+
+        <div class="panel right-panel">
+          <div class="content">
+            <h3>已经注册啦？</h3>
+            <p>快去登录呗</p>
+            <button id="sign-in-btn" class="btn transparent">走喽</button>
           </div>
-          <div class="tiparea">
-            <p class="wxtip">温馨提示：</p>
-            <p class="tip">
-              用户名为：admin/editor
-              <span>(可用于切换权限)</span>
-            </p>
-            <p class="tip">密码为：123456</p>
-          </div>
-          <div class="sanFangArea">
-            <p class="title">第三方账号登录</p>
-            <ul class="rflex">
-              <!-- <li @click="loginByWechat">
-                <icon-svg icon-class="iconwechat" />
-              </li>
-              <li>
-                <icon-svg icon-class="iconweibo" />
-              </li>
-              <li>
-                <icon-svg icon-class="iconGithub" />
-              </li> -->
-            </ul>
-          </div>
-        </el-form>
-      </section>
-    </transition>
-    <div class="bottom-div">
-      <p>Copyright 2020 PinTeh</p>
+
+          <img :src="require('@/assets/img/register.svg')" class="image" alt="">
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import store from "../store";
-import logoImg from "@/assets/logo.png";
 export default {
   name:'login',
   data() {
     return {
-      logo: logoImg,
+      permissionList: [],
+      roleName: '',
       loginForm: {
-        username: "794409767@qq.com",
-        password: "123123"
+        username: 'admin1',
+        password: 'admin1',
+        vcode: '',
+        vcodeId :''
       },
-      rules: {
-        username: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
+      // 登录表单验证规则
+      loginFormRules: {
+        // 验证用户名格式
+        userName: [
+          {required: true, message: "请输入用户名称", trigger: "blur"},
+          {min: 2, max: 20, message: "用户名称长度在2到20个字符之间", trigger: "blur"}
         ],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
-      }
-    };
+        // 验证密码格式
+        password: [
+          {required: true, message: "请输入密码", trigger: "blur"},
+          {min: 6, max: 16, message: "登录密码长度在6到16个字符之间", trigger: "blur"}
+        ]
+      },
+      sessionId: 0,
+      // 以上登录
+
+
+      registerForm: {
+        userName: '',
+        password: '',
+        confirmPassword: '',
+        phoneNumber: '',
+        sex: '',
+        mail:'',
+        code:''
+      },
+      pswverifyimg: 'http://127.0.0.1:9011/live/getVCode',
+      show: true,
+      codetoken: '',
+      isSendMail: false
+    }
   },
-  mounted() {},
+  mounted() {
+    // 切换layout
+    const sign_in_btn = document.querySelector('#sign-in-btn')
+    const sign_up_btn = document.querySelector('#sign-up-btn')
+    const reg = document.querySelector('#changelayouttoreg')
+
+    const container = document.querySelector('.container')
+
+    sign_up_btn.addEventListener('click', () => {
+      // this.$router.push('/register')
+      container.classList.add('sign-up-mode')
+    })
+    reg.addEventListener('click', () => {
+      // this.$router.push('/register')
+      container.classList.add('sign-up-mode')
+    })
+
+    sign_in_btn.addEventListener('click', () => {
+      container.classList.remove('sign-up-mode')
+    })
+    this.changeCodeImg()
+  },
   methods: {
-    loginByWechat() {},
-    showMessage(type, message) {
-      this.$message({
-        type: type,
-        message: message
-      });
+    changeCodeImg() {
+      this.loginForm.vcodeId = new Date().valueOf()
+      this.pswverifyimg = 'http://127.0.0.1:9011/live/getVCode?t=' +this.loginForm.vcodeId;
     },
-    submitForm(loginForm) {
-      this.$refs[loginForm].validate(valid => {
-        if (valid) {
-          let userinfo = this.loginForm;
-          store
-            .dispatch("login", userinfo)
-            .then((res) => {
-              if(res.data.code == 0){
-                this.$router.push("/");
-              }
-            });
-        } else {
-          return false;
-        }
-      });
+    async getvcode() {
     },
-    handleRegister() {
-      this.$router.push({
-        path: "/register"
-      });
+
+    /**
+     * @description: 注册
+     */
+    async register() {
     },
-    handleToHome() {
-      this.$router.push({
-        path: "/"
-      });
+
+
+    /**
+     * @description: 登录
+     */
+    async userpwdLogin() {
+      console.log("xs")
+      var userinfo = this.loginForm;
+      store.dispatch("login", userinfo)
+          .then((res) => {
+            if(res.data.code == 0){
+              this.$router.push("/");
+            }
+          });
     }
   }
-};
+}
 </script>
 
-<style lang="less" scoped>
-.bottom-div {
-  text-align: center;
-  height: 20px;
-  width: 100%;
-  bottom: 30px;
+<style rel="stylesheet" lang="css" scoped>
+
+/* google字体库 */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+input {
+  font-family: "Poppins", sans-serif;
+}
+
+.phonein .el-form-item {
+  margin-bottom: 20px;
+}
+
+.phonein .loginbtn {
+  width: 200px;
+  height: 40px;
+}
+
+.verifybtn {
+  width: 100px;
+  height: 40px;
   position: absolute;
-  p {
-    font-size: 14px;
-    color: #7e7e7e;
-  }
+  right: 0px;
+  top: 0;
 }
-.register {
-  text-decoration: none;
-  text-align: right;
-  a {
-    text-decoration: none;
-    padding: 5px;
-    color: #666666;
-  }
-  a:visited {
-    color: #666666;
-  }
+
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+  overflow: hidden;
 }
-.login_page {
+
+.container::before {
+  content: "";
+  position: absolute;
+  width: 2000px;
+  height: 2000px;
+  border-radius: 50%;
+  background: linear-gradient(-45deg, #4481eb, #04befe);
+  top: -10%;
+  right: 48%;
+  transform: translateY(-50%);
+  z-index: 6;
+  transition: 1.8s ease-in-out;
+}
+
+.forms-container {
   position: absolute;
   width: 100%;
   height: 100%;
-  // background: url(../assets/img/login.svg) no-repeat center center;
-  background-size: 100% 100%;
+  top: 0;
+  left: 0;
 }
-.form_contianer {
+
+.signin-signup {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 75%;
+  /* 作用是什么 */
   transform: translate(-50%, -50%);
-  //   background: #fff;
-  width: 370px;
-  border-radius: 5px;
-  padding: 25px;
-  text-align: center;
-  .titleArea {
-    justify-content: center;
-    align-items: center;
-    // text-transform: uppercase;
-    font-size: 22px;
-    width: 100%;
-    padding-bottom: 20px;
-    .logo {
-      width: 40px;
-      margin-right: 10px;
-    }
-    .title {
-      i {
-        color: #ff6c60;
-        font-style: normal;
-      }
-    }
-  }
-
-  .loginForm {
-    .submit_btn {
-      width: 100%;
-      padding: 13px 0;
-      font-size: 16px;
-    }
-    .loginTips {
-      position: absolute;
-      left: 10px;
-      z-index: 20;
-      // color: #FF7C1A;
-      font-size: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
-}
-.manage_tip {
-  margin-bottom: 20px;
-  .title {
-    font-family: cursive;
-    font-weight: bold;
-    font-size: 26px;
-    color: #fff;
-  }
-  .logo {
-    width: 60px;
-    height: 60px;
-  }
+  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr;
+  z-index: 5;
+  transition: 1s 0.7s ease-in-out;
 }
 
-.tiparea {
-  display: none;
-  text-align: left;
-  font-size: 12px;
-  color: #0a0a0a;
-  padding: 10px 0;
-  .tip {
-    margin-left: 54px;
-  }
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 5rem;
+  overflow: hidden;
+  /* 难点 */
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  /* delay防止表单提前暴露 */
+  transition: 0.2s 0.7s ease-in-out;
 }
 
-.form-fade-enter-active,
-.form-fade-leave-active {
-  transition: all 1s;
+form.sign-in-form {
+  z-index: 2;
 }
-.form-fade-enter,
-.form-fade-leave-active {
-  transform: translate3d(0, -50px, 0);
+
+form.sign-up-form {
+  z-index: 1;
   opacity: 0;
 }
-.loginForm {
-  .el-button--primary {
-    background-color: #ff7c1a;
-    border: 1px solid #ff7c1a;
+
+.title {
+  font-size: 2.2rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.input-field {
+  max-width: 300px;
+  width: 100%;
+  height: 55px;
+  background-color: #f0f0f0;
+  margin: 10px 0;
+  border-radius: 55px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  padding: 0 0.4rem;
+}
+
+.input-verify {
+  max-width: 150px !important;
+  width: 80% !important;
+  position: relative;
+  left: -70px;
+}
+
+.input-verify input {
+  margin-top: 13px;
+}
+
+.input-verify a {
+  position: relative;
+  right: -180px;
+  top: -32px;
+  width: 100px;
+  height: 40px;
+}
+
+.input-verify a img {
+  width: 100%;
+  height: 100%;
+}
+
+.input-field i {
+  text-align: center;
+  line-height: 55px;
+  color: #acacac;
+  font-size: 1.1rem;
+}
+
+.input-field input {
+  background: none;
+  outline: none;
+  border: none;
+  line-height: 1;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.input-field select {
+  background: none;
+  outline: none;
+  border: none;
+  line-height: 1;
+  font-weight: 600;
+  font-size: 1.1rem;
+  width: 220px;
+  color: #333;
+}
+
+.input-field input::placeholder {
+  color: #aaa;
+  font-weight: 500;
+}
+
+.btn {
+  width: 150px;
+  height: 40px;
+  border: none;
+  outline: none;
+  border-radius: 49px;
+  cursor: pointer;
+  background-color: #5995fd;
+  color: #fff;
+  /* 大写 */
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px 0;
+  /* 动画延迟 */
+  transition: 0.5s;
+}
+
+.btn:hover {
+  background-color: #4d84e2;
+}
+
+.social-text {
+  padding: 0.7rem 0;
+  font-size: 1rem;
+}
+
+.social-media {
+  display: flex;
+  justify-content: center;
+}
+
+.social-icon {
+  height: 40px;
+  width: 40px;
+  border: 1px solid #333;
+  margin: 0 0.45rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 1.1rem;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.social-icon:hover {
+  color: #4481eb;
+  border-color: #44b1eb;
+}
+
+.panels-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: center;
+  justify-content: center;
+  z-index: 7;
+}
+
+.panel .content {
+  color: #fff;
+  transition: 0.9s 0.6s ease-in-out;
+}
+
+.panel h3 {
+  font-weight: 600;
+  line-height: 1;
+  font-size: 1.5rem;
+}
+
+.panel p {
+  font-size: 0.95rem;
+  padding: 0.7rem 0;
+}
+
+.btn.transparent {
+  margin: 0;
+  background: none;
+  border: 2px solid #fff;
+  width: 130px;
+  height: 41px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.left-panel {
+  pointer-events: all;
+  padding: 3rem 17% 2rem 12%;
+}
+
+.right-panel {
+  pointer-events: none;
+  padding: 3rem 12% 2rem 17%;
+}
+
+.image {
+  width: 100%;
+  transition: 1.1s 0.4s ease-in-out;
+}
+
+.right-panel .content,
+.right-panel .image {
+  transform: translateX(800px);
+}
+
+.container.sign-up-mode:before {
+  transform: translate(100%, -50%);
+  right: 52%;
+}
+
+.container.sign-up-mode .left-panel .image,
+.container.sign-up-mode .left-panel .content {
+  transform: translateX(-800px);
+}
+
+.container.sign-up-mode .right-panel .content,
+.container.sign-up-mode .right-panel .image {
+  transform: translateX(0px);
+}
+
+.container.sign-up-mode .left-panel {
+  pointer-events: none;
+}
+
+.container.sign-up-mode .right-panel {
+  pointer-events: all;
+}
+
+.container.sign-up-mode .signin-signup {
+  left: 25%;
+}
+
+.container.sign-up-mode form.sign-in-form {
+  z-index: 1;
+  opacity: 0;
+}
+
+.container.sign-up-mode form.sign-up-form {
+  z-index: 2;
+  opacity: 1;
+}
+
+@media (max-width: 870px) {
+  .container {
+    min-height: 800px;
+    height: 100vh;
+  }
+  .container:before {
+    width: 1500px;
+    height: 1500px;
+    left: 30%;
+    bottom: 68%;
+    transform: translateX(-50%);
+    right: initial;
+    top: initial;
+    transition: 2s ease-in-out;
+  }
+  .signin-signup {
+    width: 100%;
+    left: 50%;
+    top: 85%;
+    transform: translate(-50%, -100%);
+    transition: 1s 0.8s ease-in-out;
+  }
+  .panels-container {
+    z-index: 10;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+  }
+  .panel {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2.5rem 8%;
+  }
+  .image {
+    width: 200px;
+    transition: 0.9s 0.6s ease-in-out;
+  }
+  .left-panel {
+    grid-row: 1 / 2;
+  }
+  .right-panel {
+    grid-row: 3 / 4;
+  }
+  .panel h3 {
+    font-size: 1.2rem;
+  }
+  .panel p {
+    font-size: 0.7rem;
+    padding: 0.5rem 0;
+  }
+  .btn.btn.transparent {
+    width: 110px;
+    height: 35px;
+    font-variation-settings: 0.7em;
+  }
+  .panel .content {
+    padding-right: 15%;
+    transition: 0.9s 0.8s ease-in-out;
+  }
+  .right-panel .content,
+  .right-panel .image {
+    transform: translateY(300px);
+  }
+  .container.sign-up-mode:before {
+    transform: translate(-50%, 100%);
+    bottom: 32%;
+    right: initial;
+  }
+  .container.sign-up-mode .left-panel .image,
+  .container.sign-up-mode .left-panel .content {
+    transform: translateY(-300px);
+  }
+  .container.sign-up-mode .signin-signup {
+    top: 5%;
+    transform: translate(-50%, 0);
+    left: 50%;
   }
 }
-.sanFangArea {
-  border-top: 1px solid #dcdfe6;
-  padding: 10px 0;
-  display: none;
-  .title {
-    font-size: 14px;
-    color: #8b9196;
-    margin-bottom: 10px;
+
+@media (max-width: 465px) {
+  form {
+    padding: 0 1.5rem;
   }
-  ul {
-    li {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      .svg-icon {
-        font-size: 24px;
-      }
-    }
+  .image {
+    display: none;
+  }
+  .container .left-panel .content,
+  .container .right-panel .content {
+    margin-left: 40px;
   }
 }
+
 </style>

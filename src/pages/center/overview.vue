@@ -1,41 +1,43 @@
 <template>
-  <div class="overview" style="height:auto;box-sizing: border-box;padding:10px">
-    <div class="header-operator">
-      <el-date-picker
-        v-model="dateRange"
-        type="daterange"
-        align="right"
-        unlink-panels
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        :picker-options="pickerOptions"
-        @change="handleDateRangeChange"
-        size="small"
-        value-format="yyyy-MM-dd"
-      ></el-date-picker>
-      <span>{{'总时长： ' + time + '分钟'}}</span>
-      <el-tooltip effect="dark" content="图表显示" placement="bottom">
-        <el-button icon="el-icon-s-data" size="mini" plain @click="chartShow = !chartShow"></el-button>
-      </el-tooltip>
-    </div>
-    <el-table :data="tableData" border style="width: 100%;" size="small">
-      <el-table-column label="序号" type="index" align="center" width="100"></el-table-column>
-      <el-table-column prop="startTime" label="开始时间" align="center"></el-table-column>
-      <el-table-column prop="endTime" label="结束时间" align="center"></el-table-column>
-      <el-table-column prop="time" align="center" label="时长(分)"></el-table-column>
-    </el-table>
-    <el-pagination
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage"
-      :page-size="limit"
-      layout="prev, pager, next"
-      :total="total"
-      style="margin:10px 0px 10px 0px;text-align:center;"
-    ></el-pagination>
+  <el-card>
+    <div class="overview" style="height:auto;box-sizing: border-box;padding:10px">
+      <div class="header-operator">
+        <el-date-picker
+            v-model="dateRange"
+            type="daterange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :picker-options="pickerOptions"
+            @change="handleDateRangeChange"
+            size="small"
+            value-format="yyyy-MM-dd"
+        ></el-date-picker>
+        <span>{{'总时长： ' + time + '分钟'}}</span>
+        <el-tooltip effect="dark" content="图表显示" placement="bottom">
+          <el-button icon="el-icon-s-data" size="mini" plain @click="chartShow = !chartShow"></el-button>
+        </el-tooltip>
+      </div>
+      <el-table :data="tableData" border style="width: 100%;" size="small">
+        <el-table-column label="序号" type="index" align="center" width="100"></el-table-column>
+        <el-table-column prop="startTime" label="开始时间" align="center"></el-table-column>
+        <el-table-column prop="endTime" label="结束时间" align="center"></el-table-column>
+        <el-table-column prop="time" align="center" label="时长(分)"></el-table-column>
+      </el-table>
+      <el-pagination
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="limit"
+          layout="prev, pager, next"
+          :total="total"
+          style="margin:10px 0px 10px 0px;text-align:center;"
+      ></el-pagination>
 
-    <div v-show="chartShow" id="c1"></div>
-  </div>
+      <div v-show="chartShow" id="c1"></div>
+    </div>
+  </el-card>
 </template>
 
 <script>

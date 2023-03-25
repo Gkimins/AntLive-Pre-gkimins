@@ -11,10 +11,20 @@ import store from './store/index'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
+
 Vue.use(ElementUI)
 Vue.use(VueAxios,axios)
 
 Vue.config.productionTip = false
+
+window.Hls = require('hls.js');
+import flvjs from 'flv.js';
+Vue.use(flvjs);
+
+// 引入cors
+// const cors = require('cors')
+// // 使用 cors()
+// Vue.use(cors())
 
 router.beforeEach((to,from,next)=>{
   NProgress.start()
@@ -29,7 +39,7 @@ router.beforeEach((to,from,next)=>{
       next()
     }
   } else {
-    next() 
+    next()
   }
 })
 

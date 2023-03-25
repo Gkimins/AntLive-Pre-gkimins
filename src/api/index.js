@@ -1,10 +1,12 @@
 import request from '@/utils/request'
 
 export default {
-    login(username, password) {
+    login(username, password, vcode, vcodeId) {
         const data = {
             username,
-            password
+            password,
+            vcode,
+            vcodeId,
         }
         return request({
             url: '/live/login',
@@ -158,6 +160,15 @@ export default {
         return request({
             url: '/live/present',
             method: 'get'
+        })
+    },
+    getIsWatch(rid) {
+        return request({
+            url: '/live/watch/isFollow',
+            method: 'get',
+            params:{
+                rid
+            }
         })
     },
     getMenuList() {
@@ -328,6 +339,15 @@ export default {
             method: 'delete',
             params: {
                 id
+            }
+        })
+    },
+    cancelFollow(rid) {
+        return request({
+            url: '/live/watch/cancelFollow',
+            method: 'delete',
+            params: {
+                rid
             }
         })
     },
