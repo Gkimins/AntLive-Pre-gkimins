@@ -3,9 +3,15 @@
     <el-header style="padding:0px">
       <Header :categorys="this.$store.state.categorys" @category-select="handleSelect" />
     </el-header>
-    <el-main style="padding:5px 20px 20px 20px">
-      <div class="item-container">
+    <el-main>
+      <div class="item-container ">
+        <el-carousel indicator-position="outside">
+          <el-carousel-item v-for="item in 4" :key="item">
+            <h3>{{ item }}</h3>
+          </el-carousel-item>
+        </el-carousel>
         <el-breadcrumb separator-class="el-icon-arrow-right" class="bread-crumb">
+          <span>全部</span>
           <el-breadcrumb-item>
             <span style="cursor:pointer;font-weight:bold;" @click="handleAllClick">全部</span>
           </el-breadcrumb-item>
@@ -62,6 +68,21 @@ export default {
 </script>
 
 <style lang="less">
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 18px;
+  opacity: 0.75;
+  line-height: 300px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n+1) {
+  background-color: #d3dce6;
+}
 .item-container {
   width: 90%;
   margin: 0 auto;

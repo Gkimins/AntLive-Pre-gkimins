@@ -1,29 +1,43 @@
 <template>
   <div class="main-header">
     <div class="main-header-nav">
+      <el-image style="float: left;width: 50px; height: 50px;margin: 4px 50px 0px 0px"   :src="require('@/assets/img/favicon.png')"  />
       <a class="nav-a" href="#" style="float:left;" @click="handleIndex">首页</a>
-      <el-popover width="260" trigger="hover"  v-model="visible">
+      <el-popover width="260" trigger="hover" v-model="visible">
         <div class="popover-container">
-          <el-button v-for="item in this.$store.state.categorys" :key="item.id" style="margin:0px 6px 5px 0px" plain size="mini" @click="handleCategoryClick(item)">{{item.name}}</el-button>
+          <el-button v-for="item in this.$store.state.categorys" :key="item.id" style="margin:0px 6px 5px 0px" plain
+                     size="mini" @click="handleCategoryClick(item)">{{ item.name }}
+          </el-button>
         </div>
+        <a class="nav-a" href="#" style="float:left;" slot="reference">分类</a>
+        <a class="nav-a" href="#" style="float:left;" slot="reference">分类</a>
+        <a class="nav-a" href="#" style="float:left;" slot="reference">分类</a>
+        <a class="nav-a" href="#" style="float:left;" slot="reference">分类</a>
         <a class="nav-a" href="#" style="float:left;" slot="reference">分类</a>
         <a class="nav-a" href="#" style="float:left;" slot="reference" @click="handleVideoClick">视频</a>
       </el-popover>
+
+      <div style="float: left;margin: 7px 0px 0px 50px">
+        <el-input placeholder="请输入内容" v-model="input2" style="width: 400px">
+          <el-button slot="append" icon="el-icon-search"></el-button>
+        </el-input>
+      </div>
 
       <a class="nav-a" v-if="this.isLogin" href="#" @click="handleLogin">登录</a>
       <a class="nav-a" v-else href="#" @click="handleClick">
         <el-dropdown @command="handleCommand">
           <span class="el-dropdown-link">
             <el-avatar
-              style="vertical-align:middle;margin:0 5px 0 10px;"
-              size="small"
-              :src="this.$store.state.userInfo.avatar"
+                style="vertical-align:middle;margin:0 5px 0 10px;"
+                size="small"
+                :src="this.$store.state.userInfo.avatar"
             ></el-avatar>
             <span
-              style="padding:5px;font-size:15px;"
-            >{{this.$store.state.userInfo.nickName || 'AntLive'}}</span>
+                style="padding:5px;font-size:15px;"
+            >{{ this.$store.state.userInfo.nickName || 'AntLive' }}</span>
             <i style="padding:0 10px 0 0;" class="el-icon-arrow-down el-icon--right"></i>
           </span>
+
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="/center">个人中心</el-dropdown-item>
             <el-dropdown-item v-if="hasAdminRole" command="/admin">管理后台</el-dropdown-item>
@@ -37,25 +51,27 @@
 
 <script>
 import store from "../store";
+
 export default {
   name: "main-header",
-  props:['categorys','notIndexPage'],
+  props: ['categorys', 'notIndexPage'],
   data() {
     return {
       activeIndex: "1",
-      visible:false
+      input2: "",
+      visible: false
     };
   },
   computed: {
     isLogin() {
       return (
-        this.$store.state.userInfo === "" || this.$store.state.userInfo === null
+          this.$store.state.userInfo === "" || this.$store.state.userInfo === null
       );
     },
-    hasAdminRole(){
+    hasAdminRole() {
       return (
-        this.$store.state.userInfo!==null &&
-        this.$store.state.userInfo.roleIds.length > 0
+          this.$store.state.userInfo !== null &&
+          this.$store.state.userInfo.roleIds.length > 0
       );
     }
   },
@@ -63,30 +79,34 @@ export default {
     store.dispatch("init");
   },
   methods: {
-    handleCategoryClick(v){
+    handleCategoryClick(v) {
       this.visible = false;
-      this.$emit("category-select",v)
+      this.$emit("category-select", v)
     },
 
-    handleVideoClick(){
+    handleVideoClick() {
       this.$router.push({
         path: "/video"
-      }).catch(()=>{});
+      }).catch(() => {
+      });
     },
     handleClick() {
       this.$router.push({
         path: "/center"
-      }).catch(()=>{});
+      }).catch(() => {
+      });
     },
     handleLogin() {
       this.$router.push({
         path: "/login"
-      }).catch(()=>{});
+      }).catch(() => {
+      });
     },
     handleRegister() {
       this.$router.push({
         path: "/register"
-      }).catch(()=>{});
+      }).catch(() => {
+      });
     },
     handleCommand(command) {
       if (command == "/logout") {
@@ -97,12 +117,14 @@ export default {
       }
       this.$router.push({
         path: command
-      }).catch(()=>{});
+      }).catch(() => {
+      });
     },
     handleIndex() {
       this.$router.push({
         path: "/"
-      }).catch(()=>{});
+      }).catch(() => {
+      });
     },
   }
 };
@@ -114,15 +136,18 @@ export default {
   height: 58px;
   text-align: center;
   width: 100%;
-  .category-btn{
-    margin:0px 5px 5px 0px;
+
+  .category-btn {
+    margin: 0px 5px 5px 0px;
   }
 }
+
 .main-header-nav {
-  width: 70%;
-  background: rgb(144, 144, 233);
+  width: 80%;
+  //background: rgb(144, 144, 233);
   margin: 0 auto;
 }
+
 .nav-a {
   line-height: 50px;
   float: right;
@@ -136,6 +161,7 @@ export default {
   /* 主题颜色 */
   background: rgb(252, 70, 25);
   color: white;
+
   span {
     color: white;
   }
