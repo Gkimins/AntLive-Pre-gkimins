@@ -18,8 +18,8 @@
       </el-popover>
 
       <div style="float: left;margin: 7px 0px 0px 50px">
-        <el-input placeholder="请输入内容" v-model="input2" style="width: 400px">
-          <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-input placeholder="请输入内容" v-model="input2" style="width: 400px" >
+          <el-button @click="searchRoom" slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </div>
 
@@ -83,7 +83,9 @@ export default {
       this.visible = false;
       this.$emit("category-select", v)
     },
-
+    searchRoom(){
+      this.$emit("search-room",this.input2)
+    },
     handleVideoClick() {
       this.$router.push({
         path: "/video"

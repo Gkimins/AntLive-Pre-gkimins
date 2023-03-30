@@ -83,7 +83,8 @@
                   >10
                   </div>
                   <div
-                      :class="sendCount==100?'price-item price-item-active':'price-item'"
+                      :class="sendCount==100?'price-item price-' +
+                       'item-active':'price-item'"
                       @click="sendCount = 100"
                   >100
                   </div>

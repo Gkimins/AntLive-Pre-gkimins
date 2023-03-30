@@ -1,7 +1,7 @@
 <template>
   <el-container class="index-center">
     <el-header style="padding:0px">
-      <Header :categorys="this.$store.state.categorys" @category-select="handleSelect" />
+      <Header :categorys="this.$store.state.categorys" @category-select="handleSelect" @search-room="handleSearchRoom"/>
     </el-header>
     <el-main>
       <div class="item-container ">
@@ -45,6 +45,11 @@ export default {
     store.dispatch('getCategorys').then(()=>{})
   },
   methods: {
+    handleSearchRoom(roomName){
+      Api.searchRoom(roomName).then(res=>{
+        this.rooms = res.data.data;
+      })
+    },
     handleSelect(c) {
       if (c == null) {
         this.current_category = "";

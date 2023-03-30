@@ -9,7 +9,7 @@ export default {
             vcodeId,
         }
         return request({
-            url: '/live/login',
+            url: '/api/live/login',
             method: 'post',
             data
         })
@@ -28,7 +28,7 @@ export default {
     // },
     foo(rid) {
         return request({
-            url: '/live/info',
+            url: '/api/live/info',
             method: 'get',
             params: {
                 rid
@@ -37,14 +37,14 @@ export default {
     },
     register(data) {
         return request({
-            url: '/live/register',
+            url: '/api/live/register',
             method: 'post',
             data
         })
     },
     sendCode(account) {
         return request({
-            url: '/live/code',
+            url: '/api/live/code',
             method: 'post',
             params: {
                 account
@@ -53,7 +53,7 @@ export default {
     },
     bind(data){
         return request({
-            url: '/live/bind',
+            url: '/api/live/bind',
             method: 'post',
             params: {
                 account:data.account,
@@ -63,20 +63,20 @@ export default {
     },
     auth(data) {
         return request({
-            url: '/live/auth',
+            url: '/api/live/auth',
             method: 'post',
             data
         })
     },
     getAuthInfo(){
         return request({
-            url: '/live/auth/info',
+            url: '/api/live/auth/info',
             method: 'get',
         })
     },
     userBlock(ids,type){
         return request({
-            url: '/live/admin/user/block/'+type,
+            url: '/api/live/admin/user/block/'+type,
             method: 'post',
             data:{
                 ids
@@ -85,7 +85,7 @@ export default {
     },
     authPass(ids,type){
         return request({
-            url: '/live/admin/auth/pass/'+type,
+            url: '/api/live/admin/auth/pass/'+type,
             method: 'post',
             data:{
                 ids
@@ -94,7 +94,7 @@ export default {
     },
     authDel(ids){
         return request({
-            url: '/live/admin/auth/del/',
+            url: '/api/live/admin/auth/del/',
             method: 'post',
             data:{
                 ids
@@ -103,38 +103,38 @@ export default {
     },
     getSecurityInfo() {
         return request({
-            url: '/live/getSecurityInfo',
+            url: '/api/live/getSecurityInfo',
             method: 'get'
         })
     },
     getUserInfo() {
         return request({
-            url: '/live/getUserInfo',
+            url: '/api/live/getUserInfo',
             method: 'get'
         })
     },
     saveRole(data){
         return request({
-            url: '/live/admin/role/save',
+            url: '/api/live/admin/role/save',
             method: 'post',
             data
         })
     },
     getRoleList() {
         return request({
-            url: '/live/admin/role/list',
+            url: '/api/live/admin/role/list',
             method: 'get'
         })
     },
     getHasRoleUserList(){
         return request({
-            url: '/live/admin/user/hasRole/list',
+            url: '/api/live/admin/user/hasRole/list',
             method: 'get'
         })
     },
     getRoleListByUserId(uid){
         return request({
-            url: '/live/admin/role/listByUserId',
+            url: '/api/live/admin/role/listByUserId',
             method: 'get',
             params:{
                 uid
@@ -143,7 +143,7 @@ export default {
     },
     getRoomInfo(rid) {
         return request({
-            url: '/live/room',
+            url: '/api/live/room',
             method: 'get',
             params: {
                 rid
@@ -152,19 +152,19 @@ export default {
     },
     getRoomSettingInfo() {
         return request({
-            url: '/live/room/setting/info',
+            url: '/api/live/room/setting/info',
             method: 'get',
         })
     },
     getPresentInfo() {
         return request({
-            url: '/live/present',
+            url: '/api/live/present',
             method: 'get'
         })
     },
     getIsWatch(rid) {
         return request({
-            url: '/live/watch/isFollow',
+            url: '/api/live/watch/isFollow',
             method: 'get',
             params:{
                 rid
@@ -173,13 +173,13 @@ export default {
     },
     getMenuList() {
         return request({
-            url: '/live/admin/menu/list',
+            url: '/api/live/admin/menu/list',
             method: 'get'
         })
     },
     getMenuListByRole(rid) {
         return request({
-            url: '/live/admin/menu/listByRole',
+            url: '/api/live/admin/menu/listByRole',
             method: 'get',
             params:{
                 rid
@@ -188,22 +188,31 @@ export default {
     },
     getMenuListByRoleIds(roleIds) {
         return request({
-            url: '/live/admin/menu/listByRoleIds',
+            url: '/api/live/admin/menu/listByRoleIds',
             method: 'post',
             data:{
                 ids:roleIds
             }
         })
     },
+    searchRoom(roomName){
+        return request({
+            url: '/api/live/room/living',
+            method: 'get',
+            params: {
+                roomName
+            }
+        })
+    },
     getSystemMonitor(){
         return request({
-            url: '/live/admin/monitor',
+            url: '/api/live/admin/monitor',
             method: 'get'
         })
     },
     getLivingRoomInfo(cid) {
         return request({
-            url: '/live/room/living',
+            url: '/api/live/room/living',
             method: 'get',
             params: {
                 cid
@@ -212,7 +221,7 @@ export default {
     },
     getLiveStatInfo(page,limit,dateRange) {
         return request({
-            url: '/live/info/list',
+            url: '/api/live/info/list',
             method: 'get',
             params: {
                 page,
@@ -223,13 +232,13 @@ export default {
     },
     getBalance() {
         return request({
-            url: '/live/bill',
+            url: '/api/live/bill',
             method: 'get',
         })
     },
     recharge(num) {
         return request({
-            url: '/live/bill/recharge',
+            url: '/api/live/bill/recharge',
             method: 'get',
             params: {
                 num
@@ -238,7 +247,7 @@ export default {
     },
     getCategory(page,limit){
         return request({
-            url: '/live/category/query',
+            url: '/api/live/category/query',
             method: 'get',
             params: {
                 page,
@@ -248,7 +257,7 @@ export default {
     },
     getBillList(month, page, limit) {
         return request({
-            url: '/live/bill/list',
+            url: '/api/live/bill/list',
             method: 'get',
             params: {
                 page,
@@ -259,7 +268,7 @@ export default {
     },
     getRoomPresentList(page, limit, dateRange) {
         return request({
-            url: '/live/room/present/list',
+            url: '/api/live/room/present/list',
             method: 'get',
             params: {
                 page,
@@ -270,7 +279,7 @@ export default {
     },
     getWithdrawalList(month, page, limit) {
         return request({
-            url: '/live/bill/withdrawal/list',
+            url: '/api/live/bill/withdrawal/list',
             method: 'get',
             params: {
                 page,
@@ -280,7 +289,7 @@ export default {
     },
     getWatctList(type, page, limit) {
         return request({
-            url: '/live/watch/list',
+            url: '/api/live/watch/list',
             method: 'get',
             params: {
                 type,
@@ -291,14 +300,14 @@ export default {
     },
     saveWatch(data) {
         return request({
-            url: '/live/watch',
+            url: '/api/live/watch',
             method: 'post',
             data
         })
     },
     updateMenu(data){
         return request({
-            url: '/live/admin/menu/update',
+            url: '/api/live/admin/menu/update',
             method: 'post',
             data
         })
@@ -306,20 +315,20 @@ export default {
 
     saveMenu(data){
         return request({
-            url: '/live/admin/menu/save',
+            url: '/api/live/admin/menu/save',
             method: 'post',
             data
         })
     },
     getSystemPushInfo(){
         return request({
-            url: '/live/admin/push/info',
+            url: '/api/live/admin/push/info',
             method: 'get',
         })
     },
     getSystemPushLog(sysPushId){
         return request({
-            url: '/live/admin/push/log',
+            url: '/api/live/admin/push/log',
             method: 'get',
             params:{
                 sysPushId
@@ -328,14 +337,14 @@ export default {
     },
     updateSystemPushInfo(data){
         return request({
-            url: '/live/admin/push/update',
+            url: '/api/live/admin/push/update',
             method: 'post',
             data
         })
     },
     delWatch(id) {
         return request({
-            url: '/live/watch',
+            url: '/api/live/watch',
             method: 'delete',
             params: {
                 id
@@ -344,7 +353,7 @@ export default {
     },
     cancelFollow(rid) {
         return request({
-            url: '/live/watch/cancelFollow',
+            url: '/api/live/watch/cancelFollow',
             method: 'delete',
             params: {
                 rid
@@ -353,41 +362,41 @@ export default {
     },
     liveOpen() {
         return request({
-            url: '/live/open',
+            url: '/api/live/open',
             method: 'post'
         })
     },
     updateRoleMenu(data){
         return request({
-            url: '/live/admin/role/menu/update',
+            url: '/api/live/admin/role/menu/update',
             method: 'post',
             data
         })
     },
     updateUserRole(data){
         return request({
-            url: '/live/admin/user/role/update',
+            url: '/api/live/admin/user/role/update',
             method: 'post',
             data
         })
     },
     savePresent(data){
         return request({
-            url: '/live/admin/present/save',
+            url: '/api/live/admin/present/save',
             method: 'post',
             data
         })
     },
     editPresent(data){
         return request({
-            url: '/live/admin/present/edit',
+            url: '/api/live/admin/present/edit',
             method: 'post',
             data
         })
     },
     removePresent(id){
         return request({
-            url: '/live/admin/present/del',
+            url: '/api/live/admin/present/del',
             method: 'post',
             params: {
                 id
@@ -396,7 +405,7 @@ export default {
     },
     liveClose(rid) {
         return request({
-            url: '/live/on_done',
+            url: '/api/live/on_done',
             method: 'post',
             params: {
                 name: rid
@@ -405,34 +414,34 @@ export default {
     },
     sendPresent(data) {
         return request({
-            url: '/live/present/live/reward',
+            url: '/api/live/present/api/live/reward',
             method: 'post',
             data
         })
     },
     saveRoomInfo(data) {
         return request({
-            url: '/live/room/info/save',
+            url: '/api/live/room/info/save',
             method: 'post',
             data
         })
     },
     updateUserInfo(data) {
         return request({
-            url: '/live/user/info/update',
+            url: '/api/live/user/info/update',
             method: 'post',
             data
         })
     },
     getDashboardData() {
         return request({
-            url: '/live/admin/dashboard/data',
+            url: '/api/live/admin/dashboard/data',
             method: 'get'
         })
     },
     adminGetUserList(page, limit, uid, disabled) {
         return request({
-            url: '/live/admin/user/list',
+            url: '/api/live/admin/user/list',
             method: 'get',
             params: {
                 page,
@@ -444,7 +453,7 @@ export default {
     },
     adminGetRoomList(page, limit) {
         return request({
-            url: '/live/admin/room/list',
+            url: '/api/live/admin/room/list',
             method: 'get',
             params: {
                 page,
@@ -454,7 +463,7 @@ export default {
     },
     adminAuthInfoList(page, limit,status) {
         return request({
-            url: '/live/admin/auth/list',
+            url: '/api/live/admin/auth/list',
             method: 'get',
             params: {
                 page,
@@ -465,7 +474,7 @@ export default {
     },
     adminPresentList(page, limit) {
         return request({
-            url: '/live/admin/present/list',
+            url: '/api/live/admin/present/list',
             method: 'get',
             params: {
                 page,
@@ -475,7 +484,7 @@ export default {
     },
     adminBillList(page, limit, type, dateRange) {
         return request({
-            url: '/live/admin/bill/list',
+            url: '/api/live/admin/bill/list',
             method: 'get',
             params: {
                 page,
@@ -487,7 +496,7 @@ export default {
     },
     adminLiveInfoList(page, limit, rid, dateRange) {
         return request({
-            url: '/live/admin/liveInfo/list',
+            url: '/api/live/admin/liveInfo/list',
             method: 'get',
             params: {
                 page,
@@ -499,7 +508,7 @@ export default {
     },
     adminLiveBanList(page, limit) {
         return request({
-            url: '/live/admin/live/ban/list',
+            url: '/api/live/admin/api/live/ban/list',
             method: 'get',
             params: {
                 page,
@@ -509,7 +518,7 @@ export default {
     },
     liveDetectList(page, limit){
         return request({
-            url: '/live/admin/live/detect/list',
+            url: '/api/live/admin/api/live/detect/list',
             method: 'get',
             params: {
                 page,
@@ -519,100 +528,100 @@ export default {
     },
     openLive() {
         return request({
-            url: '/live/tencent/live/open',
+            url: '/api/live/tencent/api/live/open',
             method: 'get',
         })
     },
     withdrawal(data) {
         return request({
-            url: '/live/bill/withdrawal',
+            url: '/api/live/bill/withdrawal',
             method: 'post',
             data
         })
     },
     getStatView(params) {
         return request({
-            url: '/live/statistic/stat/view/list',
+            url: '/api/live/statistic/stat/view/list',
             method: 'get',
             params
         })
     },
     getStatSpeak(params) {
         return request({
-            url: '/live/statistic/stat/speak/list',
+            url: '/api/live/statistic/stat/speak/list',
             method: 'get',
             params
         })
     },
     getSnapshotTempaltes(){
         return request({
-            url: '/live/admin/live/snapshot/template/list',
+            url: '/api/live/admin/api/live/snapshot/template/list',
             method: 'get',
         })
     },
     updateSnapshotTemplate(data){
         return request({
-            url: '/live/admin/live/snapshot/template/update',
+            url: '/api/live/admin/api/live/snapshot/template/update',
             method: 'post',
             data
         })
     },
     getBanRecordList(params){
         return request({
-            url: '/live/admin/live/ban/record/list',
+            url: '/api/live/admin/api/live/ban/record/list',
             method: 'get',
             params
         })
     },
     getVodSignature(){
         return request({
-            url: '/live/vod/signature',
+            url: '/api/live/vod/signature',
             method: 'post',
         })
     },
     saveUploadVodInfo(data){
         return request({
-            url: '/live/vod/video/info/save',
+            url: '/api/live/vod/video/info/save',
             method: 'post',
             data
         })
     },
     getVodList(params){
         return request({
-            url: '/live/vod/video/list',
+            url: '/api/live/vod/video/list',
             method: 'get',
             params
         })
     },
     getVodNormalList(params){
         return request({
-            url: '/live/vod/video/list/normal',
+            url: '/api/live/vod/video/list/normal',
             method: 'get',
             params
         })
     },
     getVodVideoInfo(params){
         return request({
-            url: '/live/vod/video/info',
+            url: '/api/live/vod/video/info',
             method: 'get',
             params
         })
     },
     applySecret() {
         return request({
-            url: '/live/ant/live/applySecret',
+            url: '/api/live/ant/api/live/applySecret',
             method: 'post',
         })
     },
     stopLive() {
         return request({
-            url: '/live/ant/live/stopLive',
+            url: '/api/live/ant/api/live/stopLive',
             method: 'post',
         })
     },
     getLiveStatus() {
         return request({
-            url: '/live/ant/live/getLiveStatus',
+            url: '/api/live/ant/api/live/getLiveStatus',
             method: 'get',
         })
     },
