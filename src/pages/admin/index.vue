@@ -12,7 +12,7 @@
           </div>
         </div>
         <el-menu
-          unique-opened	
+          unique-opened
           :default-active="activeIndex"
           class="el-menu-vertical"
           @select="handleSelect"
@@ -32,7 +32,7 @@
                   <span slot="title">{{sub.label}}</span>
                 </el-menu-item>
               </div>
-                
+
             </el-submenu>
             <el-menu-item v-else :key="item.path" :title="item.label" :index="item.path">
               <i :class="item.icon"></i>
@@ -45,8 +45,6 @@
       <el-container>
         <el-header>
           <div class="header-div">
-            <!-- Ant
-            <i>Live</i>-->
             <el-tooltip effect="dark" content="收缩" placement="bottom">
               <i
                 @click="handleFold"
@@ -61,13 +59,12 @@
                 <el-avatar
                   size="small"
                   style="vertical-align:middle;margin-top:-8px;"
-                  src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-                ></el-avatar>您好，管理员
+                  :src="userInfo.avatar"
+                ></el-avatar>您好，{{userInfo.username}}
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="a">个人信息</el-dropdown-item>
-                <el-dropdown-item command="c" divided>退出</el-dropdown-item>
+                <el-dropdown-item command="logout" divided>退出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
             <el-tooltip effect="dark" content="全屏" placement="bottom">
@@ -86,9 +83,9 @@
           </el-breadcrumb>
         </el-header>
         <el-main>
-          <router-view></router-view>
+          <router-view style="overflow: hidden"></router-view>
         </el-main>
-        <el-footer>@CopyRight PinTeh</el-footer>
+        <el-footer>@CopyRight Gkimins</el-footer>
       </el-container>
     </el-container>
   </div>
@@ -180,8 +177,25 @@ export default {
         }
       ],
       menus: [],
-      loading:true
-    };
+      loading:true,
+      userInfo: {
+        accountNonExpired: true,
+        accountNonLocked: true,
+        authorities: [],
+        avatar: "",
+        createTime: "",
+        credentialsNonExpired: true,
+        disabled: 0,
+        email: "",
+        enabled: true,
+        id: "",
+        lastPasswordResetTime: "",
+        password: "",
+        phone: "",
+        roles: [],
+        username: ""
+      }
+    }
   },
   mounted() {
     this.initMenus();
@@ -194,6 +208,7 @@ export default {
       this.$store.dispatch("init");
       let userInfo = this.$store.state.userInfo;
       console.log(userInfo);
+      this.userInfo = userInfo;
       if (userInfo == null) {
         this.$router.push("/login").catch(()=>{})
         return;
@@ -226,7 +241,11 @@ export default {
       console.log("click");
     },
     handleCommand(command) {
-      this.$message("click on item " + command);
+      if (command == "logout") {
+        this.$store.dispatch("logout");
+        this.$router.push("/login").catch(()=>{});
+        return;
+      }
     }
   }
 };

@@ -256,11 +256,13 @@ export default {
     async userpwdLogin() {
       console.log("xs")
       var userinfo = this.loginForm;
-      store.dispatch("login", userinfo)
-          .then((res) => {
-            if(res.data.code == 0){
+      store.dispatch("login", userinfo).then((res) => {
+            if(res.data.code == 200){
               this.$router.push("/");
             }
+            this.changeCodeImg();
+          }).catch((err) => {
+            console.log(err)
           });
     }
   }

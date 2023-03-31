@@ -51,8 +51,8 @@
         </el-form-item>
         <el-form-item label="是否显示">
           <el-radio-group v-model="form.hidden" style="float:left">
-            <el-radio-button label="0">是</el-radio-button>
-            <el-radio-button label="1">否</el-radio-button>
+            <el-radio-button label="false">是</el-radio-button>
+            <el-radio-button label="true">否</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="排序">

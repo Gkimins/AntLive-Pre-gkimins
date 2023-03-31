@@ -116,7 +116,7 @@ export default {
   data() {
     return {
       total: 0,
-      limit: 10,
+      limit: 8,
       tableData: [],
       currentPage: 1,
       authStatus: "",

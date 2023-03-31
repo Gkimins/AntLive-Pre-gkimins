@@ -40,7 +40,7 @@ export default {
         return{
             watchList:[],
             total: 0,
-            limit: 10,
+            limit: 8,
             currentPage: 1,
         }
     },

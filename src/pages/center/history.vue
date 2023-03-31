@@ -40,7 +40,7 @@ export default {
     return {
       watchList: [],
       total: 0,
-      limit: 10,
+      limit: 8,
       currentPage: 1
     };
   },
@@ -55,6 +55,7 @@ export default {
     page() {
       Api.getWatctList(0, this.currentPage, this.limit).then(res => {
         let ret = res.data.data;
+        console.log(ret);
         this.watchList = ret.records;
         this.total = ret.total;
       });

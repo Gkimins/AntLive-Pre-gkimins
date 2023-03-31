@@ -32,7 +32,7 @@ export default {
     return {
       tableData: [],
       currentPage: 1,
-      limit: 10,
+      limit: 8,
       total: 0,
       uid: null,
       disabled: null

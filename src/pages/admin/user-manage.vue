@@ -1,13 +1,14 @@
 <template>
   <div class="user-manage-container">
     <div class="header-operator">
-      <span>用户标识</span>
+      <span>用户名</span>
       <el-input
-        placeholder="请输入ID"
-        v-model="uid"
+        placeholder="用户名"
+        v-model="name"
         style="width:200px"
         size="small"
         :clearable="true"
+        @input="handleSearchButton"
         @clear="handleInputClear"
       >
         <el-button slot="append" @click="handleSearchButton" icon="el-icon-search"></el-button>
@@ -79,9 +80,9 @@ export default {
     return {
       tableData: [],
       currentPage: 1,
-      limit: 10,
+      limit: 8,
       total: 0,
-      uid: null,
+      name: null,
       disabled: null
     };
   },
@@ -121,7 +122,7 @@ export default {
       Api.adminGetUserList(
         this.currentPage,
         this.limit,
-        this.uid,
+        this.name,
         this.disabled
       ).then(res => {
         let ret = res.data.data;

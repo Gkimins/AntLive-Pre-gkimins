@@ -51,7 +51,7 @@ export default {
       time: "",
       dateRange: null,
       total: 0,
-      limit: 10,
+      limit: 8,
       currentPage: 1,
       columnPlot: null,
       chartShow:false,

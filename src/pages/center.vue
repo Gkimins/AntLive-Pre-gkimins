@@ -69,16 +69,16 @@ export default {
   },
   filters:{
     level_filter(v){
-      return "uid:" + v;
+      return "name:" + v;
     }
   },
   methods:{
     handleInfoClick(){
-      this.$router.push({
-        path:'/center/info'
-      }).catch(()=>{
-
-      })
+      // this.$router.push({
+      //   path:'/center/info'
+      // }).catch(()=>{
+      //
+      // })
     }
   }
 };

@@ -9,7 +9,7 @@ module.exports = {
         port:8088,
         proxy:{
             '/api':{
-                target:'http://serveo.net:8222/',
+                target:'http://127.0.0.1:9011/',
                 changeOrigin:true,
                 secure: false,
                 pathRewrite:{

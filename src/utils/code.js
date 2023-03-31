@@ -1,6 +1,6 @@
 export default  {
-    SUCCESS:0,
-    ERROR:1,
+    SUCCESS:200,
+    ERROR:500,
     UNAUTH:401,
     UNAUTHZ:403
 }

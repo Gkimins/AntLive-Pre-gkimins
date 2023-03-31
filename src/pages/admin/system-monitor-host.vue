@@ -1,51 +1,62 @@
 <template>
   <div class="system-monitor-container">
-    <el-table :data="tableData" style="width: 100%" v-loading="loading">
-      <el-table-column label="序号" type="index" width="50" align="center"></el-table-column>
-      <el-table-column
-        prop="describeInstancesResponse.instances[0].hostName"
-        label="名称"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="describeInstancesResponse.instances[0].cpu"
-        label="CPU数"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="describeInstancesResponse.instances[0].ostype"
-        label="系统类型"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="describeInstancesResponse.instances[0].osname"
-        label="系统名称"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="describeInstancesResponse.instances[0].publicIpAddress[0]"
-        label="地址"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="describeInstancesResponse.instances[0].memory"
-        label="内存大小"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="describeInstancesResponse.instances[0].status"
-        label="状态"
-        align="center"
-      >
-        <template slot-scope="scope">
-          <span style="color:#00ca00">{{scope.row.describeInstancesResponse.instances[0].status}}</span>
-        </template>
-      </el-table-column>
-    </el-table>
+<!--    嵌入别的页面-->
+<!--    https://monitor.seriphine.tk/-->
+    <iframe
+      src="https://monitor.seriphine.tk/"
+      frameborder="0"
+      width="100%"
+      height="500px"
+      style="overflow: hidden"
+      scrolling="no"
 
-    <div id="container"></div>
-    <div id="internet"></div>
-    <div id="intranet"></div>
+    ></iframe>
+<!--    <el-table :data="tableData" style="width: 100%" v-loading="loading">-->
+<!--      <el-table-column label="序号" type="index" width="50" align="center"></el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="describeInstancesResponse.instances[0].hostName"-->
+<!--        label="名称"-->
+<!--        align="center"-->
+<!--      ></el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="describeInstancesResponse.instances[0].cpu"-->
+<!--        label="CPU数"-->
+<!--        align="center"-->
+<!--      ></el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="describeInstancesResponse.instances[0].ostype"-->
+<!--        label="系统类型"-->
+<!--        align="center"-->
+<!--      ></el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="describeInstancesResponse.instances[0].osname"-->
+<!--        label="系统名称"-->
+<!--        align="center"-->
+<!--      ></el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="describeInstancesResponse.instances[0].publicIpAddress[0]"-->
+<!--        label="地址"-->
+<!--        align="center"-->
+<!--      ></el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="describeInstancesResponse.instances[0].memory"-->
+<!--        label="内存大小"-->
+<!--        align="center"-->
+<!--      ></el-table-column>-->
+<!--      <el-table-column-->
+<!--        prop="describeInstancesResponse.instances[0].status"-->
+<!--        label="状态"-->
+<!--        align="center"-->
+<!--      >-->
+<!--        <template slot-scope="scope">-->
+<!--          <span style="color:#00ca00">{{scope.row.describeInstancesResponse.instances[0].status}}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--    </el-table>-->
+
+<!--    <div id="container"></div>-->
+<!--    <div id="internet"></div>-->
+<!--    <div id="intranet"></div>-->
   </div>
 </template>
 
@@ -57,7 +68,7 @@ export default {
   data() {
     return {
       total: 0,
-      limit: 10,
+      limit: 8,
       tableData: [],
       currentPage: 1,
       monitorData: [],

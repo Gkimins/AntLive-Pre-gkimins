@@ -16,23 +16,32 @@
       <div class="uid" v-text="'ID:'+uid"></div>
       <div style="margin: 10px 0px 0px 0px">
         <span style="font-size: 15px" >直播间ID:</span>
-        <span style="color: #66ccff; margin-left: 15px" v-text="1125"></span>
-        <span style="color: #66ccff; margin-left: 15px; font-size: 15px" >点击复制</span>
+        <span style="color: #66ccff; margin-left: 15px" v-text="roomSetting.id"></span>
+        <span @click="copyLink(roomSetting.id)" style="color: #66ccff; margin-left: 15px; font-size: 15px" >点击复制</span>
       </div>
       <div style="margin: 10px 0px 0px 0px">
         <span style="font-size: 15px" >直播间链接:</span>
-        <span style="color: #66ccff; margin-left: 15px">http://live.bilibili.com/904881</span>
-        <span style="color: #66ccff; margin-left: 15px; font-size: 15px" >点击复制</span>
+        <span style="color: #66ccff; margin-left: 15px">http://live.253786.xyz/{{roomSetting.id}}</span>
+        <span @click="copyLink('http://live.253786.xyz/'+roomSetting.id)" style="color: #66ccff; margin-left: 15px; font-size: 15px" >点击复制</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Api from "../api";
 export default {
   name: "UserInfo",
   data() {
     return {
+      roomSetting: {
+        id: "",
+        title: "",
+        notice: "",
+        cid: "",
+        cover: "",
+        cover_preview: ""
+      },
     };
   },
   props: ["nick", "level", "uid", "starNumber", "roomId", "roomUrl","portrait"],
@@ -55,7 +64,35 @@ export default {
         return 6;
       }
     }
-  }
+  },
+
+  methods: {
+    getRoomSettingInfo() {
+      Api.getRoomSettingInfo().then(res => {
+        if (res.data.code === 200) {
+          console.log(res)
+          this.roomSetting = res.data.data;
+        }
+      });
+    },
+    // 写入到剪贴板
+    copyLink(id) {
+      var oInput = document.createElement('input');
+      oInput.value = id;
+      document.body.appendChild(oInput);
+      oInput.select(); // 选择对象
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      oInput.className = 'oInput';
+      oInput.style.display='none';
+      this.$message({
+        message: '复制成功',
+        type: 'success'
+      });
+    }
+  },
+  mounted() {
+    this.getRoomSettingInfo()
+  },
 };
 </script>
 

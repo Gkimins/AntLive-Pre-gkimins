@@ -15,7 +15,7 @@
       <el-table-column prop="createTime" label="封禁时间"  align="center" show-overflow-tooltip></el-table-column>
       <el-table-column prop="reason" label="原因"  align="center" show-overflow-tooltip></el-table-column>
       <el-table-column label="当前状态" align="center" show-overflow-tooltip>
-         <template> 
+         <template>
           <span style="color:#ff8686;">封禁中</span>
         </template>
       </el-table-column>
@@ -40,7 +40,7 @@ export default {
     return {
       tableData: [],
       currentPage: 1,
-      limit: 10,
+      limit: 8,
       total: 0,
       roomId: null,
       dateRange: null

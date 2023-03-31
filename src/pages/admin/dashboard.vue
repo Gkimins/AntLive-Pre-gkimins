@@ -7,7 +7,7 @@
             <p>
               <i class="el-icon-s-custom">会员数</i>
             </p>
-            <p>857</p>
+            <p>{{ dashData.userCount }}</p>
           </el-card>
         </el-col>
         <el-col :span="6">
@@ -15,13 +15,13 @@
             <p>
               <i class="el-icon-s-data">正在直播</i>
             </p>
-            <p>123</p>
+            <p>{{ dashData.livingCount }}</p>
           </el-card>
         </el-col>
         <el-col :span="12">
           <el-card shadow="hover">
             <p><i class="el-icon-money">今日收益</i></p>
-            <p>￥415738.98</p>
+            <p>￥{{dashData.todayIncome}}</p>
           </el-card>
         </el-col>
       </el-row>
@@ -41,8 +41,29 @@
 </template>
 
 <script>
+import Api from "../../api";
 export default {
-  name: "dashboard"
+  name: "dashboard",
+  data() {
+    return {
+      dashData:{
+        livingCount: 0,
+        userCount: 0,
+        todayIncome: 0
+      },
+
+    };
+  },
+  mounted() {
+    this.getDashboad();
+  },
+  methods: {
+    getDashboad() {
+      Api.getDashboardData().then((res) => {
+        this.dashData = res.data.data;
+      });
+    }
+  },
 };
 </script>
 
@@ -54,14 +75,6 @@ export default {
   position: absolute;
   margin: -15px 0px 0px 20px;
 }
-/* .dashboar-container img{
-  height: 60px;
-  width: 60px;
-  border-radius: 5%;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.349);
-  -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.349);
-  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.349);
-} */
 .image {
   width: 100%;
   display: block;

@@ -6,7 +6,7 @@
           <el-form-item label="头像">
             <el-upload
                 class="avatar-uploader"
-                action="http://occulto.serveo.net/live/upload"
+                action="/api/live/upload"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload">
@@ -54,7 +54,7 @@ export default {
   methods: {
     onSave() {
       Api.updateUserInfo(this.form).then(res=>{
-          if (res.data.code == 0) {
+          if (res.data.code == 200) {
           this.$message({
             message: res.data.msg,
             type: "success"

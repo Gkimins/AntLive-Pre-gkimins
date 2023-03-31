@@ -119,7 +119,7 @@ export default {
           let userinfo = this.loginForm;
           store.dispatch("register", userinfo)
           .then(res => {
-            if (res.data.code == 0) {
+            if (res.data.code == 200) {
               this.showMessage("success","注册成功")
               this.$router.push("/login")
             }

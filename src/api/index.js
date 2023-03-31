@@ -210,6 +210,7 @@ export default {
             method: 'get'
         })
     },
+
     getLivingRoomInfo(cid) {
         return request({
             url: '/api/live/room/living',
@@ -435,18 +436,18 @@ export default {
     },
     getDashboardData() {
         return request({
-            url: '/api/live/admin/dashboard/data',
+            url: '/api/live/admin/dashboard',
             method: 'get'
         })
     },
-    adminGetUserList(page, limit, uid, disabled) {
+    adminGetUserList(page, limit, name, disabled) {
         return request({
             url: '/api/live/admin/user/list',
             method: 'get',
             params: {
                 page,
                 limit,
-                uid,
+                name,
                 disabled
             }
         })
@@ -625,4 +626,14 @@ export default {
             method: 'get',
         })
     },
+    uploadImg(data) {
+        return request({
+            url: '/api/live/upload/img',
+            methods: 'post',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            data
+        })
+    }
 }

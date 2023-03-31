@@ -54,7 +54,7 @@ export default {
       tableData: [],
       time: "",
       total: 0,
-      limit: 10,
+      limit: 8,
       currentPage: 1,
       dateRange:null,
       pickerOptions: {

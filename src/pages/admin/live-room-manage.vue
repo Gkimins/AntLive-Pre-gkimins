@@ -1,10 +1,10 @@
 <template>
   <div class="user-manage-container">
-    <div class="header-operator"> 
+    <div class="header-operator">
       <span>房间号</span>
     <el-input placeholder="请输入房间号" v-model="roomId" style="width:200px" size="small">
         <el-button slot="append" @click="handleSearchButton" icon="el-icon-search"></el-button>
-      </el-input> 
+      </el-input>
        <span>直播状态</span>
       <el-select v-model="liveStatus" placeholder="直播状态" size="small" @change="handleSelectChange" :clearable="true">
         <el-option key="0" label="未开播" value="0"></el-option>
@@ -71,7 +71,7 @@ export default {
     return {
       tableData: [],
       currentPage: 1,
-      limit: 10,
+      limit: 8,
       total: 0,
       liveStatus:null,
       liveDisabled:null,

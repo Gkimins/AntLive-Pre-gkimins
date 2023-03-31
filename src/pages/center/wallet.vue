@@ -189,7 +189,7 @@ export default {
       checkIndex: 0,
       query_month: '',
       withdrawal_query_month: '',
-      limit: 10,
+      limit: 8,
       withdrawalLimit: 10,
       currentPage: 1,
       withdrawalCurrentPage: 1,

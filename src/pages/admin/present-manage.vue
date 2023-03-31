@@ -1,10 +1,16 @@
 <template>
   <div class="user-manage-container">
-    <div style="text-align:left;padding-bottom:10px;">
-      <el-button plain @click="handleShowDialog" size="small">新建</el-button>
+    <div>
+      <div style="float: left">
+        <el-tag>礼物管理</el-tag>
+      </div>
+      <div style="text-align:left;padding-bottom:10px; float: right">
+        <el-button  type="primary" plain @click="handleShowDialog">新建</el-button>
+      </div>
     </div>
+
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column label="序号" type="index" width="50" align="center"></el-table-column>
+      <el-table-column label="#" type="index" width="50" align="center"></el-table-column>
       <!-- <el-table-column prop="id" label="标识" width="80" align="center"></el-table-column> -->
       <el-table-column prop="name" label="名称" align="center"></el-table-column>
       <el-table-column prop="icon" label="图片" align="center">
@@ -34,15 +40,23 @@
       style="margin-top:10px;"
     ></el-pagination>
 
-    <el-dialog title="新建" :visible.sync="dialogFormVisible" width="600px">
+    <el-dialog :title="op.title" :visible.sync="dialogFormVisible" width="600px">
       <el-form :model="form" size="small" label-width="100px">
         <el-form-item label="名称">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="图片">
-          <el-input v-model="form.icon" autocomplete="off"></el-input>
+          <el-upload
+              class="avatar-uploader"
+              action="/api/live/upload"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload">
+            <img style="width: 50px;height: 50px" v-if="form.icon" :src="form.icon" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </el-form-item>
-        <el-form-item label="价格(金豆)">
+        <el-form-item label="礼物价格">
           <el-input v-model="form.price" type="number" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="排序">
@@ -50,8 +64,8 @@
         </el-form-item>
         <el-form-item label="禁用状态">
           <el-radio-group v-model="form.disabled" style="float:left">
-            <el-radio-button label="0">否</el-radio-button>
-            <el-radio-button label="1">是</el-radio-button>
+            <el-radio-button label="false">否</el-radio-button>
+            <el-radio-button label="true">是</el-radio-button>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -70,7 +84,7 @@ export default {
   data() {
     return {
       total: 0,
-      limit: 10,
+      limit: 8,
       tableData: [],
       currentPage: 1,
       form: {
@@ -84,16 +98,33 @@ export default {
       op: {
         title: "",
         tag: "save"
-      }
+      },
+      imageUrl: ''
     };
   },
   mounted() {
     this.page();
   },
   methods: {
+    handleAvatarSuccess(res) {
+      this.form.icon = res.data;
+    },
+    beforeAvatarUpload(file) {
+      console.log(file.type)
+      const isJPG = file.type === "image/png";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error("上传图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
+    },
     handleEdit(row) {
       this.op = {
-        title: "编辑",
+        title: "编辑礼物",
         tag: "edit"
       };
       this.form = {
@@ -109,16 +140,18 @@ export default {
     handleEditConfirm() {
       if (this.op.tag == "save") {
         Api.savePresent(this.form).then(res => {
+          console.log(res)
           this.$message({
-            message: res.data.msg,
+            message: "保存成功",
             type: "success"
           });
           this.page();
         });
       } else if (this.op.tag == "edit") {
         Api.editPresent(this.form).then(res => {
+          console.log(res)
           this.$message({
-            message: res.data.msg,
+            message: "修改成功",
             type: "success"
           });
           this.page();
@@ -145,7 +178,7 @@ export default {
     },
     handleShowDialog() {
       this.op = {
-        title: "新建",
+        title: "新建礼物",
         tag: "save"
       };
       this.form = {
@@ -153,7 +186,7 @@ export default {
         icon: "",
         price: "",
         sort: 0,
-        disabled: 0
+        disabled: false
       };
       this.dialogFormVisible = true;
     },
@@ -172,5 +205,9 @@ export default {
 .user-manage-container {
   background: #fff;
   padding: 20px;
+}
+.el-upload{
+  width: 50px;
+  height: 50px;
 }
 </style>
