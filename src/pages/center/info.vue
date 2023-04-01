@@ -1,7 +1,10 @@
 <template>
   <el-card>
-    <div class="personal-info-container" style="height:500px;box-sizing: border-box;padding:25px;text-align:left;">
-      <div style="width:500px;">
+    <div class="personal-info-container" style="height:500px;box-sizing: border-box;text-align:left;">
+      <div slot="header" class="clearfix">
+        <span style="font-size: 21px">个人信息编辑 <i class="el-icon-user" style="margin-left: 10px"></i></span>
+      </div>
+      <div style="width:500px;padding: 20px">
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="头像">
             <el-upload
@@ -85,7 +88,7 @@ export default {
       this.form.avatar = userInfo.avatar;
       this.form.nickName = userInfo.nickName;
       this.form.email = userInfo.email;
-      this.form.moible = userInfo.moible;
+      this.form.mobile = userInfo.mobile;
       this.form.signature = userInfo.signature;
   }
 };

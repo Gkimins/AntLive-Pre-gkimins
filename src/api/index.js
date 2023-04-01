@@ -415,7 +415,7 @@ export default {
     },
     sendPresent(data) {
         return request({
-            url: '/api/live/present/api/live/reward',
+            url: '/api/live/present/reward',
             method: 'post',
             data
         })
@@ -509,7 +509,7 @@ export default {
     },
     adminLiveBanList(page, limit) {
         return request({
-            url: '/api/live/admin/api/live/ban/list',
+            url: '/api/live/admin/live/ban/list',
             method: 'get',
             params: {
                 page,
@@ -519,7 +519,7 @@ export default {
     },
     liveDetectList(page, limit){
         return request({
-            url: '/api/live/admin/api/live/detect/list',
+            url: '/api/live/admin/live/detect/list',
             method: 'get',
             params: {
                 page,
@@ -529,7 +529,7 @@ export default {
     },
     openLive() {
         return request({
-            url: '/api/live/tencent/api/live/open',
+            url: '/api/live/tencent/live/open',
             method: 'get',
         })
     },
@@ -556,20 +556,20 @@ export default {
     },
     getSnapshotTempaltes(){
         return request({
-            url: '/api/live/admin/api/live/snapshot/template/list',
+            url: '/api/live/admin/live/snapshot/template/list',
             method: 'get',
         })
     },
     updateSnapshotTemplate(data){
         return request({
-            url: '/api/live/admin/api/live/snapshot/template/update',
+            url: '/api/live/admin/live/snapshot/template/update',
             method: 'post',
             data
         })
     },
     getBanRecordList(params){
         return request({
-            url: '/api/live/admin/api/live/ban/record/list',
+            url: '/api/live/admin/live/ban/record/list',
             method: 'get',
             params
         })
@@ -610,19 +610,19 @@ export default {
     },
     applySecret() {
         return request({
-            url: '/api/live/ant/api/live/applySecret',
+            url: '/api/live/ant/live/applySecret',
             method: 'post',
         })
     },
     stopLive() {
         return request({
-            url: '/api/live/ant/api/live/stopLive',
+            url: '/api/live/ant/live/stopLive',
             method: 'post',
         })
     },
     getLiveStatus() {
         return request({
-            url: '/api/live/ant/api/live/getLiveStatus',
+            url: '/api/live/ant/live/getLiveStatus',
             method: 'get',
         })
     },

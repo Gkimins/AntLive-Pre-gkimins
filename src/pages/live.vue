@@ -54,56 +54,59 @@
               </div>
             </div>
             <div class="live-content">
-              <LivePlayer @senddm="senddm" v-if="info.status===1" :url="spliceLiveUrl" ref="maindplayer"/>
+              <LivePlayer @senddm="senddm" v-if="info.status===1" :url="spliceLiveUrl" :texts="texts" ref="maindplayer"/>
               <div class="not-live" v-else-if="info.status===0">主播正在赶来的路上...</div>
               <div class="not-live" style="color:#ff8e8e;" v-else>该直播间因违规已被封禁</div>
             </div>
-            <div class="present-content">
-              <el-popover
-                  v-for="item in presents"
-                  :key="item.id"
-                  placement="top"
-                  width="250"
-                  v-model="visible"
-              >
-                <div style="height:30px;">
-                  <el-image style="width:30px;height:30px;" :src="item.icon"></el-image>
-                  {{ item.name }}
-                  <span>（{{ item.price }}开心果）</span>
-                </div>
-                <div style="text-align: left; margin: 20px 0 2px 0;background:666;">
-                  <div
-                      :class="sendCount==1?'price-item price-item-active':'price-item'"
-                      @click="sendCount = 1"
-                  >1
+            <div style="overflow: hidden;">
+              <div class="present-content">
+                <el-popover
+                    v-for="item in presents"
+                    :key="item.id"
+                    placement="top"
+                    width="250"
+                    v-model="visible"
+                >
+                  <div style="height:30px;">
+                    <el-image style="width:30px;height:30px;" :src="item.icon"></el-image>
+                    {{ item.name }}
+                    <span>（{{ item.price }}开心果）</span>
                   </div>
-                  <div
-                      :class="sendCount==10?'price-item price-item-active':'price-item'"
-                      @click="sendCount = 10"
-                  >10
-                  </div>
-                  <div
-                      :class="sendCount==100?'price-item price-' +
+                  <div style="text-align: left; margin: 20px 0 2px 0;background:666;">
+                    <div
+                        :class="sendCount==1?'price-item price-item-active':'price-item'"
+                        @click="sendCount = 1"
+                    >1
+                    </div>
+                    <div
+                        :class="sendCount==10?'price-item price-item-active':'price-item'"
+                        @click="sendCount = 10"
+                    >10
+                    </div>
+                    <div
+                        :class="sendCount==100?'price-item price-' +
                        'item-active':'price-item'"
-                      @click="sendCount = 100"
-                  >100
+                        @click="sendCount = 100"
+                    >100
+                    </div>
+                    <el-button
+                        style="float:right"
+                        type="primary"
+                        size="mini"
+                        @click="handlePresent"
+                    >确定
+                    </el-button>
                   </div>
-                  <el-button
-                      style="float:right"
-                      type="primary"
-                      size="mini"
-                      @click="handlePresent"
-                  >确定
-                  </el-button>
-                </div>
-                <el-image
-                    class="present-item"
-                    :src="item.icon"
-                    slot="reference"
-                    @click="handlePresentClick(item)"
-                ></el-image>
-              </el-popover>
+                  <el-image
+                      class="present-item"
+                      :src="item.icon"
+                      slot="reference"
+                      @click="handlePresentClick(item)"
+                  ></el-image>
+                </el-popover>
+              </div>
             </div>
+
           </el-card>
         </div>
         <div class="live-chat-div">
@@ -120,14 +123,23 @@
             </div>
             <div class="send-message-content" style="display: inline-flex">
               <el-image style="width: 32px;height: 32px;margin-top: 3px" :src="require('@/assets/img/Palette.png')"/>
-              <el-input style="margin-left: 10px" v-model="input" :disabled="this.isLogin" placeholder>
+              <el-input @keyup.enter.native="handleSend" style="margin-left: 10px" v-model="input" :disabled="this.isLogin" placeholder>
                 <el-button slot="append" :disabled="this.isLogin" @click="handleSend">发送</el-button>
               </el-input>
             </div>
           </el-card>
         </div>
       </div>
-      <div style="height:100px;width:100%;"></div>
+      <div style="margin-top: 30px">
+        <el-card style="margin-left: 69px;width: 996px">
+          <el-tabs value="first">
+            <el-tab-pane label="直播公告" name="first">
+              <div v-html="info.notice" style="padding: 10px 20px 10px 20px">
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+        </el-card>
+      </div>
     </el-main>
   </el-container>
 </template>
@@ -152,14 +164,16 @@ export default {
           avatar: ""
         },
         liveUrl: "",
-        status: ""
+        status: "",
+        notice: "",
       },
       isFollow: false,
       presents: [],
       socket: "",
       messageList: [],
       sendCount: 1,
-      currentPresent: {}
+      currentPresent: {},
+      texts:[]
     };
   },
   computed: {
@@ -252,7 +266,9 @@ export default {
         this.presents = res.data.data;
       });
       this.initWebSocket(rid);
-      if (this.$store.state.userInfo == null) {
+      console.log(this.$store.state, "this.$store.state.userInfo")
+      if (this.$store.state.token == null) {
+        console.log(this.$store.state, "this.$store.state.userInfo")
         this.input = "登录后才可以发送消息噢~";
       }
       Api.getIsWatch(rid).then(res => {
@@ -300,6 +316,7 @@ export default {
       this.$refs.maindplayer.sendDmf(final_data);
     },
     handleSend() {
+      console.log(this.input, "this.input");
       this.sendAndReFreshList(this.input);
       this.input = "";
 
@@ -480,12 +497,12 @@ export default {
 
 .live-root {
   margin: 0 auto;
-  min-width: 1500px;
+  //min-width: 1500px;
 }
 
 .live-content-div {
   text-align: left;
-  width: 890px;
+  width: 997px;
   display: inline-block;
 }
 

@@ -89,11 +89,14 @@ export default {
     };
   },
   mounted() {
-    Api.getSecurityInfo().then(res => {
-      this.checked = res.data.data;
-    });
+    this.loadData();
   },
   methods: {
+    loadData(){
+      Api.getSecurityInfo().then(res => {
+        this.checked = res.data.data;
+      });
+    },
     handle2Click() {
       this.$router.push("/center/identify").catch(() => {});
     },
@@ -132,10 +135,12 @@ export default {
       this.$refs["ruleForm"].validate(valid => {
         if (valid) {
           Api.bind(this.form).then(res => {
+
             this.$message({
               message: res.data.msg,
               type: "success"
             });
+            this.loadData();
           });
           this.dialogFormVisible = false;
           this.form = {

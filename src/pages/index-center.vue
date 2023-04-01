@@ -5,7 +5,7 @@
     </el-header>
     <el-main>
       <div class="item-container ">
-        <el-carousel indicator-position="outside">
+        <el-carousel indicator-position="outside" v-if="showCarousel">
           <el-carousel-item v-for="item in 4" :key="item">
             <h3>{{ item }}</h3>
           </el-carousel-item>
@@ -37,7 +37,8 @@ export default {
     return {
       rooms: [],
       categorys: [],
-      current_category: ""
+      current_category: "",
+      showCarousel: true
     };
   },
   mounted() {
@@ -48,6 +49,7 @@ export default {
     handleSearchRoom(roomName){
       Api.searchRoom(roomName).then(res=>{
         this.rooms = res.data.data;
+        this.showCarousel = false;
       })
     },
     handleSelect(c) {

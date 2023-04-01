@@ -12,17 +12,18 @@
           <span v-text="level"></span>
         </div>
       </div>
-
       <div class="uid" v-text="'ID:'+uid"></div>
-      <div style="margin: 10px 0px 0px 0px">
-        <span style="font-size: 15px" >直播间ID:</span>
-        <span style="color: #66ccff; margin-left: 15px" v-text="roomSetting.id"></span>
-        <span @click="copyLink(roomSetting.id)" style="color: #66ccff; margin-left: 15px; font-size: 15px" >点击复制</span>
-      </div>
-      <div style="margin: 10px 0px 0px 0px">
-        <span style="font-size: 15px" >直播间链接:</span>
-        <span style="color: #66ccff; margin-left: 15px">http://live.253786.xyz/{{roomSetting.id}}</span>
-        <span @click="copyLink('http://live.253786.xyz/'+roomSetting.id)" style="color: #66ccff; margin-left: 15px; font-size: 15px" >点击复制</span>
+      <div v-if="roomSetting.id!=0">
+        <div style="margin: 10px 0px 0px 0px">
+          <span style="font-size: 15px" >直播间ID:</span>
+          <span style="color: #66ccff; margin-left: 15px" >{{roomSetting.id}}</span>
+          <span @click="copyLink(1)" style="color: #66ccff; margin-left: 15px; font-size: 15px" >点击复制</span>
+        </div>
+        <div style="margin: 10px 0px 0px 0px">
+          <span style="font-size: 15px" >直播间链接:</span>
+          <span style="color: #66ccff; margin-left: 15px">http://live.253786.xyz/{{roomSetting.id}}</span>
+          <span @click="copyLink(2)" style="color: #66ccff; margin-left: 15px; font-size: 15px" >点击复制</span>
+        </div>
       </div>
     </div>
   </div>
@@ -35,7 +36,7 @@ export default {
   data() {
     return {
       roomSetting: {
-        id: "",
+        id: 0,
         title: "",
         notice: "",
         cid: "",
@@ -77,6 +78,11 @@ export default {
     },
     // 写入到剪贴板
     copyLink(id) {
+      if (id ===1){
+        id = this.roomSetting.id
+      }else {
+        id = "http://live.253786.xyz/"+this.roomSetting.id
+      }
       var oInput = document.createElement('input');
       oInput.value = id;
       document.body.appendChild(oInput);
