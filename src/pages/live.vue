@@ -114,10 +114,18 @@
             <div class="rank"></div>
             <div class="danmu">
               <ul id="danmu-list" class="infinite-list" style="overflow:auto">
-                <!-- v-infinite-scroll="load" -->
                 <li v-for="(i,index) in messageList" :key="index" class="infinite-list-item">
-                  <span class="chat-name">{{ i.name }}</span>:
-                  <span class="chat-content">{{ i.content }}</span>
+                  <div v-if="i.name==='礼物赠送'" style="display: inline-flex">
+                    <el-image style="width: 60px;height: 60px" v-if="i.name==='礼物赠送'" :src="i.icon"></el-image>
+                    <div style="line-height: 4;">
+                      <span class="chat-content">{{ i.content }}</span>*
+                      <span style="font-size: 21px;color: orange" class="chat-content">{{ i.num }}</span>个
+                    </div>
+                  </div>
+                  <div v-else>
+                    <span class="chat-name">{{ i.name }}</span>:
+                    <span class="chat-content">{{ i.content }}</span>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -227,7 +235,8 @@ export default {
         };
         Api.sendPresent(data)
             .then(ret => {
-              if (ret.data.code != 0) {
+              if (ret.data.code != 200) {
+                console.log(ret)
                 this.$notify.error({
                   title: "错误",
                   message: "赠送失败"
@@ -375,20 +384,28 @@ export default {
       console.log(message, "message");
       let data = JSON.parse(message.message);
       console.log(data)
-      let final_data = JSON.parse(data.content);
-      if (message.type === "GIFT") {
+      if (data.op === "PRESENT") {
         // 礼物特效
-        let p = message.p;
+        let p = data.p;
         this.$notify({
-          title: message.u.name,
+          title: data.u.name,
           message: "收到" + p.name + " * " + p.number,
           type: "success"
         });
+        this.messageList.push({
+          name: "礼物赠送",
+          content: data.d,
+          icon: p.icon,
+          num: p.number
+        });
+      }else {
+        let final_data = JSON.parse(data.content);
+        this.messageList.push({
+          name: data.nickname,
+          content: final_data.text,
+        });
+        this.$refs.maindplayer.sendDmf(final_data);
       }
-      this.messageList.push({
-        name: data.nickname,
-        content: final_data.text
-      });
       setTimeout(() => {
         var div = document.getElementById("danmu-list");
         div.scrollTop = div.scrollHeight;
@@ -399,7 +416,6 @@ export default {
       if (getLocalUserInfo() != null && data.nickname === JSON.parse(getLocalUserInfo()).nickName) {
         return;
       }
-      this.$refs.maindplayer.sendDmf(final_data);
 
     },
     send() {

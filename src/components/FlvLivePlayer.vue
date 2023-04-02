@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import 'flv.js'
+// import FlvJs from 'flv.js'
+import flvjs from 'flv.js';
 import DPlayer from 'dplayer';
 import Hls from "hls.js";
 export default {
@@ -86,14 +87,38 @@ export default {
         },
         video: {
           url: this.url,
+          type: "customFlv",
+          customType: {
+            customHls: function (video) {
+              const hls = new Hls();
+              hls.loadSource(video.src);
+              hls.attachMedia(video);
+            },
+            customFlv: function (video, player) {
+              console.log(video.src)
+              console.log(player)
+              console.log(video)
+              const flvPlayer = flvjs.createPlayer({
+                type: 'flv',
+                url: video.src,
+              });
+              flvPlayer.attachMediaElement(video);
+              flvPlayer.load();
+            },
+          }
         },
-        customType: {
-          customHls: function (video) {
-            const hls = new Hls();
-            hls.loadSource(video.src);
-            hls.attachMedia(video);
+        contextmenu: [
+          {
+            text: 'custom1',
+            link: 'https://github.com/DIYgod/DPlayer',
           },
-        }
+          {
+            text: 'custom2',
+            click: (player) => {
+              console.log(player);
+            },
+          },
+        ],
       });
       console.log(this.dp)
     }

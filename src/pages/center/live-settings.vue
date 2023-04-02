@@ -53,11 +53,9 @@
             icon-color="red"
             title="直播流将会被中断噢～"
             @onConfirm="handleLiveStop"
+            @confirm="handleLiveStop"
         >
-          <el-button slot="reference" type="danger" plain
-          >停止直播
-          </el-button
-          >
+          <el-button slot="reference" type="danger" plain>停止直播</el-button>
         </el-popconfirm>
       </div>
     </el-card>
@@ -91,7 +89,7 @@ export default {
         this.verifyStatus = ret.status;
       });
       Api.getLiveStatus().then((r) => {
-        if (r.data.code == 0) {
+        if (r.data.code == 200) {
           this.liveStatusObj = r.data.data;
         }
       });
@@ -100,8 +98,10 @@ export default {
       this.openLive();
     },
     handleLiveStop() {
-      Api.stopLive().then((r) => {
-        if (r.data.code == 0) {
+      console.log("stop")
+      console.log(this.liveStatusObj.livePushSecret)
+      Api.stopLive(this.liveStatusObj.livePushSecret).then((r) => {
+        if (r.data.code == 200) {
           this.initGetStatus();
         }
       });

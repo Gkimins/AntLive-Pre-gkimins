@@ -415,7 +415,7 @@ export default {
     },
     sendPresent(data) {
         return request({
-            url: '/api/live/present/reward',
+            url: '/api/live/present/live/reward',
             method: 'post',
             data
         })
@@ -614,10 +614,13 @@ export default {
             method: 'post',
         })
     },
-    stopLive() {
+    stopLive(rid) {
         return request({
-            url: '/api/live/ant/live/stopLive',
-            method: 'post',
+            url: '/api/live/tencent/live/stopLive',
+            method: 'get',
+            params:{
+                rid:rid
+            }
         })
     },
     getLiveStatus() {
