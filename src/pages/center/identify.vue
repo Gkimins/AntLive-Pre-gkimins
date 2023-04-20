@@ -173,7 +173,7 @@ export default {
           {len: 18, message: "请输入合法的身份证号", trigger: "change"}
         ]
       },
-      uploadAction: "http://occulto.serveo.net/live/upload",
+      uploadAction: "api/live/upload",
       active: 1,
       reject: {
         tag: false,
@@ -184,6 +184,7 @@ export default {
   mounted() {
     Api.getAuthInfo().then(res => {
       let ret = res.data.data;
+      console.log(ret)
       if (ret == null) {
         this.active = -1;
       } else {
@@ -201,7 +202,7 @@ export default {
   },
   methods: {
     onSuccess(response, file, fileList) {
-      if (response.code == 0) {
+      if (response.code == 200) {
         switch (response.msg) {
           case "foo":
             this.form.handUrl = response.data;

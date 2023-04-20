@@ -26,7 +26,8 @@
             <input
                 type="text"
                 v-model="loginForm.vcode"
-                placeholder="Verify Code"
+                placeholder="验证码"
+                @keydown.enter="userpwdLogin"
             >
             <a
                 href="javascript:;"
@@ -37,10 +38,6 @@
                 :src="pswverifyimg"
             ></a>
           </div>
-          <!--          <div v-show="loginForm.errorVisible">-->
-          <!--            {{ loginForm.errorMsg }}-->
-          <!--          </div>-->
-
           <el-row :gutter="20">
             <el-col :span="12">
               <input
@@ -65,7 +62,7 @@
           <div class="input-field">
             <i class="fa fa-user"/>
             <input
-                v-model="registerForm.userName"
+                v-model="registerForm.username"
                 type="text"
                 placeholder="用户名"
             >
@@ -81,7 +78,7 @@
           <div class="input-field">
             <i class="fa fa-lock"/>
             <input
-                v-model="registerForm.confirmPassword"
+                v-model="registerForm.password_confirm"
                 type="password"
                 placeholder="确认密码"
             >
@@ -89,31 +86,12 @@
           <div class="input-field">
             <i class="fa fa-envelope"/>
             <input
-                v-model="registerForm.phoneNumber"
+                v-model="registerForm.mobile"
                 type="text"
                 placeholder="手机号"
             >
           </div>
-          <div class="input-field">
-            <i class="fa fa-envelope"/>
-            <input
-                v-model="registerForm.mail"
-                type="text"
-                placeholder="邮箱"
-            >
-          </div>
-
-          <el-row v-if="!isSendMail">
-            <el-col :span="24">
-              <input
-                  type="button"
-                  value="获取验证码"
-                  class="btn solid"
-                  @click="getvcode"
-              >
-            </el-col>
-          </el-row>
-          <div class="input-field" v-if="isSendMail">
+          <div class="input-field" v-if="isSendCode">
             <i class="fa fa-envelope"/>
             <input
                 v-model="registerForm.code"
@@ -121,21 +99,22 @@
                 placeholder="验证码"
             >
           </div>
-
-          <div class="input-field">
-            <i class="fa fa-user"/>
-            <select id="gender" name="">
-              <option value="1">男</option>
-              <option value="0">女</option>
-            </select>
-          </div>
-          <el-row>
-            <el-col :span="24">
+          <el-row :gutter="20">
+            <el-col :span="12">
               <input
                   type="button"
-                  value="注 册"
+                  :value="buttonDesc"
                   class="btn solid"
-                  @click="register"
+                  @click="getvcode"
+                  :disabled="isSendCode"
+              >
+            </el-col>
+            <el-col :span="12">
+              <input v-if="isSendCode"
+                     type="button"
+                     value="注 册"
+                     class="btn solid"
+                     @click="register"
               >
             </el-col>
           </el-row>
@@ -169,6 +148,7 @@
 
 <script>
 import store from "../store";
+import Api from '../api'
 export default {
   name:'login',
   data() {
@@ -199,19 +179,21 @@ export default {
 
 
       registerForm: {
-        userName: '',
-        password: '',
-        confirmPassword: '',
-        phoneNumber: '',
-        sex: '',
-        mail:'',
-        code:''
+        username: "",
+        nickName: "",
+        password: "",
+        password_confirm: "",
+        mobile: "",
+        phone:"",
+        code: ""
       },
       pswverifyimg: 'http://127.0.0.1:9011/live/getVCode',
       show: true,
       codetoken: '',
-      isSendMail: false
+      isSendCode: false,
+      buttonDesc:'获取验证码'
     }
+
   },
   mounted() {
     // 切换layout
@@ -241,12 +223,38 @@ export default {
       this.pswverifyimg = 'http://127.0.0.1:9011/live/getVCode?t=' +this.loginForm.vcodeId;
     },
     async getvcode() {
+      let time = 60;
+      setInterval(() => {
+        time = time - 1;
+        if(time === 0){
+          return
+        }
+        this.buttonDesc = time + "s";
+      }, 1000);
+      store.dispatch("sendCode", this.registerForm.mobile);
+
+      this.isSendCode = true;
     },
 
     /**
      * @description: 注册
      */
     async register() {
+      this.registerForm.nickName = this.registerForm.username;
+      this.registerForm.phone = this.registerForm.mobile;
+      let userinfo = this.registerForm;
+      store.dispatch("register", userinfo)
+          .then(res => {
+            console.log(res);
+            if (res.data.code == 200) {
+              this.$message({
+                type: "success",
+                message: "注册成功"
+              });
+              const container = document.querySelector('.container')
+              container.classList.remove('sign-up-mode')
+            }
+          });
     },
 
 

@@ -29,11 +29,11 @@
     >
       <!-- <el-table-column label type="index" show-overflow-tooltip width="50" align="center"></el-table-column> -->
       <el-table-column prop="id" label="标识" align="center" width="80"></el-table-column>
-      <el-table-column prop="userId" label="用户id" align="center" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="userId" label="用户名" align="center" show-overflow-tooltip></el-table-column>
       <el-table-column prop="billChange" label="金额" align="center" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="balance" label="余额" align="center" show-overflow-tooltip></el-table-column>
+<!--      <el-table-column prop="balance" label="余额" align="center" show-overflow-tooltip></el-table-column>-->
       <el-table-column prop="mark" label="备注" align="center" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="创建时间" align="center" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="createTime" label="支付时间" align="center" show-overflow-tooltip></el-table-column>
       <el-table-column prop="type" label="收支" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.type===0" type="success" size="mini">收入</el-tag>

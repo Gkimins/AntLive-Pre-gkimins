@@ -23,7 +23,7 @@
 
               <div class="author-follow">
                 <p style="width: 600px;font-size: 10px;width: 215px;line-height: 18px;">
-                  <span class="head-text"><i class="el-icon-view">15人看过</i></span>
+                  <span class="head-text"><i class="el-icon-view">8413人看过</i></span>
                   <span @click="alarm()" class="iconfont head-text" style="margin-left: 16px;font-size: 10px">&#xe652;举报</span>
                   <span @click="share()" class="iconfont head-text" style="margin-left: 16px;font-size: 10px">&#xe600;分享</span>
                 </p>
@@ -54,11 +54,28 @@
               </div>
             </div>
             <div class="live-content">
+              <div v-if="showSub" class="sub">
+                <div id="scroll-container">
+                  <transition-group name="scroll" tag="div">
+                    <div v-for="(text, index) in texts" :key="index" class="scrolling-text">
+                      {{ text }}
+                    </div>
+                  </transition-group>
+                </div>
+
+              </div>
               <LivePlayer @senddm="senddm" v-if="info.status===1" :url="spliceLiveUrl" :texts="texts" ref="maindplayer"/>
               <div class="not-live" v-else-if="info.status===0">主播正在赶来的路上...</div>
               <div class="not-live" style="color:#ff8e8e;" v-else>该直播间因违规已被封禁</div>
             </div>
             <div style="overflow: hidden;">
+              <div style="float: left;margin-top: 18px;margin-left: 18px">
+                <el-switch
+                    v-model="showSub"
+                    active-text="开启字幕"
+                    >
+                </el-switch>
+              </div>
               <div class="present-content">
                 <el-popover
                     v-for="item in presents"
@@ -111,7 +128,10 @@
         </div>
         <div class="live-chat-div">
           <el-card :body-style="{ padding: '0px' }" shadow="never">
-            <div class="rank"></div>
+            <div class="rank" style="display: grid">
+              <el-image :src="require('@/assets/img/default-normal.b4c119c.png')" style="margin: 0 auto"></el-image>
+              <span style="margin-top: -28px;padding-left: 68px;color: gray;font-size: 12px">快来抢占前排为主播打Call吧</span>
+            </div>
             <div class="danmu">
               <ul id="danmu-list" class="infinite-list" style="overflow:auto">
                 <li v-for="(i,index) in messageList" :key="index" class="infinite-list-item">
@@ -181,7 +201,8 @@ export default {
       messageList: [],
       sendCount: 1,
       currentPresent: {},
-      texts:[]
+      texts:[],
+      showSub:true
     };
   },
   computed: {
@@ -602,7 +623,7 @@ export default {
 
 .rank {
   height: 130px;
-  background: #52ad7f;
+  background: rgb(255, 255, 255);
 }
 
 .danmu {
@@ -651,4 +672,49 @@ export default {
   color: rgb(218, 218, 218);
   line-height: 500px;
 }
+.sub {
+  color: white;
+  position: absolute;
+  top: 78%;
+  left: 23%;
+  width: 33%;
+  height: 6%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  font-size: 20px;
+}
+.scrolling-text {
+  /*position: absolute; !* 使每个元素重叠在一起 *!*/
+  /*bottom: 0; !* 从底部开始出现 *!*/
+  /*left: 0;*/
+  /*right: 0;*/
+  margin: auto;
+  /*opacity: 0; !* 初始时透明度为0 *!*/
+  /*animation: scroll 1s forwards; !* 持续1秒，线性动画 *!*/
+}
+.scroll-enter-active, .scroll-leave-active {
+  transition: all 0.5s;
+}
+.scroll-leave-to{
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+.scroll-leave{
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.scroll-enter{
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.scroll-enter-to{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 </style>
+

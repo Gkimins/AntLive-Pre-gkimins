@@ -9,16 +9,16 @@
                      size="mini" @click="handleCategoryClick(item)">{{ item.name }}
           </el-button>
         </div>
-        <a class="nav-a" href="#" style="float:left;" slot="reference">分类</a>
-        <a class="nav-a" href="#" style="float:left;" slot="reference">分类</a>
-        <a class="nav-a" href="#" style="float:left;" slot="reference">分类</a>
-        <a class="nav-a" href="#" style="float:left;" slot="reference">分类</a>
-        <a class="nav-a" href="#" style="float:left;" slot="reference">分类</a>
-        <a class="nav-a" href="#" style="float:left;" slot="reference" @click="handleVideoClick">视频</a>
+        <a class="nav-a" href="#" style="float:left;" slot="reference">游戏</a>
+        <a class="nav-a" href="#" style="float:left;" slot="reference">新闻</a>
+        <a class="nav-a" href="#" style="float:left;" slot="reference">娱乐</a>
+        <a class="nav-a" href="#" style="float:left;" slot="reference">颜值</a>
+<!--        <a class="nav-a" href="#" style="float:left;" slot="reference"></a>-->
+        <a class="nav-a" href="#" style="float:left;" slot="reference" @click="handleVideoClick">虚拟主播</a>
       </el-popover>
 
       <div style="float: left;margin: 7px 0px 0px 50px">
-        <el-input placeholder="请输入内容" v-model="input2" style="width: 400px" >
+        <el-input placeholder="搜你所想~" v-model="input2" style="width: 400px" >
           <el-button @click="searchRoom" slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </div>

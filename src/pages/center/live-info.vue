@@ -1,7 +1,9 @@
 <template>
   <el-card>
+    <div slot="header" class="clearfix">
+      <span>直播间信息编辑 <i class="el-icon-user"></i></span>
+    </div>
     <div class="live-info-div">
-
       <div v-if="this.status == -1" >
         <el-empty style="margin: 72px 0px 0px 10px" description="您还没有进行身份认证，请认证后再尝试~"
                   :image="require('@/assets/img/waiting.png')"></el-empty>
@@ -12,13 +14,10 @@
           label-position="right"
           label-width="80px"
           :model="formData"
-          style="width:400px;margin-top:20px;margin-left:50px;"
+          style="margin-top:20px;margin-left:50px;"
       >
         <el-form-item label="标题">
           <el-input v-model="formData.title"></el-input>
-        </el-form-item>
-        <el-form-item label="公告">
-          <el-input v-model="formData.notice"></el-input>
         </el-form-item>
         <el-form-item label="分类">
           <el-select v-model="formData.cid" placeholder="请选择分类" style="display:inline;">
@@ -34,7 +33,7 @@
         <el-form-item label="直播封面">
           <el-upload
               class="avatar-uploader"
-              action="http://occulto.serveo.net/live/upload"
+              action="api/live/upload"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload"
@@ -42,6 +41,9 @@
             <img v-if="formData.cover_preview" :src="formData.cover_preview" class="cover" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
+        </el-form-item>
+        <el-form-item label="公告">
+          <tinymce :height="300" v-model="formData.notice"/>
         </el-form-item>
         <el-form-item>
           <div class="save_botton">
@@ -55,8 +57,11 @@
 
 <script>
 import Api from "../../api";
+import Tinymce from '@/components/Tinymce'
+
 export default {
   name: "live-info",
+  components: { Tinymce },
   data() {
     return {
       formData: {
@@ -74,7 +79,7 @@ export default {
   },
   mounted() {
     Api.getCategory(this.current_page, this.limit).then(r => {
-      this.category_list = r.data.data.records;
+      this.category_list = r.data.data.list;
     });
     Api.getRoomSettingInfo().then(res => {
       let ret = res.data.data;
@@ -105,7 +110,7 @@ export default {
     },
     onSubmit() {
       Api.saveRoomInfo(this.formData).then(r => {
-        if (r.data.code == 0) {
+        if (r.data.code == 200) {
           this.$message({
             message: "保存完成",
             type: "success"
@@ -119,9 +124,9 @@ export default {
 
 <style lang="less">
 .live-info-div {
-  height: 500px;
+  //height: 500px;
   .no-auth-container{
-    height:500px;
+    //height:500px;
     line-height: 500px;
     font-size: 13px;
     color:#666;

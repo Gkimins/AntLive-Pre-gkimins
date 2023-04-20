@@ -21,10 +21,10 @@
             <el-input v-model="form.nickName"></el-input>
           </el-form-item>
           <el-form-item label="邮箱">
-            <el-input v-model="form.email" disabled></el-input>
+            <el-input v-model="form.email" placeholder="请绑定邮箱" disabled></el-input>
           </el-form-item>
           <el-form-item label="手机">
-            <el-input v-model="form.mobile" disabled></el-input>
+            <el-input v-model="form.mobile" placeholder="请绑定手机" disabled></el-input>
           </el-form-item>
           <el-form-item label="个性签名">
             <el-input type="textarea" v-model="form.signature"></el-input>

@@ -1,15 +1,5 @@
 <template>
   <div >
-    <div class="sub">
-      <div id="scroll-container">
-        <transition-group name="scroll" tag="div">
-          <div v-for="(text, index) in texts" :key="index" class="scrolling-text">
-            {{ text }}
-          </div>
-        </transition-group>
-      </div>
-
-    </div>
     <div style="width: 100%;height: 500px" id="dplayer"></div>
   </div>
 
@@ -51,14 +41,14 @@ export default {
       danmu.time = null
       console.log(danmu)
       this.updateText(danmu)
-      this.$emit('senddm',danmu)
+      // this.$emit('senddm',danmu)
     },
     updateText(danmu) {
       if (this.b){
-        this.texts.push(danmu); // 添加一个新元素
+        this.texts.push(danmu.text); // 添加一个新元素
         this.b=false
       }else {
-        this.texts.push(danmu); // 添加一个新元素
+        this.texts.push(danmu.text); // 添加一个新元素
         setTimeout(()=>{
           if (this.texts.length>2){
             this.texts.splice(0,1); // 移除第一个元素
@@ -87,7 +77,7 @@ export default {
         },
         video: {
           url: this.url,
-          type: "customFlv",
+          type: "customHls",
           customType: {
             customHls: function (video) {
               const hls = new Hls();
@@ -126,48 +116,3 @@ export default {
 };
 </script>
 
-<style>
-.sub {
-  color: white;
-  position: absolute;
-  top: 78%;
-  left: 23%;
-  width: 33%;
-  height: 6%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 2;
-}
-.scrolling-text {
-  /*position: absolute; !* 使每个元素重叠在一起 *!*/
-  /*bottom: 0; !* 从底部开始出现 *!*/
-  /*left: 0;*/
-  /*right: 0;*/
-  margin: auto;
-  /*opacity: 0; !* 初始时透明度为0 *!*/
-  /*animation: scroll 1s forwards; !* 持续1秒，线性动画 *!*/
-}
-.scroll-enter-active, .scroll-leave-active {
-  transition: all 0.5s;
-}
-.scroll-leave-to{
-  opacity: 0;
-  transform: translateY(-60px);
-}
-
-.scroll-leave{
-  opacity: 1;
-  transform: translateY(0px);
-}
-
-.scroll-enter{
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.scroll-enter-to{
-  opacity: 1;
-  transform: translateY(0);
-}
-
-
-</style>

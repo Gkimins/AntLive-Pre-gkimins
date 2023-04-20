@@ -16,6 +16,14 @@ module.exports = {
                     '^/api':''
                 }
             },
+            '/video':{
+                target: 'http://39.135.138.60:18890',
+                changeOrigin:true,
+                secure: false,
+                pathRewrite:{
+                    '^/video':''
+                }
+            }
         }
     }
 }

@@ -20,30 +20,36 @@
       <!-- <el-table-column label type="index" show-overflow-tooltip width="50" align="center"></el-table-column> -->
       <el-table-column type="expand">
       <template slot-scope="props">
-        <el-form label-position="left" class="demo-table-expand" >
-          <el-form-item label="封面:">
-            <span>{{ props.row.cover }}</span>
-          </el-form-item>
-          <el-form-item label="简介:">
-            <span>{{ props.row.introduce }}</span>
-          </el-form-item>
-          <el-form-item label="公告:">
-            <span>{{ props.row.notice }}</span>
-          </el-form-item>
-          <el-form-item label="推流地址:">
-            <span>{{ props.row.rtmpUrl }}</span>
-          </el-form-item>
-        </el-form>
+        <el-card style="">
+          <el-tabs value="first">
+            <el-tab-pane label="直播信息" name="first">
+              <p>直播封面:</p>
+              <el-image style="width: 60px;height: 60px" :src="props.row.cover">
+              </el-image>
+              <p>直播公告:</p>
+              <div v-html="props.row.notice" style="padding: 10px 20px 10px 20px">
+              </div>
+              <el-form-item label="推流地址:">
+                <span>{{ props.row.rtmpUrl }}</span>
+              </el-form-item>
+            </el-tab-pane>
+          </el-tabs>
+        </el-card>
       </template>
       </el-table-column>
       <el-table-column prop="id" label="房间号" align="center"></el-table-column>
       <el-table-column prop="title" label="标题" align="center" show-overflow-tooltip></el-table-column>
       <el-table-column prop="categoryId" label="分类" align="center" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="userId" label="用户id" align="center" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="status" label="直播状态" align="center" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="user.nickName" label="用户名称" align="center" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="status" label="直播状态" align="center" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span v-if="scope.row.status == 0">未直播</span>
+          <span v-if="scope.row.status == 1">直播中</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="disabled" label="封禁状态" align="center">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.disabled===0" type="success" size="mini" effect="plain">可用</el-tag>
+          <el-tag v-if="scope.row.disabled===0" type="success" size="mini" effect="plain">正常</el-tag>
           <el-tag v-else type="success" effect="plain" size="mini">已封禁</el-tag>
         </template>
       </el-table-column>

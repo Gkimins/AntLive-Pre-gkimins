@@ -29,7 +29,7 @@
         <el-col :span="12">
           <el-card shadow="hover" :body-style="{ padding: '0px' }">
             <!-- <el-image style="width: 100%;height:90%;" src="http://image.imhtb.cn/bg.jpg" fit="fit"></el-image> -->
-            <p>Ant Live</p>
+            <p>Voice Live</p>
           </el-card>
         </el-col>
         <el-col :span="12">

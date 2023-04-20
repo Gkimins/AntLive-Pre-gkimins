@@ -4,7 +4,7 @@
       <el-aside>
         <div class="el-aside-logo">
           <div v-if="!isCollapse">
-            Ant
+            Voice
             <i>Live</i>
           </div>
           <div style="margin-left:-15px;" v-else>

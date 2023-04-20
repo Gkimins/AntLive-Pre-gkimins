@@ -16,7 +16,6 @@
       </el-select>
     </div>
     <el-table :data="tableData" style="width: 100%">
-      <!-- <el-table-column label type="index" show-overflow-tooltip width="50" align="center"></el-table-column> -->
       <el-table-column prop="id" label="标识" width="80" align="center"></el-table-column>
       <el-table-column prop="userId" label="用户id" width="80" align="center"></el-table-column>
       <el-table-column prop="realName" label="真实姓名" width="100" align="center"></el-table-column>
@@ -72,6 +71,7 @@
           <span v-else-if="scope.row.status===3" style="color:#ff6363">认证失败</span>
           <span v-else>未知</span>
         </template>
+
       </el-table-column>
       <!-- <el-table-column prop="status" label="审批" align="center">
         <template slot-scope="scope">
@@ -80,7 +80,8 @@
       </el-table-column>-->
       <el-table-column prop="status" label="审批" align="center">
         <template slot-scope="scope">
-          <el-popover placement="top" width="160" v-model="popoverVisible">
+          <el-popover placement="top" width="160">
+            <h3>是否通过申请？</h3>
             <div style="text-align: center; margin: 0">
               <el-button size="mini" type="danger" @click="handlePass(scope.row,'reject')">拒绝</el-button>
               <el-button type="primary" size="mini" @click="handlePass(scope.row,'pass')">通过</el-button>
@@ -120,7 +121,7 @@ export default {
       tableData: [],
       currentPage: 1,
       authStatus: "",
-      popoverVisible: false
+      // popoverVisible: false
     };
   },
   mounted() {
@@ -128,7 +129,7 @@ export default {
   },
   methods: {
     handlePass(v,type) {
-      this.popoverVisible = false;
+      // this.popoverVisible = false;
       console.log(v)
       let ids = (v.id + "").split(",");
       if (type == 'pass') {

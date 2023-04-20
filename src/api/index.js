@@ -529,7 +529,7 @@ export default {
     },
     openLive() {
         return request({
-            url: '/api/live/tencent/live/open',
+            url: '/api/live/tencent/live/secret',
             method: 'get',
         })
     },

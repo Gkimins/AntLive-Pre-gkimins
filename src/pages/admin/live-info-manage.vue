@@ -27,11 +27,20 @@
     >
       <el-table-column label type="index" width="50" align="center"></el-table-column>
       <!-- <el-table-column prop="id" label="标识" align="center" width="80"></el-table-column> -->
-      <el-table-column prop="userId" label="用户id" width="130" align="center" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="user.nickName" label="用户名称" width="130" align="center" show-overflow-tooltip></el-table-column>
       <el-table-column prop="roomId" label="房间号"  width="130" align="center" show-overflow-tooltip></el-table-column>
       <el-table-column prop="startTime" label="开始时间" align="center" show-overflow-tooltip></el-table-column>
       <el-table-column prop="endTime" label="结束时间" align="center" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="status" label="当前状态" align="center" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="status" label="当前状态" align="center" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span v-if="scope.row.status == 0">直播中</span>
+          <span v-if="scope.row.status == 1">直播结束</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="clickCount" label="点击量" align="center" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="danMuCount" label="弹幕量" align="center" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="presentCount" label="礼物数量" align="center" show-overflow-tooltip></el-table-column>
+
     </el-table>
     <el-pagination
       @current-change="handleCurrentChange"
