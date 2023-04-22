@@ -33,12 +33,10 @@
       <div v-else>
         <p><i class="el-icon-loading"></i> 直播中</p>
         <el-divider></el-divider>
-        <span>推流地址：</span
-        ><span style="font-size: 14px; color: #666">{{
-          liveStatusObj.livePushUrl
-        }}</span>
+        <span>当前已经在直播</span
+        >
         <p></p>
-        <span>密钥：</span
+        <span>房间号：</span
         ><span style="font-size: 14px; color: #666">{{
           liveStatusObj.livePushSecret
         }}</span>

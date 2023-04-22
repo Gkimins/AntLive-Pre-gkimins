@@ -119,6 +119,7 @@ export default {
           let userinfo = this.loginForm;
           store.dispatch("register", userinfo)
           .then(res => {
+            console.log(res)
             if (res.data.code == 200) {
               this.showMessage("success","注册成功")
               this.$router.push("/login")
@@ -148,9 +149,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#code_item{
-  display: none;
-}
 .register {
   text-decoration: none;
   text-align: right;

@@ -17,15 +17,19 @@
                 <el-image class="author-info-avatar" :src="info.userInfo.avatar" :fit="'fit'"></el-image>
               </div>
               <div class="author-info">
-                <p class="author-info-title">{{ info.title }} <span @click="this.$router.push({path:'/',params:info.categoryInfo})" style="margin-left: 15px">{{info.categoryInfo.name}}</span></p>
+                <p class="author-info-title">{{ info.title }} <span
+                    @click="this.$router.push({path:'/',params:info.categoryInfo})"
+                    style="margin-left: 15px">{{ info.categoryInfo.name }}</span></p>
                 <p class="author-info-name">{{ info.userInfo.name }}</p>
               </div>
 
               <div class="author-follow">
                 <p style="width: 600px;font-size: 10px;width: 215px;line-height: 18px;">
                   <span class="head-text"><i class="el-icon-view">8413人看过</i></span>
-                  <span @click="alarm()" class="iconfont head-text" style="margin-left: 16px;font-size: 10px">&#xe652;举报</span>
-                  <span @click="share()" class="iconfont head-text" style="margin-left: 16px;font-size: 10px">&#xe600;分享</span>
+                  <span @click="alarm()" class="iconfont head-text"
+                        style="margin-left: 16px;font-size: 10px">&#xe652;举报</span>
+                  <span @click="share()" class="iconfont head-text"
+                        style="margin-left: 16px;font-size: 10px">&#xe600;分享</span>
                 </p>
                 <el-button
                     @click="handleBan"
@@ -54,27 +58,33 @@
               </div>
             </div>
             <div class="live-content">
-              <div v-if="showSub" class="sub">
-                <div id="scroll-container">
+              <div v-if="showSub" class="sub" v-bind:style="{height: sub_height + '%'}" >
+                <div id="scroll-container" >
                   <transition-group name="scroll" tag="div">
-                    <div v-for="(text, index) in texts" :key="index" class="scrolling-text">
+                    <div v-for="(text, index) in texts" :key="index" class="scrolling-text"
+                         v-bind:style="{fontSize: subsize + 'px'}">
                       {{ text }}
                     </div>
                   </transition-group>
                 </div>
 
               </div>
-              <LivePlayer @senddm="senddm" v-if="info.status===1" :url="spliceLiveUrl" :texts="texts" ref="maindplayer"/>
+              <LivePlayer @senddm="senddm" v-if="info.status===1" :url="spliceLiveUrl" :texts="texts"
+                          ref="maindplayer"/>
               <div class="not-live" v-else-if="info.status===0">主播正在赶来的路上...</div>
               <div class="not-live" style="color:#ff8e8e;" v-else>该直播间因违规已被封禁</div>
             </div>
             <div style="overflow: hidden;">
-              <div style="float: left;margin-top: 18px;margin-left: 18px">
+              <div style="float: left;margin-top: 15px;margin-left: 18px">
                 <el-switch
                     v-model="showSub"
                     active-text="开启字幕"
-                    >
+                >
                 </el-switch>
+                <span v-if="showSub" style="font-size: 14px;margin-left: 18px">字幕大小</span>
+                <el-input-number v-if="showSub" controls-position="right" style="width: 100px;margin-left: 18px"
+                                 v-model="subsize" @change="handlesubSizeChange" :min="1" :max="999"
+                                 label="字幕大小"></el-input-number>
               </div>
               <div class="present-content">
                 <el-popover
@@ -82,7 +92,6 @@
                     :key="item.id"
                     placement="top"
                     width="250"
-                    v-model="visible"
                 >
                   <div style="height:30px;">
                     <el-image style="width:30px;height:30px;" :src="item.icon"></el-image>
@@ -150,8 +159,28 @@
               </ul>
             </div>
             <div class="send-message-content" style="display: inline-flex">
-              <el-image style="width: 32px;height: 32px;margin-top: 3px" :src="require('@/assets/img/Palette.png')"/>
-              <el-input @keyup.enter.native="handleSend" style="margin-left: 10px" v-model="input" :disabled="this.isLogin" placeholder>
+              <el-popover
+                  placement="top"
+                  title="颜色选择"
+                  width="300"
+                  trigger="click"
+              >
+                <el-card style="width: 300px;">
+                  <el-radio-group v-model="yellow">
+                    <el-radio label="#fff">白色</el-radio>
+                    <el-radio label="#FF0000">红色</el-radio>
+                    <el-radio label="16769331">黄色</el-radio>
+                    <el-radio label="6610199">绿色</el-radio>
+                    <el-radio label="3788031">蓝色</el-radio>
+                    <el-radio label="13959417">紫色</el-radio>
+                  </el-radio-group>
+                </el-card>
+                <el-image slot="reference" style="width: 32px;height: 32px;margin-top: 3px"
+                          :src="require('@/assets/img/Palette.png')"/>
+              </el-popover>
+
+              <el-input @keyup.enter.native="handleSend" style="margin-left: 10px" v-model="input"
+                        :disabled="this.isLogin" placeholder>
                 <el-button slot="append" :disabled="this.isLogin" @click="handleSend">发送</el-button>
               </el-input>
             </div>
@@ -201,8 +230,12 @@ export default {
       messageList: [],
       sendCount: 1,
       currentPresent: {},
-      texts:[],
-      showSub:true
+      texts: [],
+      showSub: false,
+      yellow: 'white',
+      direction: 'top',
+      subsize: '18',
+      sub_height: 8,
     };
   },
   computed: {
@@ -228,11 +261,11 @@ export default {
     this.init();
   },
   methods: {
-    alarm(){
+    alarm() {
       //截图 并用el-pop显示， 用于举报
 
     },
-    share(){
+    share() {
 
     },
     handleBan() {
@@ -328,12 +361,11 @@ export default {
     sendAndReFreshList(message) {
       let ws = store.state.webSocket.socket;
       let rid = this.$route.params.id;
-
       console.log(getLocalUserInfo(), "getLocalUserInfo");
       let final_data = {
         text: message,
-        color: "#fff",
-        type: "right"
+        color: this.yellow,
+        type: this.direction
       };
       ws.send(
           JSON.stringify({
@@ -343,7 +375,7 @@ export default {
             content: JSON.stringify(final_data)
           })
       );
-      this.$refs.maindplayer.sendDmf(final_data);
+      // this.$refs.maindplayer.sendDmf(final_data);
     },
     handleSend() {
       console.log(this.input, "this.input");
@@ -403,6 +435,9 @@ export default {
       console.log(msg, "msg");
       let message = JSON.parse(msg.data);
       console.log(message, "message");
+      if (message.message=="与服务端建立连接成功"){
+        return;
+      }
       let data = JSON.parse(message.message);
       console.log(data)
       if (data.op === "PRESENT") {
@@ -419,7 +454,7 @@ export default {
           icon: p.icon,
           num: p.number
         });
-      }else {
+      } else {
         let final_data = JSON.parse(data.content);
         this.messageList.push({
           name: data.nickname,
@@ -444,6 +479,18 @@ export default {
     },
     onclose() {
       console.log("ws已经关闭");
+    },
+    handlesubSizeChange(current,old) {
+      var a = this.sub_height;
+      if (old > current) {
+        // 减去
+        if (a > 5) {
+          a = a - 1;
+          this.sub_height = a;
+        }
+      } else {
+        this.sub_height = a + 1;
+      }
     }
   }
 };
@@ -451,8 +498,9 @@ export default {
 
 <style scoped lang="less">
 .head-text {
-  color:#9499a0;
+  color: #9499a0;
 }
+
 .head-text:hover {
   color: #66ccff;
 }
@@ -672,7 +720,9 @@ export default {
   color: rgb(218, 218, 218);
   line-height: 500px;
 }
+
 .sub {
+  border-radius:9px;
   color: white;
   position: absolute;
   top: 78%;
@@ -682,37 +732,44 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
   font-size: 20px;
+  overflow: hidden;
 }
+
 .scrolling-text {
   /*position: absolute; !* 使每个元素重叠在一起 *!*/
   /*bottom: 0; !* 从底部开始出现 *!*/
   /*left: 0;*/
   /*right: 0;*/
   margin: auto;
+  text-align: center;
+  margin-top: 5px;
   /*opacity: 0; !* 初始时透明度为0 *!*/
   /*animation: scroll 1s forwards; !* 持续1秒，线性动画 *!*/
 }
+
 .scroll-enter-active, .scroll-leave-active {
   transition: all 0.5s;
 }
-.scroll-leave-to{
+
+.scroll-leave-to {
   opacity: 0;
   transform: translateY(-60px);
 }
 
-.scroll-leave{
+.scroll-leave {
   opacity: 1;
   transform: translateY(0px);
 }
 
-.scroll-enter{
+.scroll-enter {
   opacity: 0;
   transform: translateY(30px);
 }
 
-.scroll-enter-to{
+.scroll-enter-to {
   opacity: 1;
   transform: translateY(0);
+  background: none;
 }
 
 

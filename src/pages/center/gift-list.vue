@@ -9,7 +9,8 @@
 
       <div v-if="tableData.length > 0">
         <div class="header-operator">
-          <el-date-picker
+          <el-input style="width: 200px;height: 25px" v-model="username" placeholder="请输入内容"></el-input>
+          <el-date-picker style="margin-left: 50px"
               v-model="dateRange"
               type="datetimerange"
               align="right"
@@ -25,12 +26,14 @@
         </div>
         <el-table :data="tableData" border style="width: 100%;" size="small">
           <el-table-column label="序号" type="index" align="center" width="100"></el-table-column>
-          <el-table-column prop="fromId" align="center" label="赠送者"></el-table-column>
-          <el-table-column prop="presentId" align="center" label="礼物"></el-table-column>
+<!--          <el-table-column prop="fromId" align="center" label="赠送者"></el-table-column>-->
+          <el-table-column prop="userName" align="center" label="赠送者用户名"></el-table-column>
+<!--          <el-table-column prop="presentId" align="center" label="礼物"></el-table-column>-->
+          <el-table-column prop="presentName" align="center" label="礼物名称"></el-table-column>
           <el-table-column prop="unitPrice" align="center" label="礼物单价"></el-table-column>
           <el-table-column prop="number" align="center" label="礼物数量"></el-table-column>
           <el-table-column prop="totalPrice" align="center" label="总价值(开心果)"></el-table-column>
-          <el-table-column prop="createTime" align="center" label="获得时间" width="180"></el-table-column>
+          <el-table-column prop="createTime" align="center" label="赠送时间" width="180"></el-table-column>
         </el-table>
         <el-pagination
             @current-change="handleCurrentChange"
@@ -57,6 +60,7 @@ export default {
       limit: 8,
       currentPage: 1,
       dateRange:null,
+      username:'',
       pickerOptions: {
         shortcuts: [
           {
