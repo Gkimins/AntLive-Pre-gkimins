@@ -21,7 +21,8 @@
       </div>
     </el-main>
     <el-footer height="" style="background: #f6f9fa">
-      <Footer></Footer>
+<!--      <Footer></Footer>-->
+      <FooterHuYa></FooterHuYa>
     </el-footer>
   </el-container>
 </template>
@@ -29,14 +30,15 @@
 <script>
 import Header from "../components/Header";
 import LiveRoom from "../components/LiveRoom";
-import Footer from "../components/Footer";
+// import Footer from "../components/Footer";
+import FooterHuYa from "../components/Footer-huya";
 import Api from "../api";
 import store from '../store';
 export default {
   components: {
     LiveRoom,
     Header,
-    Footer
+    FooterHuYa
   },
   data() {
     return {

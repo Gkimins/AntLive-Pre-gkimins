@@ -17,7 +17,7 @@ import AdminDashboard from './pages/admin/dashboard'
 
 Vue.use(VueRouter)
 
-const routes = [    
+const routes = [
     {
         path: '/',
         name: 'center',
@@ -70,6 +70,10 @@ const routes = [
             {
                 path:'user-manage',
                 component:()=>import("./pages/admin/user-manage")
+            },
+            {
+                path:'foot',
+                component:()=>import("./components/Footer")
             },
             {
                 path:'user-auth',
