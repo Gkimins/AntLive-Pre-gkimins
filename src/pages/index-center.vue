@@ -20,18 +20,23 @@
         <LiveRoom v-for="item in rooms" :key="item.id" :room="item"></LiveRoom>
       </div>
     </el-main>
+    <el-footer height="" style="background: #f6f9fa">
+      <Footer></Footer>
+    </el-footer>
   </el-container>
 </template>
 
 <script>
 import Header from "../components/Header";
 import LiveRoom from "../components/LiveRoom";
+import Footer from "../components/Footer";
 import Api from "../api";
 import store from '../store';
 export default {
   components: {
     LiveRoom,
-    Header
+    Header,
+    Footer
   },
   data() {
     return {
