@@ -343,10 +343,12 @@ export default {
       });
     },
     senddm(message) {
-      console.log('in')
       let ws = store.state.webSocket.socket;
       let rid = this.$route.params.id;
-
+      console.log(message)
+      if (message==""){
+        return
+      }
       console.log(getLocalUserInfo(), "getLocalUserInfo");
       ws.send(
           JSON.stringify({
@@ -378,6 +380,9 @@ export default {
       // this.$refs.maindplayer.sendDmf(final_data);
     },
     handleSend() {
+      if (this.input==""){
+        return
+      }
       console.log(this.input, "this.input");
       this.sendAndReFreshList(this.input);
       this.input = "";
@@ -437,6 +442,12 @@ export default {
       console.log(message, "message");
       if (message.message=="与服务端建立连接成功"){
         return;
+      }
+      if (message.name=="警告"){
+        this.$confirm('请文明用语！第二页违规将被禁言', '确认信息', {
+          distinguishCancelAndClose: true,
+          confirmButtonText: '确认',
+        })
       }
       let data = JSON.parse(message.message);
       console.log(data)
