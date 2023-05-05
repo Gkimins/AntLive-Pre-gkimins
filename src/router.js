@@ -138,7 +138,11 @@ const routes = [
             {
                 path:'ban-record',
                 component:()=>import("./pages/admin/ban-record")
-            }
+            },
+            {
+                path:'recommand',
+                component:()=>import("./pages/admin/recommand")
+            },
         ]
     },
     {

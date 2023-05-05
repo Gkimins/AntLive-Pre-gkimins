@@ -29,7 +29,7 @@
     >
       <!-- <el-table-column label type="index" show-overflow-tooltip width="50" align="center"></el-table-column> -->
       <el-table-column prop="id" label="标识" align="center" width="80"></el-table-column>
-      <el-table-column prop="userId" label="用户名" align="center" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="user.nickName" label="用户名称" align="center" show-overflow-tooltip></el-table-column>
       <el-table-column prop="billChange" label="金额" align="center" show-overflow-tooltip></el-table-column>
 <!--      <el-table-column prop="balance" label="余额" align="center" show-overflow-tooltip></el-table-column>-->
       <el-table-column prop="mark" label="备注" align="center" show-overflow-tooltip></el-table-column>

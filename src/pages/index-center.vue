@@ -5,9 +5,10 @@
     </el-header>
     <el-main>
       <div class="item-container ">
-        <el-carousel indicator-position="outside" v-if="showCarousel">
-          <el-carousel-item v-for="item in 4" :key="item">
-            <h3>{{ item }}</h3>
+<!--        换成获取所有的推广位，然后显示-->
+        <el-carousel indicator-position="outside" v-if="rmPicList">
+          <el-carousel-item v-for="item in rmPicList" :key="item">
+            <h3>{{ rmPicList.bannerUrl }}</h3>
           </el-carousel-item>
         </el-carousel>
         <el-breadcrumb separator-class="el-icon-arrow-right" class="bread-crumb">
@@ -21,7 +22,6 @@
       </div>
     </el-main>
     <el-footer height="" style="background: #f6f9fa">
-<!--      <Footer></Footer>-->
       <FooterHuYa></FooterHuYa>
     </el-footer>
   </el-container>
@@ -45,7 +45,8 @@ export default {
       rooms: [],
       categorys: [],
       current_category: "",
-      showCarousel: true
+      showCarousel: true,
+      rmPicList: []
     };
   },
   mounted() {
@@ -69,6 +70,9 @@ export default {
       this.list(c.id);
     },
     list(cid) {
+      Api.getBanners().then(res => {
+        this.rmPicList = res.data.data
+      })
       Api.getLivingRoomInfo(cid).then(res => {
         this.rooms = res.data.data;
       });

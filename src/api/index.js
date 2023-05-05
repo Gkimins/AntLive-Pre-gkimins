@@ -638,5 +638,32 @@ export default {
             },
             data
         })
+    },
+    deleteRecommandItem(id) {
+        return request({
+            url: '/api/live/banner/' + id,
+            method: 'delete',
+        })
+
+    },
+    updateRecommandStatus(id, status) {
+        return request({
+            url: '/api/live/banner/' + id + '/' + status,
+            method: 'put',
+        })
+    },
+    getBanners(param) {
+        return request({
+            url: '/api/live/banner',
+            method: 'get',
+            params: param
+        })
+    },
+    saveOrUpdateBanner(dialogForm) {
+        return request({
+            url: '/api/live/banner',
+            method: 'post',
+            data: dialogForm
+        })
     }
 }
