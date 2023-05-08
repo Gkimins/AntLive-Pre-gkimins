@@ -15,8 +15,7 @@ export default {
   props: ["url","texts"],
   data() {
     return {
-      dp:[],
-      b:true
+      dp:[]
     };
   },
   watch: {
@@ -40,21 +39,8 @@ export default {
     sendDm(danmu){
       danmu.time = null
       console.log(danmu)
-      this.updateText(danmu)
+
       // this.$emit('senddm',danmu)
-    },
-    updateText(danmu) {
-      if (this.b){
-        this.texts.push(danmu.text); // 添加一个新元素
-        this.b=false
-      }else {
-        this.texts.push(danmu.text); // 添加一个新元素
-        setTimeout(()=>{
-          if (this.texts.length>2){
-            this.texts.splice(0,1); // 移除第一个元素
-          }
-        },200)
-      }
     },
     init(v){
       console.log(v);
@@ -99,14 +85,8 @@ export default {
         },
         contextmenu: [
           {
-            text: 'custom1',
-            link: 'https://github.com/DIYgod/DPlayer',
-          },
-          {
-            text: 'custom2',
-            click: (player) => {
-              console.log(player);
-            },
+            text: '听觉无障碍',
+            link: 'xx',
           },
         ],
       });

@@ -80,6 +80,12 @@ export default {
     handleAllClick() {
       this.current_category = "";
       this.list();
+    },
+    //点击增加访问量
+    handleAddClick(bannerId){
+      Api.addBannerClick(bannerId).then(res=>{
+        console.log(res)
+      })
     }
   }
 };

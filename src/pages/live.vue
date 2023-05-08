@@ -58,8 +58,8 @@
               </div>
             </div>
             <div class="live-content">
-              <div v-if="showSub" class="sub" v-bind:style="{height: sub_height + '%'}" >
-                <div id="scroll-container" >
+              <div v-if="showSub" class="sub" v-bind:style="{height: sub_height + '%'}">
+                <div id="scroll-container">
                   <transition-group name="scroll" tag="div">
                     <div v-for="(text, index) in texts" :key="index" class="scrolling-text"
                          v-bind:style="{fontSize: subsize + 'px'}">
@@ -69,7 +69,7 @@
                 </div>
 
               </div>
-              <LivePlayer @senddm="senddm" v-if="info.status===1" :url="spliceLiveUrl" :texts="texts"
+              <LivePlayer @senddm="senddm" v-if="info.status===1" :url="spliceLiveUrl"
                           ref="maindplayer"/>
               <div class="not-live" v-else-if="info.status===0">主播正在赶来的路上...</div>
               <div class="not-live" style="color:#ff8e8e;" v-else>该直播间因违规已被封禁</div>
@@ -85,6 +85,10 @@
                 <el-input-number v-if="showSub" controls-position="right" style="width: 100px;margin-left: 18px"
                                  v-model="subsize" @change="handlesubSizeChange" :min="1" :max="999"
                                  label="字幕大小"></el-input-number>
+                <span v-if="showSub" style="font-size: 14px;margin-left: 18px">字幕延迟（s）</span>
+                <el-input-number v-if="showSub" controls-position="right" style="width: 100px;margin-left: 18px"
+                                 v-model="default_timeout" :min="1" :max="999"
+                                 label="字幕延迟"></el-input-number>
               </div>
               <div class="present-content">
                 <el-popover
@@ -236,6 +240,7 @@ export default {
       direction: 'top',
       subsize: '18',
       sub_height: 8,
+      default_timeout: 8,
     };
   },
   computed: {
@@ -261,6 +266,20 @@ export default {
     this.init();
   },
   methods: {
+    //{message: '{",
+    // "nickname":"管理员","roomId":1}', name: 'sub', time: '2023-05-08T11:25:42.844'}
+    updateSubText(subtext) {
+      let data = JSON.parse(subtext.message);
+      let tt = this.default_timeout * 1000;
+      setTimeout(() => {
+        this.texts.push(data.content); // 添加一个新元素
+        setTimeout(() => {
+          if (this.texts.length > 2) {
+            this.texts.splice(0, 1); // 移除第一个元素
+          }
+        }, 200)
+      }, tt)
+    },
     alarm() {
       //截图 并用el-pop显示， 用于举报
 
@@ -346,7 +365,7 @@ export default {
       let ws = store.state.webSocket.socket;
       let rid = this.$route.params.id;
       console.log(message)
-      if (message==""){
+      if (message == "") {
         return
       }
       console.log(getLocalUserInfo(), "getLocalUserInfo");
@@ -380,7 +399,7 @@ export default {
       // this.$refs.maindplayer.sendDmf(final_data);
     },
     handleSend() {
-      if (this.input==""){
+      if (this.input == "") {
         return
       }
       console.log(this.input, "this.input");
@@ -395,7 +414,6 @@ export default {
     initWebSocket(rid) {
       let socketObj = store.state.webSocket;
       console.log(socketObj, "obj");
-      // logdata
       if (
           socketObj.rid === rid &&
           socketObj.socket != "" &&
@@ -410,7 +428,7 @@ export default {
         console.log("初始化ws");
         console.log(getToken())
         this.socket = new WebSocket(
-            "ws://127.0.0.1:18888/"
+            "ws://127.0.0.1:8222/dm"
         );
         this.socket.onopen = this.open;
         this.socket.onclose = this.onclose;
@@ -440,14 +458,20 @@ export default {
       console.log(msg, "msg");
       let message = JSON.parse(msg.data);
       console.log(message, "message");
-      if (message.message=="与服务端建立连接成功"){
+      if (message.message == "与服务端建立连接成功") {
         return;
       }
-      if (message.name=="警告"){
+      if (message.name == "警告") {
         this.$confirm('请文明用语！第二页违规将被禁言', '确认信息', {
           distinguishCancelAndClose: true,
           confirmButtonText: '确认',
         })
+      }
+      //{message: '{"content":"治疗关节炎","roomId":1}', name: 'sub', time: '2023-05-08T11:45:52.521'}message: "{\"content\":\"治疗关节炎\",\"roomId\":1}"name: "sub"time: "2023-05-08T11:45:52.521"[[Prototype]]: Object 'message'
+      console.log(message.name, "message.nnn");
+      if (message.name == "sub") {
+        this.updateSubText(message);
+        return;
       }
       let data = JSON.parse(message.message);
       console.log(data)
@@ -491,7 +515,7 @@ export default {
     onclose() {
       console.log("ws已经关闭");
     },
-    handlesubSizeChange(current,old) {
+    handlesubSizeChange(current, old) {
       var a = this.sub_height;
       if (old > current) {
         // 减去
@@ -733,7 +757,7 @@ export default {
 }
 
 .sub {
-  border-radius:9px;
+  border-radius: 9px;
   color: white;
   position: absolute;
   top: 78%;

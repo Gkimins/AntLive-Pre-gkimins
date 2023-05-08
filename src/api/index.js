@@ -665,5 +665,11 @@ export default {
             method: 'post',
             data: dialogForm
         })
+    },
+    addBannerClick(id) {
+        return request({
+            url: '/api/live/banner/click/' + id,
+            method: 'post',
+        })
     }
 }
