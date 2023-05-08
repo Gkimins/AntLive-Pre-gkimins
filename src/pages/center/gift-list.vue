@@ -11,24 +11,24 @@
         <div class="header-operator">
           <el-input style="width: 200px;height: 25px" v-model="username" placeholder="请输入内容"></el-input>
           <el-date-picker style="margin-left: 50px"
-              v-model="dateRange"
-              type="datetimerange"
-              align="right"
-              unlink-panels
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              :picker-options="pickerOptions"
-              @change="handleDateRangeChange"
-              size="small"
-              value-format="yyyy-MM-dd HH:mm"
+                          v-model="dateRange"
+                          type="datetimerange"
+                          align="right"
+                          unlink-panels
+                          range-separator="至"
+                          start-placeholder="开始日期"
+                          end-placeholder="结束日期"
+                          :picker-options="pickerOptions"
+                          @change="handleDateRangeChange"
+                          size="small"
+                          value-format="yyyy-MM-dd HH:mm"
           ></el-date-picker>
         </div>
         <el-table :data="tableData" border style="width: 100%;" size="small">
           <el-table-column label="序号" type="index" align="center" width="100"></el-table-column>
-<!--          <el-table-column prop="fromId" align="center" label="赠送者"></el-table-column>-->
+          <!--          <el-table-column prop="fromId" align="center" label="赠送者"></el-table-column>-->
           <el-table-column prop="userName" align="center" label="赠送者用户名"></el-table-column>
-<!--          <el-table-column prop="presentId" align="center" label="礼物"></el-table-column>-->
+          <!--          <el-table-column prop="presentId" align="center" label="礼物"></el-table-column>-->
           <el-table-column prop="presentName" align="center" label="礼物名称"></el-table-column>
           <el-table-column prop="unitPrice" align="center" label="礼物单价"></el-table-column>
           <el-table-column prop="number" align="center" label="礼物数量"></el-table-column>
@@ -50,6 +50,7 @@
 
 <script>
 import Api from "../../api";
+
 export default {
   name: "gift-list",
   data() {
@@ -59,8 +60,8 @@ export default {
       total: 0,
       limit: 8,
       currentPage: 1,
-      dateRange:null,
-      username:'',
+      dateRange: null,
+      username: '',
       pickerOptions: {
         shortcuts: [
           {
@@ -95,7 +96,7 @@ export default {
     };
   },
   methods: {
-   handleDateRangeChange() {
+    handleDateRangeChange() {
       this.page()
     },
     handleCurrentChange(val) {
@@ -103,7 +104,7 @@ export default {
       this.page();
     },
     page() {
-      Api.getRoomPresentList(this.currentPage, this.limit, this.dateRange + '').then(r => {
+      Api.getRoomPresentList(this.currentPage, this.limit, this.dateRange + '', 0).then(r => {
         let ret = r.data.data;
         this.tableData = ret.records;
         this.total = ret.total;
@@ -123,6 +124,7 @@ export default {
     padding: 10px 0px 5px 0px;
     height: 40px;
     background: rgba(255, 255, 255, 0.315);
+
     span {
       font-size: 13px;
       color: rgb(100, 100, 100);

@@ -62,7 +62,7 @@
                 <div id="scroll-container">
                   <transition-group name="scroll" tag="div">
                     <div v-for="(text, index) in texts" :key="index" class="scrolling-text"
-                         v-bind:style="{fontSize: subsize + 'px'}">
+                         v-bind:style="{fontSize: subSize + 'px'}">
                       {{ text }}
                     </div>
                   </transition-group>
@@ -83,11 +83,11 @@
                 </el-switch>
                 <span v-if="showSub" style="font-size: 14px;margin-left: 18px">字幕大小</span>
                 <el-input-number v-if="showSub" controls-position="right" style="width: 100px;margin-left: 18px"
-                                 v-model="subsize" @change="handlesubSizeChange" :min="1" :max="999"
+                                 v-model="subSize" @change="handlesubSizeChange" :min="1" :max="999"
                                  label="字幕大小"></el-input-number>
                 <span v-if="showSub" style="font-size: 14px;margin-left: 18px">字幕延迟（s）</span>
                 <el-input-number v-if="showSub" controls-position="right" style="width: 100px;margin-left: 18px"
-                                 v-model="default_timeout" :min="1" :max="999"
+                                 v-model="defaultTimeout" :min="1" :max="999"
                                  label="字幕延迟"></el-input-number>
               </div>
               <div class="present-content">
@@ -139,11 +139,22 @@
 
           </el-card>
         </div>
+
         <div class="live-chat-div">
           <el-card :body-style="{ padding: '0px' }" shadow="never">
             <div class="rank" style="display: grid">
-              <el-image :src="require('@/assets/img/default-normal.b4c119c.png')" style="margin: 0 auto"></el-image>
-              <span style="margin-top: -28px;padding-left: 68px;color: gray;font-size: 12px">快来抢占前排为主播打Call吧</span>
+              <div v-if="presentRankList" class="presentrankdiv">
+                <div v-for="(i,index) in presentRankList" :key="index" class="presentrank">
+                  <el-avatar :size="20" :src="i.user.avatar">
+                  </el-avatar>
+                  <span style="margin-left: 4px; color:white;width:80px">{{ i.user.nickName }}</span>
+                  <span style="margin-left: 150px;color:white">{{ i.totalPrice }}</span>
+                </div>
+              </div>
+              <div v-else>
+                <el-image :src="require('@/assets/img/default-normal.b4c119c.png')" style="margin: 0 auto"></el-image>
+                <span style="margin-top: -28px;padding-left: 68px;color: gray;font-size: 12px">快来抢占前排为主播打Call吧</span>
+              </div>
             </div>
             <div class="danmu">
               <ul id="danmu-list" class="infinite-list" style="overflow:auto">
@@ -238,9 +249,10 @@ export default {
       showSub: false,
       yellow: 'white',
       direction: 'top',
-      subsize: '18',
+      subSize: '18',
       sub_height: 8,
-      default_timeout: 8,
+      defaultTimeout: 8,
+      presentRankList: []
     };
   },
   computed: {
@@ -270,7 +282,7 @@ export default {
     // "nickname":"管理员","roomId":1}', name: 'sub', time: '2023-05-08T11:25:42.844'}
     updateSubText(subtext) {
       let data = JSON.parse(subtext.message);
-      let tt = this.default_timeout * 1000;
+      let tt = this.defaultTimeout * 1000;
       setTimeout(() => {
         this.texts.push(data.content); // 添加一个新元素
         setTimeout(() => {
@@ -360,6 +372,7 @@ export default {
         rid: rid,
         type: 0
       });
+      this.getPresentRankList()
     },
     senddm(message) {
       let ws = store.state.webSocket.socket;
@@ -526,6 +539,14 @@ export default {
       } else {
         this.sub_height = a + 1;
       }
+    },
+    getPresentRankList() {
+      let rid = this.$route.params.id;
+      Api.getPresentRankList(rid).then(r => {
+        let ret = r.data.data;
+        this.presentRankList = ret;
+        console.log(ret);
+      });
     }
   }
 };
@@ -807,6 +828,30 @@ export default {
   background: none;
 }
 
+
+.presentrank {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  margin-left: 20px;
+  font-size: 12px;
+}
+
+.presentrank:hover {
+  overflow: inherit;
+}
+
+.presentrankdiv {
+  overflow: hidden;
+  background: rgb(161,31,87);
+  z-index: 9999;
+  border-radius: 2px;
+}
+
+.presentrankdiv:hover {
+  overflow: inherit;
+}
 
 </style>
 

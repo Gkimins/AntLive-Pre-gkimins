@@ -267,16 +267,27 @@ export default {
             }
         })
     },
-    getRoomPresentList(page, limit, dateRange) {
+    getRoomPresentList(page, limit, dateRange, uid) {
         return request({
             url: '/api/live/room/present/list',
             method: 'get',
             params: {
                 page,
                 limit,
-                dateRange
+                dateRange,
+                uid
             }
         })
+    },
+    getPresentRankList(roomId){
+        return request({
+            url: '/api/live/room/present/presentRank',
+            method: 'get',
+            params: {
+                roomId
+            }
+        })
+
     },
     getWithdrawalList(month, page, limit) {
         return request({
