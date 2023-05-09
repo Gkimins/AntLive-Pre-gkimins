@@ -14,7 +14,13 @@
           <time class="time">{{ room.userInfo.name }}</time>
         </div>
       </div>
-      <span class="head-text time" style="margin: 36px 0px 0px 40px;"><i class="el-icon-view">15人看过</i></span></div>
+<!--      <div v-for="item in itemList" :key="item.id">
+  <span >{{ item.viewerCount | formatViewerCount }}</span>
+</div>-->
+      <span class="head-text time" style="margin: 36px 0px 0px 40px;">
+        <i class="el-icon-view" :class="[room.viewerCount >= 10000 && room.viewerCount < 100000 ? 'highlight' : '']">{{ room.viewerCount |formatViewerCount }}</i>
+      </span>
+    </div>
   </el-card>
 </template>
 
@@ -26,6 +32,22 @@ export default {
     return {
       currentDate: new Date()
     };
+  },
+  computed: {
+  },
+  filters:{
+    formatViewerCount(viewerCount){
+      if (viewerCount >= 100000) {
+        return '10w+'
+      }else if (viewerCount >= 10000) {
+        return Math.floor(viewerCount / 10000) + 'w'
+      }
+      else if (viewerCount <= 1000) {
+        return viewerCount
+      } else {
+        return Math.floor(viewerCount / 1000) + 'k+'
+      }
+    }
   },
   methods: {
     handleClick() {
@@ -79,5 +101,9 @@ export default {
   color: #999;
   vertical-align: top;
   line-height: 22px;
+}
+.highlight {
+  color: red;
+  font-weight: bold;
 }
 </style>

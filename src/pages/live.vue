@@ -25,7 +25,7 @@
 
               <div class="author-follow">
                 <p style="width: 600px;font-size: 10px;width: 215px;line-height: 18px;">
-                  <span class="head-text"><i class="el-icon-view">8413人看过</i></span>
+                  <span class="head-text"><i class="el-icon-view">{{ info.viewerCount | formatViewerCount }}人看过</i></span>
                   <span @click="alarm()" class="iconfont head-text"
                         style="margin-left: 16px;font-size: 10px">&#xe652;举报</span>
                   <span @click="share()" class="iconfont head-text"
@@ -254,6 +254,19 @@ export default {
       defaultTimeout: 8,
       presentRankList: []
     };
+  },
+  filters: {
+    formatViewerCount(viewerCount) {
+      if (viewerCount >= 100000) {
+        return '10w+'
+      } else if (viewerCount >= 10000) {
+        return Math.floor(viewerCount / 10000) + 'w'
+      } else if (viewerCount <= 1000) {
+        return viewerCount
+      } else {
+        return Math.floor(viewerCount / 1000) + 'k+'
+      }
+    }
   },
   computed: {
     isLogin() {
@@ -844,7 +857,7 @@ export default {
 
 .presentrankdiv {
   overflow: hidden;
-  background: rgb(161,31,87);
+  background: rgb(161, 31, 87);
   z-index: 9999;
   border-radius: 2px;
 }
