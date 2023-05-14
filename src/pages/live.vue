@@ -148,7 +148,8 @@
                   <el-avatar :size="20" :src="i.user.avatar">
                   </el-avatar>
                   <span style="margin-left: 4px; color:white;width:80px">{{ i.user.nickName }}</span>
-                  <span style="margin-left: 150px;color:white">{{ i.totalPrice }}</span>
+<!--                  裁剪，不显示最后两位-->
+                  <span style="margin-left: 150px;color:white">{{ i.totalPrice.substr(0, i.totalPrice.length - 2) }}</span>
                 </div>
               </div>
               <div v-else>
@@ -213,6 +214,9 @@
         </el-card>
       </div>
     </el-main>
+    <el-footer height="" style="background: #f6f9fa">
+      <FooterHuYa></FooterHuYa>
+    </el-footer>
   </el-container>
 </template>
 
@@ -223,6 +227,8 @@ import LivePlayer from "../components/FlvLivePlayer";
 import {getLocalUserInfo, getToken} from "../utils/auth";
 import store from "../store";
 
+import FooterHuYa from "../components/Footer-huya";
+import LiveRoom from "@/components/LiveRoom";
 export default {
   name: "index",
   data() {
@@ -273,6 +279,9 @@ export default {
       return this.$store.state.userInfo == null;
     },
     spliceLiveUrl() {
+      if (this.info.id<9){
+        return this.info.liveUrl;
+      }
       return this.info.liveUrl + this.info.id + ".flv";
     },
     isLiveRole() {
@@ -285,7 +294,8 @@ export default {
   },
   components: {
     Header,
-    LivePlayer
+    LivePlayer,
+    FooterHuYa
   },
   mounted() {
     this.init();
@@ -858,7 +868,7 @@ export default {
 .presentrankdiv {
   overflow: hidden;
   background: rgb(161, 31, 87);
-  z-index: 9999;
+  z-index: 2000;
   border-radius: 2px;
 }
 

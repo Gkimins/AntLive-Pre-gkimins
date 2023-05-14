@@ -6,9 +6,12 @@
     <el-main>
       <div class="item-container ">
 <!--        换成获取所有的推广位，然后显示-->
-        <el-carousel indicator-position="outside" v-if="rmPicList">
-          <el-carousel-item v-for="item in rmPicList" :key="item">
-            <h3>{{ rmPicList.bannerUrl }}</h3>
+        <el-carousel indicator-position="outside" v-if="rmPicList" :autoplay="false" height="500px" arrow="always">
+          <el-carousel-item v-for="(item,index) in rmPicList" :key="index">
+<!--            <el-image :src="item.bannerUrl"/>-->
+              <LivePlayer :url="item.url"
+                          ref="maindplayer" style="width: 80%"/>
+
           </el-carousel-item>
         </el-carousel>
         <el-breadcrumb separator-class="el-icon-arrow-right" class="bread-crumb">
@@ -31,6 +34,8 @@
 import Header from "../components/Header";
 import LiveRoom from "../components/LiveRoom";
 // import Footer from "../components/Footer";
+
+import LivePlayer from "../components/FlvLivePlayer";
 import FooterHuYa from "../components/Footer-huya";
 import Api from "../api";
 import store from '../store';
@@ -38,7 +43,8 @@ export default {
   components: {
     LiveRoom,
     Header,
-    FooterHuYa
+    FooterHuYa,
+    LivePlayer
   },
   data() {
     return {
@@ -54,6 +60,17 @@ export default {
     store.dispatch('getCategorys').then(()=>{})
   },
   methods: {
+    async spliceLiveUrl(roomId) {
+      var info ;
+      await Api.getRoomInfo(roomId).then(res => {
+        info = res.data.data;
+      });
+      console.log("77")
+      if (roomId<9){
+        return info.liveUrl;
+      }
+      return info.liveUrl + info.id + ".flv";
+    },
     handleSearchRoom(roomName){
       Api.searchRoom(roomName).then(res=>{
         this.rooms = res.data.data;
@@ -69,9 +86,15 @@ export default {
       this.current_category = c.name;
       this.list(c.id);
     },
-    list(cid) {
-      Api.getBanners().then(res => {
-        this.rmPicList = res.data.data
+    async list(cid) {
+      var tt = this;
+      await Api.getBanners().then(res => {
+        this.rmPicList = res.data.data;
+        for (let i = 0; i < this.rmPicList.length; i++) {
+          tt.spliceLiveUrl(this.rmPicList[i].bannerLinkHomeId).then(res => {
+            this.rmPicList[i].url = res;
+          });
+        }
       })
       Api.getLivingRoomInfo(cid).then(res => {
         this.rooms = res.data.data;

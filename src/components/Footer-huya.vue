@@ -1,16 +1,16 @@
 <template>
   <div class="huya-footer__bd" style="text-align: center">
     <div class="huya-footer__nav"><p><a target="_blank"
-                                        href="https://hd.huya.com/web/about/index.html#about">关于虎牙</a>|<a
-        target="_blank" href="https://ir.huya.com">Investor Relations</a>|<a target="_blank"
-                                                                             href="https://hr.huya.com/">加入我们</a>|<a
-        target="_blank" href="https://hd.huya.com/web/about/index.html#contact">合作联系</a>|<a target="_blank"
-                                                                                            href="https://hd.huya.com/web/about/index.html#sites">友情链接</a>|<a
-        target="_blank" href="https://e.huya.com/home">广告投放</a>|<a target="_blank"
-                                                                   href="https://kefu.zbase.huya.com/s/dist/tpl/serviceCenter.html#/home?product=HYPC">联系客服</a>|<a
-        target="_blank" href="https://hd.huya.com/huyaDIYzt/6811/pc/index.html#diySetTab=5">平台规则</a>|<a target="_blank"
-                                                                                                        href="https://hd.huya.com/huyaDIYzt/6811/pc/index.html#diySetTab=1">隐私政策</a>|<a
-        target="_blank" href="https://hd.huya.com/huyaDIYzt/6811/pc/index.html#diySetTab=4">版权保护投诉指引</a></p>
+                                        href="https://hd.253786.xyz/web/about/index.html#about">关于系统</a>|<a
+        target="_blank" href="https://ir.253786.xyz">Investor Relations</a>|<a target="_blank"
+                                                                             href="https://hr.253786.xyz/">加入我们</a>|<a
+        target="_blank" href="https://hd.253786.xyz/web/about/index.html#contact">合作联系</a>|<a target="_blank"
+                                                                                            href="https://hd.253786.xyz/web/about/index.html#sites">友情链接</a>|<a
+        target="_blank" href="https://e.253786.xyz/home">广告投放</a>|<a target="_blank"
+                                                                   href="https://kefu.zbase.253786.xyz/s/dist/tpl/serviceCenter.html#/home?product=HYPC">联系客服</a>|<a
+        target="_blank" href="https://hd.253786.xyz/huyaDIYzt/6811/pc/index.html#diySetTab=5">平台规则</a>|<a target="_blank"
+                                                                                                        href="https://hd.253786.xyz/huyaDIYzt/6811/pc/index.html#diySetTab=1">隐私政策</a>|<a
+        target="_blank" href="https://hd.253786.xyz/huyaDIYzt/6811/pc/index.html#diySetTab=4">版权保护投诉指引</a></p>
       <p><a target="_blank" href="https://a.msstatic.com/huya/hd/h5/static-source/main/credentials/yyzz.png">营业执照</a>|<a
           target="_blank" href="https://a.msstatic.com/huya/hd/h5/static-source/main/credentials/jyxk-tv2023.pdf">广播电视节目制作经营许可证</a>|<a
           target="_blank" href="https://a.msstatic.com/huya/hd/h5/static-source/main/credentials/yyxjyxk2023.pdf">营业性演出许可证</a>|<a
@@ -19,14 +19,14 @@
           target="_blank" href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44011302000433"><img
           src="https://a.msstatic.com/huya/main/img/cnb2.png" width="20" height="20" style="margin-right:3px">粤公网安备44011302000433</a>
       </p></div>
-    <div class="huya-footer__copyright"><p><span>©&nbsp;2012-现在&nbsp;huya.com</span><span>广州虎牙信息科技有限公司 版权所有</span><span>All Rights Reserved</span><a
-        target="_blank" href="https://www.huya.com/">HUYA</a><a target="_blank" href="https://jbts.mct.gov.cn/"
+    <div class="huya-footer__copyright"><p><span>©&nbsp;2012-现在&nbsp;253786.xyz</span><span>听觉无障碍直播平台 版权所有</span><span>All Rights Reserved</span><a
+        target="_blank" href="https://www.253786.xyz/">HUYA</a><a target="_blank" href="https://jbts.mct.gov.cn/"
                                                                 class="clickstat" data-eid="click/home/yejiao/jubao"
                                                                 data-edesc="点击/首页/页脚/举报">全国文化和旅游市场网上举报投诉处理系统</a><a
         target="_blank" href="https://www.12377.cn/" class="clickstat" data-eid="click/home/yejiao/jubao2"
         data-edesc="点击/首页/页脚/举报2">中国互联网不良信息举报中心</a><span style="padding:0 4px">违法和不良信息举报：020-22511620</span><span
         style="padding:0 4px">未成年人关怀热线：020-22511510</span></p></div>
-    <div class="huya-footer__hy-logo"><img src="https://a.msstatic.com/huya/hd/h5/static-source/main/huya.png"
+    <div class="huya-footer__hy-logo"><img
                                            style="height:42px;margin-right:25px"><a id="___szfw_logo___"
                                                                                     href="https://credit.szfw.org/CX20181113035218510375.html"
                                                                                     target="_blank"><img

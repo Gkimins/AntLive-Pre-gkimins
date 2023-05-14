@@ -25,7 +25,11 @@
             <router-view></router-view>
           </el-main>
         </el-container>
+
       </el-container>
+      <el-footer height="" style="background: #f6f9fa">
+        <FooterHuYa></FooterHuYa>
+      </el-footer>
     </div>
   </div>
 </template>
@@ -35,13 +39,15 @@ import Api from '../api'
 import UserInfo from "../components/UserInfo";
 import UserInfoNav from "../components/UserInfoNav";
 import Header from "../components/Header";
+import FooterHuYa from "../components/Footer-huya";
 
 export default {
   name: "user-center",
   components: {
     UserInfo,
     UserInfoNav,
-    Header
+    Header,
+    FooterHuYa
   },
   data() {
     return {

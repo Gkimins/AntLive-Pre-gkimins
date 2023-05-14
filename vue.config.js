@@ -23,6 +23,14 @@ module.exports = {
                 pathRewrite:{
                     '^/video':''
                 }
+            },
+            '/PLTV':{
+                target: 'http://39.135.138.60:18890',
+                changeOrigin:true,
+                secure: false,
+                pathRewrite:{
+                    '^/PLTV':''
+                }
             }
         }
     }

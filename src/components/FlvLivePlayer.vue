@@ -22,6 +22,7 @@ export default {
     url(v1, v2) {
       console.log(v1, "v1");
       console.log(v2, "v2");
+      this.init(this.url)
     },
   },
   mounted() {
@@ -44,6 +45,7 @@ export default {
     },
     init(v){
       console.log(v);
+      debugger;
       const vue = this;
       this.dp = new DPlayer({
         container: document.getElementById('dplayer'),
@@ -63,7 +65,8 @@ export default {
         },
         video: {
           url: this.url,
-          type: "customHls",
+          //判断是否包含 "customFlv"
+          type: this.url.includes("8088") ?  "customHls":"customFlv",
           customType: {
             customHls: function (video) {
               const hls = new Hls();
